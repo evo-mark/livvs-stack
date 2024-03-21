@@ -30,3 +30,10 @@ This template installs a barebones Laravel 11 installation with the following fe
 ```sh
 composer create-project -s dev evo-mark/inertia-11-template example-app
 ```
+
+Then inside your created application folder:
+
+- Setup database and `.env` file.
+- `composer update`
+- `pnpm install`
+- `npm run dev`
