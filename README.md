@@ -24,6 +24,7 @@ This template installs a barebones Laravel 11 installation with the following fe
 ---
 
 -   ESLint and Prettier for code-presentation enforcement
+-   Merge support for `composer.local.json` file
 
 ## Installation
 
