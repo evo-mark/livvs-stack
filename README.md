@@ -18,6 +18,7 @@ This template installs a barebones Laravel 11 installation with the following fe
 -   **InertiaRoutes** plugin
 -   **InertiaI18n** plugin for using your localisation strings inside Vue
 -   **Vue3AutoViteComponents** plugin which automatically imports components from `components/sync` and `components/async` directories.
+-   Global Vue component for `SvgIcon` which registers [vue3-icon](https://www.npmjs.com/package/vue3-icon)
 -   **UnpluginAutoImports** will auto-import from `vue`, `@inertiajs/vue3`, `vue-i18n`, `inertiaRoutes` and both `composables` and `helpers` directories.
 -   Simple Header, Footer and DefaultLayout application structure.
 
