@@ -13,6 +13,7 @@
 This template installs a barebones Laravel 11 installation with the following features:
 
 -   **InertiaJS** / **Vue3** framework
+-   Basic auth controllers for login, forgot password and reset password
 -   Error handling with frontend page for Inertia errors
 -   **Tailwind** and sensible presets
 -   **InertiaRoutes** plugin
