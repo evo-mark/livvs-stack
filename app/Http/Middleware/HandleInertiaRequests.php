@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Facades\MetaService;
 
 class HandleInertiaRequests extends Middleware
 {
