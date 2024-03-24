@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\VerifyEmailNoticeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +25,9 @@ Route::middleware('guest')->prefix('auth')->name('auth.')->group(function () {
     Route::post('reset-password', [ResetPasswordController::class, 'store'])->name('reset-password.store');
 });
 
-Route::middleware('auth')->prefix('auth')->name('auth.')->group(function() {
-    Route::delete('logout', LogoutController::class)->name('logout');
+Route::middleware('auth')->prefix('auth')->group(function() {
+    Route::delete('logout', LogoutController::class)->name('auth.logout');
+    Route::middleware('signed')->get('email-verification/{id}/{hash}', [VerifyEmailController::class, 'show'])->name('verification.verify');
+    Route::post('email-verification', [VerifyEmailController::class, 'store'])->name('verification.send');
+    Route::get('email-verification-required', VerifyEmailNoticeController::class)->name('verification.notice');
 });
