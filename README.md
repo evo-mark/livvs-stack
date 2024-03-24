@@ -8,13 +8,25 @@
     </a>
 </p>
 
-# Introduction
+# Laravel 11 Application Template
+
+## Introduction
 
 This template installs a barebones Laravel 11 installation with the following features:
 
+### General
+
 -   **InertiaJS** / **Vue3** framework
--   Basic auth controllers for login, forgot password and reset password
+
+### Backend
+
+-   Basic auth controllers for login, forgot password, verify email and reset password
+-   Command for `make:service` which creates and binds a service with a backing facade
+-   Prebuilt services for flash messages, icon paths and page metadata included
 -   Error handling with frontend page for Inertia errors
+
+### Frontend
+
 -   **Tailwind** and sensible presets
 -   **InertiaRoutes** plugin
 -   **InertiaI18n** plugin for using your localisation strings inside Vue
@@ -23,8 +35,9 @@ This template installs a barebones Laravel 11 installation with the following fe
 -   **UnpluginAutoImports** will auto-import from `vue`, `@inertiajs/vue3`, `vue-i18n`, `inertiaRoutes` and both `composables` and `helpers` directories.
 -   Simple Header, Footer and DefaultLayout application structure.
 
----
+### Development
 
+-   Laravel pint configured for use via `composer pint`.
 -   ESLint and Prettier for code-presentation enforcement
 -   Merge support for `composer.local.json` file
 
@@ -36,7 +49,7 @@ composer create-project -s dev evo-mark/inertia-11-template example-app
 
 Then inside your created application folder:
 
-- Setup database and `.env` file.
-- `composer update`
-- `pnpm install`
-- `npm run dev`
+-   Setup database and `.env` file.
+-   `composer update`
+-   `pnpm install`
+-   `npm run dev`
