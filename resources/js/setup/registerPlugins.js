@@ -1,5 +1,12 @@
 import { registerComponents } from "vue3-auto-vite-components";
+import { vuetifyRoutesPlugin } from "inertiaRoutes";
 import SvgIcon from "vue3-icon";
+import vuetify from "./vuetify";
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+
+const pinia = createPinia({});
+pinia.use(piniaPluginPersistedstate);
 
 /**
  * General registration function
@@ -16,5 +23,8 @@ export const registerPlugins = (app) => {
 			eager: true,
 		}),
 	});
+	app.use(vuetify);
+	app.use(vuetifyRoutesPlugin);
+	app.use(pinia);
 	app.component("SvgIcon", SvgIcon);
 };

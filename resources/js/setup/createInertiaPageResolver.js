@@ -1,4 +1,5 @@
 import DefaultLayout from "../layouts/DefaultLayout.vue";
+import { h } from "vue";
 
 /**
  * Takes a page glob and creates a function that can be
@@ -9,6 +10,10 @@ import DefaultLayout from "../layouts/DefaultLayout.vue";
 export const createInertiaPageResolver = (pages) => {
 	return async function (name) {
 		const resolvedPage = pages[`./pages/${name}.vue`];
+		if (!resolvedPage) {
+			return h("div", { class: "d-flex justify-center align-center h-screen" }, "No page found for " + name);
+		}
+
 		const page = typeof resolvedPage === "function" ? await resolvedPage() : resolvedPage;
 
 		page.default.layout = page.default.layout ?? DefaultLayout;
