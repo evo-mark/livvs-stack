@@ -10,8 +10,15 @@ import { h } from "vue";
 export const createInertiaPageResolver = (pages) => {
 	return async function (name) {
 		const resolvedPage = pages[`./pages/${name}.vue`];
+
 		if (!resolvedPage) {
-			return h("div", { class: "d-flex justify-center align-center h-screen" }, "No page found for " + name);
+			return h(
+				"div",
+				{
+					class: "flex justify-center items-center min-h-screen bg-slate-700 text-white text-2xl",
+				},
+				[h("span", "Unable to find page: "), h("span", { class: "px-2 font-bold" }, name)],
+			);
 		}
 
 		const page = typeof resolvedPage === "function" ? await resolvedPage() : resolvedPage;

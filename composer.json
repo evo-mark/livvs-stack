@@ -11,6 +11,8 @@
 	"require": {
 		"php": "^8.2",
 		"adminui/inertia-routes": "^3.0",
+		"binary-cats/laravel-rbac": "*",
+		"evo-mark/evo-laravel-service-facades": "*",
 		"evo-mark/inertia-i18n": "^1.0",
 		"inertiajs/inertia-laravel": "^1.0",
 		"laravel/framework": "^11.0",
@@ -31,7 +33,11 @@
 			"App\\": "app/",
 			"Database\\Factories\\": "database/factories/",
 			"Database\\Seeders\\": "database/seeders/"
-		}
+		},
+		"files": [
+			"bootstrap/helpers/enum.php",
+			"bootstrap/helpers/user.php"
+		]
 	},
 	"autoload-dev": {
 		"psr-4": {
@@ -41,7 +47,9 @@
 	"scripts": {
 		"post-autoload-dump": [
 			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-			"@php artisan package:discover --ansi"
+			"@php artisan package:discover --ansi",
+			"@php artisan rbac:reset",
+			"@php artisan facades:annotate --no-interaction"
 		],
 		"post-update-cmd": [
 			"@php artisan vendor:publish --tag=laravel-assets --ansi --force"
