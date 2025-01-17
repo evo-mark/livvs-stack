@@ -1,5 +1,5 @@
 import "vuetify/styles";
-import "css/app.postcss";
+import "../css/app.postcss";
 
 import { createSSRApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";

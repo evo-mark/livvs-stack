@@ -7,7 +7,7 @@ import vuetify from "vite-plugin-vuetify";
 
 export default async ({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
-	const host = env.VITE_SERVER_HOST.replace("https://", "") ?? "127.0.0.1";
+	const host = env.VITE_SERVER_HOST ? env.VITE_SERVER_HOST.replace("https://", "") : "127.0.0.1";
 
 	return defineConfig({
 		css: {

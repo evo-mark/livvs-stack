@@ -1,5 +1,5 @@
 import { registerComponents } from "vue3-auto-vite-components";
-import { vuetifyRoutesPlugin } from "inertiaRoutes";
+import { vuetifyRoutesPlugin } from "@adminui/inertia-routes";
 import SvgIcon from "vue3-icon";
 import vuetify from "./vuetify";
 import { createPinia } from "pinia";
