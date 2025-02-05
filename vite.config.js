@@ -12,14 +12,6 @@ export default async ({ mode }) => {
 	return defineConfig({
 		css: {
 			preprocessorMaxWorkers: true,
-			preprocessorOptions: {
-				sass: {
-					api: "modern-compiler",
-				},
-				scss: {
-					api: "modern-compiler",
-				},
-			},
 		},
 		plugins: [
 			AutoImport({
