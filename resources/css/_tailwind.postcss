@@ -1,13 +1,16 @@
-@import "tailwindcss";
-@layer vuetify;
+@layer theme, base, vuetify, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 @layer utilities {
-	.flex-centre {
+	.flex-center {
 		@apply flex items-center justify-center;
 	}
 }
 
 @theme {
+	--color-primary: rgb(var(--v-theme-primary));
+	--color-secondary: rgb(var(--v-theme-secondary));
 	--breakpoint-3xl: 1924px;
 }
 

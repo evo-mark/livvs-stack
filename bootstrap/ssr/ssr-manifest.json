@@ -1,9 +1,26 @@
 {
   "\u0000plugin-vue:export-helper": [],
+  "resources/js/components/sync/Footer.vue": [],
+  "resources/js/components/sync/Header.vue": [],
+  "resources/js/components/sync/app-bar/ThemeSwitcher.vue": [],
+  "resources/js/components/sync/app-bar/ThemeSwitcher.vue?vue&type=style&index=0&lang.postcss": [],
+  "resources/js/components/sync/sidebar/Navigation.vue": [],
+  "resources/js/layouts/BlankLayout.vue": [],
   "resources/js/layouts/DefaultLayout.vue": [],
+  "resources/js/pages/Dashboard.vue": [],
   "resources/js/pages/Error.vue": [],
-  "resources/js/pages/Home.vue": [],
+  "resources/js/pages/auth/ForgotPassword.vue": [],
+  "resources/js/pages/auth/Login.vue": [],
+  "resources/js/pages/auth/MustVerifyEmail.vue": [],
+  "resources/js/pages/auth/ResetPassword.vue": [],
   "resources/js/setup/createInertiaPageResolver.js": [],
   "resources/js/setup/registerPlugins.js": [],
-  "resources/js/ssr.js": []
+  "resources/js/setup/vuetify/defaults.js": [],
+  "resources/js/setup/vuetify/icons.js": [],
+  "resources/js/setup/vuetify/index.js": [],
+  "resources/js/setup/vuetify/theme.js": [],
+  "resources/js/ssr.js": [],
+  "resources/js/stores/userPreferencesStore.js": [],
+  "vendor/adminui/inertia-routes/dist/inertia-routes.js": [],
+  "virtual:plugin-vuetify:styles/main.sass": []
 }

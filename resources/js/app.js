@@ -1,5 +1,6 @@
 import "vuetify/styles";
 import "../css/app.postcss";
+import "@fontsource/roboto";
 
 import { createSSRApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";

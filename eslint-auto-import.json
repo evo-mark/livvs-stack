@@ -320,6 +320,19 @@
     "watchWithFilter": true,
     "whenever": true,
     "useAppStore": true,
-    "useUserPreferencesStore": true
+    "useUserPreferencesStore": true,
+    "DirectiveBinding": true,
+    "MaybeRef": true,
+    "MaybeRefOrGetter": true,
+    "createRef": true,
+    "onElementRemoval": true,
+    "onWatcherCleanup": true,
+    "useCountdown": true,
+    "useId": true,
+    "useLiveProps": true,
+    "useModel": true,
+    "usePreferredReducedTransparency": true,
+    "useSSRWidth": true,
+    "useTemplateRef": true
   }
 }

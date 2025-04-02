@@ -4,6 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import InertiaI18n from "inertia-i18n/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import vuetify from "vite-plugin-vuetify";
+import { resolve } from "node:path";
 
 export default async ({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
@@ -12,6 +13,13 @@ export default async ({ mode }) => {
 	return defineConfig({
 		css: {
 			preprocessorMaxWorkers: true,
+		},
+		resolve: {
+			alias: {
+				layouts: resolve("./resources/js/layouts"),
+				images: resolve("./resources/images"),
+				"~": resolve("./resources/css"),
+			},
 		},
 		plugins: [
 			AutoImport({

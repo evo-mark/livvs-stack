@@ -4,7 +4,7 @@ import { renderToString } from "@vue/server-renderer";
 import { createSSRApp, h } from "vue";
 import useInertiaI18nVue from "inertia-i18n/vue";
 import { createInertiaPageResolver, registerPlugins } from "./setup";
-import { useInertiaRoutes } from "inertiaRoutes";
+import { useInertiaRoutes } from "@adminui/inertia-routes";
 
 createServer((page) =>
 	createInertiaApp({

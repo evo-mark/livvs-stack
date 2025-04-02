@@ -1,7 +1,9 @@
 import { router } from "@inertiajs/vue3";
 
 /**
- * 
+ * Live props enables a reload of an Inertia page prop to be triggered from the backend
+ * via the webhooks broadcast function
+ *
  * @param { object } broadcaster The Laravel Echo instance for receiving broadcasts
  */
 export const useLiveProps = (broadcaster) => {

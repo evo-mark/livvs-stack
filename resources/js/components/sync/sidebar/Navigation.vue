@@ -1,10 +1,12 @@
 <template>
-	<v-list nav>
-		<v-list-item title="Testing One" prepend-icon="mdi-account"></v-list-item>
-		<v-list-item title="Testing Two" prepend-icon="mdi-account"></v-list-item>
-		<v-list-item title="Testing Three" prepend-icon="mdi-account"></v-list-item>
-		<v-list-item title="Testing Four" prepend-icon="mdi-account"></v-list-item>
-	</v-list>
+	<VList nav>
+		<VListItem title="Testing One" :prepend-icon="mdiAccount"></VListItem>
+		<VListItem title="Testing Two" :prepend-icon="mdiAccount"></VListItem>
+		<VListItem title="Testing Three" :prepend-icon="mdiAccount"></VListItem>
+		<VListItem title="Testing Four" :prepend-icon="mdiAccount"></VListItem>
+	</VList>
 </template>
 
-<script setup></script>
+<script setup>
+import { mdiAccount } from "@mdi/js";
+</script>

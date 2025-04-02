@@ -1,8 +1,8 @@
 <template>
-	<v-app>
-		<v-navigation-drawer>
-			<div class="text-center py-4">
-				<v-avatar>
+	<VApp>
+		<VNavigationDrawer>
+			<div class="py-4 text-center">
+				<VAvatar>
 					<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40">
 						<path
 							fill="#F06225"
@@ -13,27 +13,29 @@
 							d="M0 21h8.774c2.002 0 4.076.122 5.78 1.172a10.02 10.02 0 0 1 3.274 3.274C18.878 27.15 19 29.224 19 31.226V40H6a6 6 0 0 1-6-6V21ZM40 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
 						></path>
 					</svg>
-				</v-avatar>
+				</VAvatar>
 			</div>
 			<v-divider />
 			<EvoSidebarNavigation />
 			<template #append>
-				<v-list nav>
-					<v-list-item title="Logout" prepend-icon="mdi-logout-variant" to="auth.logout" method="delete" />
-				</v-list>
+				<VList nav>
+					<v-list-item title="Logout" :prepend-icon="mdiLogoutVariant" to="auth.logout" method="delete" />
+				</VList>
 			</template>
-		</v-navigation-drawer>
-		<v-app-bar>
+		</VNavigationDrawer>
+		<VAppBar>
 			<template #append>
 				<EvoAppBarThemeSwitcher />
 			</template>
-		</v-app-bar>
-		<v-main>
+		</VAppBar>
+		<VMain>
 			<slot></slot>
-		</v-main>
-	</v-app>
+		</VMain>
+	</VApp>
 </template>
 
-<script setup></script>
+<script setup>
+import { mdiLogoutVariant } from "@mdi/js";
+</script>
 
 <style lang="postcss"></style>

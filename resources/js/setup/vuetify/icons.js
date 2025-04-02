@@ -1,4 +1,4 @@
-import { aliases, mdi } from "vuetify/iconsets/mdi";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 const icons = {
 	defaultSet: "mdi",
