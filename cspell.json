@@ -6,6 +6,8 @@
     "words": [
         "optionable"
     ],
-    "ignoreWords": [],
+    "ignoreWords": [
+        "Unplugin"
+    ],
     "import": []
 }
