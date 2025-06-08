@@ -7,7 +7,7 @@
         "laravel",
         "framework"
     ],
-    "license": "Proprietry",
+    "license": "proprietary",
     "require": {
         "php": "^8.2",
         "adminui/inertia-routes": "^3.0",
