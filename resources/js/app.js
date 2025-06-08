@@ -1,5 +1,5 @@
 import "vuetify/styles";
-import "../css/app.postcss";
+import "../css/app.css";
 import "@fontsource/roboto";
 
 import { createSSRApp, h } from "vue";

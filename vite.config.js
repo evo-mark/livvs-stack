@@ -1,10 +1,12 @@
-import { defineConfig, loadEnv } from "vite";
-import laravel from "laravel-vite-plugin";
-import vue from "@vitejs/plugin-vue";
-import InertiaI18n from "inertia-i18n/vite";
-import AutoImport from "unplugin-auto-import/vite";
-import vuetify from "vite-plugin-vuetify";
 import { resolve } from "node:path";
+import vue from "@vitejs/plugin-vue";
+import vuetify from "vite-plugin-vuetify";
+import laravel from "laravel-vite-plugin";
+import tailwindcss from '@tailwindcss/vite';
+import InertiaI18n from "inertia-i18n/vite";
+import { defineConfig, loadEnv } from "vite";
+import AutoImport from "unplugin-auto-import/vite";
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 export default async ({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
@@ -55,6 +57,10 @@ export default async ({ mode }) => {
 					configFile: "resources/js/setup/vuetify/settings.scss",
 				},
 			}),
+			tailwindcss(),
+            vueDevTools({
+                appendTo: 'resources/js/app.js',
+            }),
 		],
 		server: {
 			host,

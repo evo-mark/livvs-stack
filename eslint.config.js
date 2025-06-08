@@ -1,10 +1,12 @@
 import AutoImportJson from "./eslint-auto-import.json" with { type: "json" };
+import { defineConfig, globalIgnores } from 'eslint/config';
 import configPrettier from "eslint-config-prettier";
 import pluginVue from "eslint-plugin-vue";
 import globals from "globals";
 import js from "@eslint/js";
 
-export default [
+export default defineConfig([
+	globalIgnores(['vendor/', 'node_modules/', 'storage/', 'app/', 'public/', 'bootstrap/', 'routes/', 'database/']),
 	{
 		languageOptions: {
 			...AutoImportJson,
@@ -17,6 +19,7 @@ export default [
 		languageOptions: {
 			globals: {
 				...globals.node,
+				...globals.browser
 			},
 		},
 		rules: {
@@ -25,4 +28,4 @@ export default [
 			"vue/no-v-html": "off",
 		},
 	},
-];
+]);
