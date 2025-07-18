@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Inertia\Middleware;
 use App\Facades\MetaService;
+use Illuminate\Http\Request;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -44,12 +45,12 @@ class HandleInertiaRequests extends Middleware
                 'url' => fn () => config('app.url'),
                 'timezone' => fn () => config('app.timezone')
             ],
-            'flash' => [
+            'flash' => Inertia::always([
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
                 'warning' => fn () => $request->session()->get('warning'),
                 'info' => fn () => $request->session()->get('info'),
-            ],
+            ]),
             'meta' => [
                 'title' => fn () => MetaService::getTitle(),
             ],
