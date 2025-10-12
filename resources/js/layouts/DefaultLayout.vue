@@ -1,5 +1,5 @@
 <template>
-	<VApp>
+	<Wrapper>
 		<VNavigationDrawer>
 			<div class="py-4 text-center">
 				<VAvatar>
@@ -31,11 +31,10 @@
 		<VMain>
 			<slot></slot>
 		</VMain>
-	</VApp>
+	</Wrapper>
 </template>
 
 <script setup>
+import Wrapper from "./Wrapper.vue";
 import { mdiLogoutVariant } from "@mdi/js";
 </script>
-
-<style lang="postcss"></style>

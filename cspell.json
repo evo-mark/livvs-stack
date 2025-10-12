@@ -6,10 +6,21 @@
     "words": [
         "dispatchable",
         "optionable",
+        "persistedstate",
         "timebox"
     ],
     "ignoreWords": [
-        "Unplugin"
+        "Activitylog",
+        "Unplugin",
+        "barryvdh",
+        "dont",
+        "fakerphp",
+        "livvs",
+        "nunomaduro",
+        "pestphp",
+        "phpunit",
+        "pixelfear",
+        "schosting"
     ],
     "import": []
 }

@@ -1,26 +1,14 @@
 {
-    "compilerOptions": {
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
-        "target": "ES6",
-        "paths": {
-            "~/*": [
-                "./resources/css/*"
-            ],
-            "images/*": [
-                "./resources/images/*"
-            ],
-            "layouts/*": [
-                "./resources/js/layouts/*"
-            ],
-            "evo-laravel-datatable": [
-                "./vendor/evo-mark/evo-laravel-datatable"
-            ]
-        }
-    },
-    "include": [
-        "resources/**/*",
-        "auto-imports.d.ts",
-        "global.d.ts"
-    ]
+	"compilerOptions": {
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"target": "esnext",
+		"paths": {
+			"~/*": ["./resources/css/*"],
+			"images/*": ["./resources/images/*"],
+			"layouts/*": ["./resources/js/layouts/*"],
+			"evo-laravel-datatable": ["./vendor/evo-mark/evo-laravel-datatable"]
+		}
+	},
+	"include": ["resources/**/*", "auto-imports.d.ts", "global.d.ts"]
 }

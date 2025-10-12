@@ -22,7 +22,7 @@
 const userPreferencesStore = useUserPreferencesStore();
 </script>
 
-<style lang="postcss">
+<style>
 .theme-switcher.v-switch--inset .v-switch__thumb {
 	transform: none;
 }

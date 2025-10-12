@@ -39,20 +39,25 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'app' => [
-                'name' => fn () => config('app.name'),
-                'env' => fn () => config('app.env'),
-                'debug' => fn () => config('app.debug'),
-                'url' => fn () => config('app.url'),
-                'timezone' => fn () => config('app.timezone')
+                'name' => fn() => config('app.name'),
+                'env' => fn() => config('app.env'),
+                'debug' => fn() => config('app.debug'),
+                'url' => fn() => config('app.url'),
+                'timezone' => fn() => config('app.timezone')
             ],
             'flash' => Inertia::always([
-                'success' => fn () => $request->session()->get('success'),
-                'error' => fn () => $request->session()->get('error'),
-                'warning' => fn () => $request->session()->get('warning'),
-                'info' => fn () => $request->session()->get('info'),
+                'success' => fn() => $request->session()->get('success'),
+                'error' => fn() => $request->session()->get('error'),
+                'warning' => fn() => $request->session()->get('warning'),
+                'info' => fn() => $request->session()->get('info'),
             ]),
             'meta' => [
-                'title' => fn () => MetaService::getTitle(),
+                'title' => fn() => MetaService::getTitle(),
+            ],
+            'ws' => [
+                'key' => config('broadcasting.connections.pusher.key'),
+                'host' => config('broadcasting.connections.pusher.options.host'),
+                'port' => config('broadcasting.connections.pusher.options.port'),
             ],
         ]);
     }

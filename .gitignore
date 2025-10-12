@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 pnpm-lock.yaml
 composer.lock
+/*helper.php
