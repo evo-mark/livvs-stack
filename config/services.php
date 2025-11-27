@@ -31,4 +31,7 @@ return [
         ],
     ],
 
+    'get_address' => [
+        'token' => env('GET_ADDRESS_TOKEN')
+    ]
 ];

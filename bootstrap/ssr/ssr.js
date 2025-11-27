@@ -1,4322 +1,2134 @@
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-import { ssrRenderAttrs, ssrInterpolate, ssrRenderComponent, ssrRenderSlot } from "vue/server-renderer";
-import { useSSRContext, computed, mergeProps, unref, reactive, ref, inject, getCurrentInstance, useAttrs, onMounted, onUnmounted, watch, toValue, getCurrentScope, onScopeDispose, withCtx, renderSlot, createTextVNode, createVNode, withModifiers, resolveComponent, createBlock, openBlock, h, createSSRApp } from "vue";
-import { router, useForm, usePage, createInertiaApp } from "@inertiajs/vue3";
-import { VApp } from "vuetify/components/VApp";
-import { VBtn } from "vuetify/components/VBtn";
-import { VCard, VCardItem, VCardTitle, VCardText } from "vuetify/components/VCard";
-import { VCheckbox } from "vuetify/components/VCheckbox";
-import { VForm } from "vuetify/components/VForm";
-import { VRow, VCol } from "vuetify/components/VGrid";
-import { VTextField } from "vuetify/components/VTextField";
+import { Head, createInertiaApp, router, useForm, usePage } from "@inertiajs/vue3";
 import createServer from "@inertiajs/vue3/server";
 import { renderToString } from "@vue/server-renderer";
+import { computed, createBlock, createSSRApp, createTextVNode, createVNode, getCurrentInstance, getCurrentScope, h, inject, isRef, mergeModels, mergeProps, onMounted, onScopeDispose, onUnmounted, openBlock, reactive, ref, renderSlot, resolveComponent, toValue, unref, useAttrs, useModel, useSSRContext, watch, withCtx, withModifiers } from "vue";
 import useInertiaI18nVue from "inertia-i18n/vue";
+import { ssrInterpolate, ssrRenderAttrs, ssrRenderComponent, ssrRenderSlot } from "vue/server-renderer";
+import { VApp } from "vuetify/components/VApp";
+import { mdiAccount, mdiEye, mdiEyeOff, mdiLogoutVariant, mdiPlus } from "@mdi/js";
 import { VAppBar } from "vuetify/components/VAppBar";
-import { VAvatar } from "vuetify/components/VAvatar";
 import { VDivider } from "vuetify/components/VDivider";
 import { VList, VListItem } from "vuetify/components/VList";
 import { VMain } from "vuetify/components/VMain";
 import { VNavigationDrawer } from "vuetify/components/VNavigationDrawer";
+import { registerComponents } from "vue3-auto-vite-components";
+import { parse, stringify } from "qs";
+import { lowerCase, omit, pick } from "es-toolkit";
+import { castArray } from "es-toolkit/compat";
+import SvgIcon from "vue3-icon";
+import { createVuetify, useTheme } from "vuetify";
+import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
+import LuxonAdapter from "@date-io/luxon";
+import { createPinia, defineStore } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import { VFooter } from "vuetify/components/VFooter";
 import { VToolbar } from "vuetify/components/VToolbar";
-import { defineStore, createPinia } from "pinia";
-import { useTheme, createVuetify } from "vuetify";
 import { usePreferredDark } from "@vueuse/core";
 import { VIcon } from "vuetify/components/VIcon";
 import { VSwitch } from "vuetify/components/VSwitch";
-import { registerComponents } from "vue3-auto-vite-components";
-import SvgIcon from "vue3-icon";
-import { mdi, aliases } from "vuetify/iconsets/mdi";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-var require_ssr = __commonJS({
-  "ssr.js"(exports, module) {
-    const _export_sfc = (sfc, props) => {
-      const target = sfc.__vccOpts || sfc;
-      for (const [key, val] of props) {
-        target[key] = val;
-      }
-      return target;
-    };
-    const _sfc_main$b = {};
-    function _sfc_ssrRender$5(_ctx, _push, _parent, _attrs) {
-      _push(`<div${ssrRenderAttrs(_attrs)}>Dashboard</div>`);
-    }
-    const _sfc_setup$b = _sfc_main$b.setup;
-    _sfc_main$b.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/Dashboard.vue");
-      return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
-    };
-    const Dashboard = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["ssrRender", _sfc_ssrRender$5]]);
-    const __vite_glob_0_0$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: Dashboard
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main$a = /* @__PURE__ */ Object.assign({
-      layout: false
-    }, {
-      __name: "Error",
-      __ssrInlineRender: true,
-      props: {
-        status: { type: Number, required: true }
-      },
-      setup(__props) {
-        const props = __props;
-        const title = computed(() => {
-          return {
-            503: "503: Service Unavailable",
-            500: "500: Server Error",
-            404: "404: Page Not Found",
-            403: "403: Forbidden"
-          }[props.status];
-        });
-        const description = computed(() => {
-          return {
-            503: "Sorry, we are doing some maintenance. Please check back soon.",
-            500: "Whoops, something went wrong on our servers.",
-            404: "Sorry, the page you are looking for could not be found.",
-            403: "Sorry, you are forbidden from accessing this page."
-          }[props.status];
-        });
-        return (_ctx, _push, _parent, _attrs) => {
-          _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex w-full h-full justify-center items-center text-center flex-col grow" }, _attrs))}><h1 class="text-4xl uppercase font-bold mb-8">${ssrInterpolate(unref(title))}</h1><div>${ssrInterpolate(unref(description))}</div></div>`);
-        };
-      }
-    });
-    const _sfc_setup$a = _sfc_main$a.setup;
-    _sfc_main$a.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/Error.vue");
-      return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
-    };
-    const __vite_glob_0_1$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: _sfc_main$a
-    }, Symbol.toStringTag, { value: "Module" }));
-    const co = Symbol.for("inertia-routes"), va = () => inject(co);
-    var Nt = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-    function ma(e) {
-      if (e.__esModule) return e;
-      var r = e.default;
-      if (typeof r == "function") {
-        var t = function n() {
-          return this instanceof n ? Reflect.construct(r, arguments, this.constructor) : r.apply(this, arguments);
-        };
-        t.prototype = r.prototype;
-      } else t = {};
-      return Object.defineProperty(t, "__esModule", { value: true }), Object.keys(e).forEach(function(n) {
-        var o = Object.getOwnPropertyDescriptor(e, n);
-        Object.defineProperty(t, n, o.get ? o : {
-          enumerable: true,
-          get: function() {
-            return e[n];
-          }
-        });
-      }), t;
-    }
-    var dr, Ut;
-    function Ne() {
-      return Ut || (Ut = 1, dr = TypeError), dr;
-    }
-    const ba = {}, Sa = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: ba
-    }, Symbol.toStringTag, { value: "Module" })), wa = /* @__PURE__ */ ma(Sa);
-    var hr, Lt;
-    function er() {
-      if (Lt) return hr;
-      Lt = 1;
-      var e = typeof Map == "function" && Map.prototype, r = Object.getOwnPropertyDescriptor && e ? Object.getOwnPropertyDescriptor(Map.prototype, "size") : null, t = e && r && typeof r.get == "function" ? r.get : null, n = e && Map.prototype.forEach, o = typeof Set == "function" && Set.prototype, i = Object.getOwnPropertyDescriptor && o ? Object.getOwnPropertyDescriptor(Set.prototype, "size") : null, s = o && i && typeof i.get == "function" ? i.get : null, f = o && Set.prototype.forEach, g = typeof WeakMap == "function" && WeakMap.prototype, h2 = g ? WeakMap.prototype.has : null, v = typeof WeakSet == "function" && WeakSet.prototype, m = v ? WeakSet.prototype.has : null, b = typeof WeakRef == "function" && WeakRef.prototype, c = b ? WeakRef.prototype.deref : null, d = Boolean.prototype.valueOf, A = Object.prototype.toString, l = Function.prototype.toString, p = String.prototype.match, y = String.prototype.slice, w = String.prototype.replace, S = String.prototype.toUpperCase, O = String.prototype.toLowerCase, x = RegExp.prototype.test, _ = Array.prototype.concat, $ = Array.prototype.join, M = Array.prototype.slice, P = Math.floor, F = typeof BigInt == "function" ? BigInt.prototype.valueOf : null, E = Object.getOwnPropertySymbols, z = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? Symbol.prototype.toString : null, B = typeof Symbol == "function" && typeof Symbol.iterator == "object", k = typeof Symbol == "function" && Symbol.toStringTag && (typeof Symbol.toStringTag === B || true) ? Symbol.toStringTag : null, oe = Object.prototype.propertyIsEnumerable, ae = (typeof Reflect == "function" ? Reflect.getPrototypeOf : Object.getPrototypeOf) || ([].__proto__ === Array.prototype ? function(a) {
-        return a.__proto__;
-      } : null);
-      function R(a, u) {
-        if (a === 1 / 0 || a === -1 / 0 || a !== a || a && a > -1e3 && a < 1e3 || x.call(/e/, u))
-          return u;
-        var C = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
-        if (typeof a == "number") {
-          var D = a < 0 ? -P(-a) : P(a);
-          if (D !== a) {
-            var N = String(D), T = y.call(u, N.length + 1);
-            return w.call(N, C, "$&_") + "." + w.call(w.call(T, /([0-9]{3})/g, "$&_"), /_$/, "");
-          }
-        }
-        return w.call(u, C, "$&_");
-      }
-      var Z = wa, ie = Z.custom, Se = H(ie) ? ie : null, se = {
-        __proto__: null,
-        double: '"',
-        single: "'"
-      }, pe = {
-        __proto__: null,
-        double: /(["\\])/g,
-        single: /(['\\])/g
-      };
-      hr = function a(u, C, D, N) {
-        var T = C || {};
-        if (V(T, "quoteStyle") && !V(se, T.quoteStyle))
-          throw new TypeError('option "quoteStyle" must be "single" or "double"');
-        if (V(T, "maxStringLength") && (typeof T.maxStringLength == "number" ? T.maxStringLength < 0 && T.maxStringLength !== 1 / 0 : T.maxStringLength !== null))
-          throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
-        var ve = V(T, "customInspect") ? T.customInspect : true;
-        if (typeof ve != "boolean" && ve !== "symbol")
-          throw new TypeError("option \"customInspect\", if provided, must be `true`, `false`, or `'symbol'`");
-        if (V(T, "indent") && T.indent !== null && T.indent !== "	" && !(parseInt(T.indent, 10) === T.indent && T.indent > 0))
-          throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
-        if (V(T, "numericSeparator") && typeof T.numericSeparator != "boolean")
-          throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
-        var we = T.numericSeparator;
-        if (typeof u > "u")
-          return "undefined";
-        if (u === null)
-          return "null";
-        if (typeof u == "boolean")
-          return u ? "true" : "false";
-        if (typeof u == "string")
-          return $t(u, T);
-        if (typeof u == "number") {
-          if (u === 0)
-            return 1 / 0 / u > 0 ? "0" : "-0";
-          var Q = String(u);
-          return we ? R(u, Q) : Q;
-        }
-        if (typeof u == "bigint") {
-          var me = String(u) + "n";
-          return we ? R(u, me) : me;
-        }
-        var ur = typeof T.depth > "u" ? 5 : T.depth;
-        if (typeof D > "u" && (D = 0), D >= ur && ur > 0 && typeof u == "object")
-          return de(u) ? "[Array]" : "[Object]";
-        var Ce = ia(T, D);
-        if (typeof N > "u")
-          N = [];
-        else if (ge(N, u) >= 0)
-          return "[Circular]";
-        function re(Me, Je, fa) {
-          if (Je && (N = M.call(N), N.push(Je)), fa) {
-            var Dt = {
-              depth: T.depth
-            };
-            return V(T, "quoteStyle") && (Dt.quoteStyle = T.quoteStyle), a(Me, Dt, D + 1, N);
-          }
-          return a(Me, T, D + 1, N);
-        }
-        if (typeof u == "function" && !W(u)) {
-          var Tt = Pe(u), Rt = Ze(u, re);
-          return "[Function" + (Tt ? ": " + Tt : " (anonymous)") + "]" + (Rt.length > 0 ? " { " + $.call(Rt, ", ") + " }" : "");
-        }
-        if (H(u)) {
-          var It = B ? w.call(String(u), /^(Symbol\(.*\))_[^)]*$/, "$1") : z.call(u);
-          return typeof u == "object" && !B ? Be(It) : It;
-        }
-        if (na(u)) {
-          for (var Ge = "<" + O.call(String(u.nodeName)), fr = u.attributes || [], Qe = 0; Qe < fr.length; Qe++)
-            Ge += " " + fr[Qe].name + "=" + ye(ue(fr[Qe].value), "double", T);
-          return Ge += ">", u.childNodes && u.childNodes.length && (Ge += "..."), Ge += "</" + O.call(String(u.nodeName)) + ">", Ge;
-        }
-        if (de(u)) {
-          if (u.length === 0)
-            return "[]";
-          var cr = Ze(u, re);
-          return Ce && !aa(cr) ? "[" + ir(cr, Ce) + "]" : "[ " + $.call(cr, ", ") + " ]";
-        }
-        if (I(u)) {
-          var lr = Ze(u, re);
-          return !("cause" in Error.prototype) && "cause" in u && !oe.call(u, "cause") ? "{ [" + String(u) + "] " + $.call(_.call("[cause]: " + re(u.cause), lr), ", ") + " }" : lr.length === 0 ? "[" + String(u) + "]" : "{ [" + String(u) + "] " + $.call(lr, ", ") + " }";
-        }
-        if (typeof u == "object" && ve) {
-          if (Se && typeof u[Se] == "function" && Z)
-            return Z(u, { depth: ur - D });
-          if (ve !== "symbol" && typeof u.inspect == "function")
-            return u.inspect();
-        }
-        if (ee(u)) {
-          var Ct = [];
-          return n && n.call(u, function(Me, Je) {
-            Ct.push(re(Je, u, true) + " => " + re(Me, u));
-          }), Pt("Map", t.call(u), Ct, Ce);
-        }
-        if (Ie(u)) {
-          var Mt = [];
-          return f && f.call(u, function(Me) {
-            Mt.push(re(Me, u));
-          }), Pt("Set", s.call(u), Mt, Ce);
-        }
-        if (Te(u))
-          return ar("WeakMap");
-        if (ta(u))
-          return ar("WeakSet");
-        if (Re(u))
-          return ar("WeakRef");
-        if (j(u))
-          return Be(re(Number(u)));
-        if (Y(u))
-          return Be(re(F.call(u)));
-        if (G(u))
-          return Be(d.call(u));
-        if (L(u))
-          return Be(re(String(u)));
-        if (typeof window < "u" && u === window)
-          return "{ [object Window] }";
-        if (typeof globalThis < "u" && u === globalThis || typeof Nt < "u" && u === Nt)
-          return "{ [object globalThis] }";
-        if (!he(u) && !W(u)) {
-          var sr = Ze(u, re), Ft = ae ? ae(u) === Object.prototype : u instanceof Object || u.constructor === Object, pr = u instanceof Object ? "" : "null prototype", jt = !Ft && k && Object(u) === u && k in u ? y.call(X(u), 8, -1) : pr ? "Object" : "", ua = Ft || typeof u.constructor != "function" ? "" : u.constructor.name ? u.constructor.name + " " : "", yr = ua + (jt || pr ? "[" + $.call(_.call([], jt || [], pr || []), ": ") + "] " : "");
-          return sr.length === 0 ? yr + "{}" : Ce ? yr + "{" + ir(sr, Ce) + "}" : yr + "{ " + $.call(sr, ", ") + " }";
-        }
-        return String(u);
-      };
-      function ye(a, u, C) {
-        var D = C.quoteStyle || u, N = se[D];
-        return N + a + N;
-      }
-      function ue(a) {
-        return w.call(String(a), /"/g, "&quot;");
-      }
-      function J(a) {
-        return !k || !(typeof a == "object" && (k in a || typeof a[k] < "u"));
-      }
-      function de(a) {
-        return X(a) === "[object Array]" && J(a);
-      }
-      function he(a) {
-        return X(a) === "[object Date]" && J(a);
-      }
-      function W(a) {
-        return X(a) === "[object RegExp]" && J(a);
-      }
-      function I(a) {
-        return X(a) === "[object Error]" && J(a);
-      }
-      function L(a) {
-        return X(a) === "[object String]" && J(a);
-      }
-      function j(a) {
-        return X(a) === "[object Number]" && J(a);
-      }
-      function G(a) {
-        return X(a) === "[object Boolean]" && J(a);
-      }
-      function H(a) {
-        if (B)
-          return a && typeof a == "object" && a instanceof Symbol;
-        if (typeof a == "symbol")
-          return true;
-        if (!a || typeof a != "object" || !z)
-          return false;
-        try {
-          return z.call(a), true;
-        } catch {
-        }
-        return false;
-      }
-      function Y(a) {
-        if (!a || typeof a != "object" || !F)
-          return false;
-        try {
-          return F.call(a), true;
-        } catch {
-        }
-        return false;
-      }
-      var K = Object.prototype.hasOwnProperty || function(a) {
-        return a in this;
-      };
-      function V(a, u) {
-        return K.call(a, u);
-      }
-      function X(a) {
-        return A.call(a);
-      }
-      function Pe(a) {
-        if (a.name)
-          return a.name;
-        var u = p.call(l.call(a), /^function\s*([\w$]+)/);
-        return u ? u[1] : null;
-      }
-      function ge(a, u) {
-        if (a.indexOf)
-          return a.indexOf(u);
-        for (var C = 0, D = a.length; C < D; C++)
-          if (a[C] === u)
-            return C;
-        return -1;
-      }
-      function ee(a) {
-        if (!t || !a || typeof a != "object")
-          return false;
-        try {
-          t.call(a);
-          try {
-            s.call(a);
-          } catch {
-            return true;
-          }
-          return a instanceof Map;
-        } catch {
-        }
-        return false;
-      }
-      function Te(a) {
-        if (!h2 || !a || typeof a != "object")
-          return false;
-        try {
-          h2.call(a, h2);
-          try {
-            m.call(a, m);
-          } catch {
-            return true;
-          }
-          return a instanceof WeakMap;
-        } catch {
-        }
-        return false;
-      }
-      function Re(a) {
-        if (!c || !a || typeof a != "object")
-          return false;
-        try {
-          return c.call(a), true;
-        } catch {
-        }
-        return false;
-      }
-      function Ie(a) {
-        if (!s || !a || typeof a != "object")
-          return false;
-        try {
-          s.call(a);
-          try {
-            t.call(a);
-          } catch {
-            return true;
-          }
-          return a instanceof Set;
-        } catch {
-        }
-        return false;
-      }
-      function ta(a) {
-        if (!m || !a || typeof a != "object")
-          return false;
-        try {
-          m.call(a, m);
-          try {
-            h2.call(a, h2);
-          } catch {
-            return true;
-          }
-          return a instanceof WeakSet;
-        } catch {
-        }
-        return false;
-      }
-      function na(a) {
-        return !a || typeof a != "object" ? false : typeof HTMLElement < "u" && a instanceof HTMLElement ? true : typeof a.nodeName == "string" && typeof a.getAttribute == "function";
-      }
-      function $t(a, u) {
-        if (a.length > u.maxStringLength) {
-          var C = a.length - u.maxStringLength, D = "... " + C + " more character" + (C > 1 ? "s" : "");
-          return $t(y.call(a, 0, u.maxStringLength), u) + D;
-        }
-        var N = pe[u.quoteStyle || "single"];
-        N.lastIndex = 0;
-        var T = w.call(w.call(a, N, "\\$1"), /[\x00-\x1f]/g, oa);
-        return ye(T, "single", u);
-      }
-      function oa(a) {
-        var u = a.charCodeAt(0), C = {
-          8: "b",
-          9: "t",
-          10: "n",
-          12: "f",
-          13: "r"
-        }[u];
-        return C ? "\\" + C : "\\x" + (u < 16 ? "0" : "") + S.call(u.toString(16));
-      }
-      function Be(a) {
-        return "Object(" + a + ")";
-      }
-      function ar(a) {
-        return a + " { ? }";
-      }
-      function Pt(a, u, C, D) {
-        var N = D ? ir(C, D) : $.call(C, ", ");
-        return a + " (" + u + ") {" + N + "}";
-      }
-      function aa(a) {
-        for (var u = 0; u < a.length; u++)
-          if (ge(a[u], `
-`) >= 0)
-            return false;
-        return true;
-      }
-      function ia(a, u) {
-        var C;
-        if (a.indent === "	")
-          C = "	";
-        else if (typeof a.indent == "number" && a.indent > 0)
-          C = $.call(Array(a.indent + 1), " ");
-        else
-          return null;
-        return {
-          base: C,
-          prev: $.call(Array(u + 1), C)
-        };
-      }
-      function ir(a, u) {
-        if (a.length === 0)
-          return "";
-        var C = `
-` + u.prev + u.base;
-        return C + $.call(a, "," + C) + `
-` + u.prev;
-      }
-      function Ze(a, u) {
-        var C = de(a), D = [];
-        if (C) {
-          D.length = a.length;
-          for (var N = 0; N < a.length; N++)
-            D[N] = V(a, N) ? u(a[N], a) : "";
-        }
-        var T = typeof E == "function" ? E(a) : [], ve;
-        if (B) {
-          ve = {};
-          for (var we = 0; we < T.length; we++)
-            ve["$" + T[we]] = T[we];
-        }
-        for (var Q in a)
-          V(a, Q) && (C && String(Number(Q)) === Q && Q < a.length || B && ve["$" + Q] instanceof Symbol || (x.call(/[^\w$]/, Q) ? D.push(u(Q, a) + ": " + u(a[Q], a)) : D.push(Q + ": " + u(a[Q], a))));
-        if (typeof E == "function")
-          for (var me = 0; me < T.length; me++)
-            oe.call(a, T[me]) && D.push("[" + u(T[me]) + "]: " + u(a[T[me]], a));
-        return D;
-      }
-      return hr;
-    }
-    var gr, Bt;
-    function Aa() {
-      if (Bt) return gr;
-      Bt = 1;
-      var e = /* @__PURE__ */ er(), r = /* @__PURE__ */ Ne(), t = function(f, g, h2) {
-        for (var v = f, m; (m = v.next) != null; v = m)
-          if (m.key === g)
-            return v.next = m.next, h2 || (m.next = /** @type {NonNullable<typeof list.next>} */
-            f.next, f.next = m), m;
-      }, n = function(f, g) {
-        if (f) {
-          var h2 = t(f, g);
-          return h2 && h2.value;
-        }
-      }, o = function(f, g, h2) {
-        var v = t(f, g);
-        v ? v.value = h2 : f.next = /** @type {import('./list.d.ts').ListNode<typeof value, typeof key>} */
-        {
-          // eslint-disable-line no-param-reassign, no-extra-parens
-          key: g,
-          next: f.next,
-          value: h2
-        };
-      }, i = function(f, g) {
-        return f ? !!t(f, g) : false;
-      }, s = function(f, g) {
-        if (f)
-          return t(f, g, true);
-      };
-      return gr = function() {
-        var g, h2 = {
-          assert: function(v) {
-            if (!h2.has(v))
-              throw new r("Side channel does not contain " + e(v));
-          },
-          delete: function(v) {
-            var m = g && g.next, b = s(g, v);
-            return b && m && m === b && (g = void 0), !!b;
-          },
-          get: function(v) {
-            return n(g, v);
-          },
-          has: function(v) {
-            return i(g, v);
-          },
-          set: function(v, m) {
-            g || (g = {
-              next: void 0
-            }), o(
-              /** @type {NonNullable<typeof $o>} */
-              g,
-              v,
-              m
-            );
-          }
-        };
-        return h2;
-      }, gr;
-    }
-    var vr, Gt;
-    function lo() {
-      return Gt || (Gt = 1, vr = Object), vr;
-    }
-    var mr, Wt;
-    function Oa() {
-      return Wt || (Wt = 1, mr = Error), mr;
-    }
-    var br, zt;
-    function xa() {
-      return zt || (zt = 1, br = EvalError), br;
-    }
-    var Sr, Ht;
-    function _a() {
-      return Ht || (Ht = 1, Sr = RangeError), Sr;
-    }
-    var wr, Kt;
-    function Ea() {
-      return Kt || (Kt = 1, wr = ReferenceError), wr;
-    }
-    var Ar, Vt;
-    function $a() {
-      return Vt || (Vt = 1, Ar = SyntaxError), Ar;
-    }
-    var Or, kt;
-    function Pa() {
-      return kt || (kt = 1, Or = URIError), Or;
-    }
-    var xr, Zt;
-    function Ta() {
-      return Zt || (Zt = 1, xr = Math.abs), xr;
-    }
-    var _r, Qt;
-    function Ra() {
-      return Qt || (Qt = 1, _r = Math.floor), _r;
-    }
-    var Er, Jt;
-    function Ia() {
-      return Jt || (Jt = 1, Er = Math.max), Er;
-    }
-    var $r, Yt;
-    function Ca() {
-      return Yt || (Yt = 1, $r = Math.min), $r;
-    }
-    var Pr, Xt;
-    function Ma() {
-      return Xt || (Xt = 1, Pr = Math.pow), Pr;
-    }
-    var Tr, en;
-    function Fa() {
-      return en || (en = 1, Tr = Math.round), Tr;
-    }
-    var Rr, rn;
-    function ja() {
-      return rn || (rn = 1, Rr = Number.isNaN || function(r) {
-        return r !== r;
-      }), Rr;
-    }
-    var Ir, tn;
-    function Da() {
-      if (tn) return Ir;
-      tn = 1;
-      var e = /* @__PURE__ */ ja();
-      return Ir = function(t) {
-        return e(t) || t === 0 ? t : t < 0 ? -1 : 1;
-      }, Ir;
-    }
-    var Cr, nn;
-    function qa() {
-      return nn || (nn = 1, Cr = Object.getOwnPropertyDescriptor), Cr;
-    }
-    var Mr, on;
-    function so() {
-      if (on) return Mr;
-      on = 1;
-      var e = /* @__PURE__ */ qa();
-      if (e)
-        try {
-          e([], "length");
-        } catch {
-          e = null;
-        }
-      return Mr = e, Mr;
-    }
-    var Fr, an;
-    function Na() {
-      if (an) return Fr;
-      an = 1;
-      var e = Object.defineProperty || false;
-      if (e)
-        try {
-          e({}, "a", { value: 1 });
-        } catch {
-          e = false;
-        }
-      return Fr = e, Fr;
-    }
-    var jr, un;
-    function Ua() {
-      return un || (un = 1, jr = function() {
-        if (typeof Symbol != "function" || typeof Object.getOwnPropertySymbols != "function")
-          return false;
-        if (typeof Symbol.iterator == "symbol")
-          return true;
-        var r = {}, t = Symbol("test"), n = Object(t);
-        if (typeof t == "string" || Object.prototype.toString.call(t) !== "[object Symbol]" || Object.prototype.toString.call(n) !== "[object Symbol]")
-          return false;
-        var o = 42;
-        r[t] = o;
-        for (var i in r)
-          return false;
-        if (typeof Object.keys == "function" && Object.keys(r).length !== 0 || typeof Object.getOwnPropertyNames == "function" && Object.getOwnPropertyNames(r).length !== 0)
-          return false;
-        var s = Object.getOwnPropertySymbols(r);
-        if (s.length !== 1 || s[0] !== t || !Object.prototype.propertyIsEnumerable.call(r, t))
-          return false;
-        if (typeof Object.getOwnPropertyDescriptor == "function") {
-          var f = (
-            /** @type {PropertyDescriptor} */
-            Object.getOwnPropertyDescriptor(r, t)
-          );
-          if (f.value !== o || f.enumerable !== true)
-            return false;
-        }
-        return true;
-      }), jr;
-    }
-    var Dr, fn;
-    function La() {
-      if (fn) return Dr;
-      fn = 1;
-      var e = typeof Symbol < "u" && Symbol, r = Ua();
-      return Dr = function() {
-        return typeof e != "function" || typeof Symbol != "function" || typeof e("foo") != "symbol" || typeof Symbol("bar") != "symbol" ? false : r();
-      }, Dr;
-    }
-    var qr, cn;
-    function po() {
-      return cn || (cn = 1, qr = typeof Reflect < "u" && Reflect.getPrototypeOf || null), qr;
-    }
-    var Nr, ln;
-    function yo() {
-      if (ln) return Nr;
-      ln = 1;
-      var e = /* @__PURE__ */ lo();
-      return Nr = e.getPrototypeOf || null, Nr;
-    }
-    var Ur, sn;
-    function Ba() {
-      if (sn) return Ur;
-      sn = 1;
-      var e = "Function.prototype.bind called on incompatible ", r = Object.prototype.toString, t = Math.max, n = "[object Function]", o = function(g, h2) {
-        for (var v = [], m = 0; m < g.length; m += 1)
-          v[m] = g[m];
-        for (var b = 0; b < h2.length; b += 1)
-          v[b + g.length] = h2[b];
-        return v;
-      }, i = function(g, h2) {
-        for (var v = [], m = h2, b = 0; m < g.length; m += 1, b += 1)
-          v[b] = g[m];
-        return v;
-      }, s = function(f, g) {
-        for (var h2 = "", v = 0; v < f.length; v += 1)
-          h2 += f[v], v + 1 < f.length && (h2 += g);
-        return h2;
-      };
-      return Ur = function(g) {
-        var h2 = this;
-        if (typeof h2 != "function" || r.apply(h2) !== n)
-          throw new TypeError(e + h2);
-        for (var v = i(arguments, 1), m, b = function() {
-          if (this instanceof m) {
-            var p = h2.apply(
-              this,
-              o(v, arguments)
-            );
-            return Object(p) === p ? p : this;
-          }
-          return h2.apply(
-            g,
-            o(v, arguments)
-          );
-        }, c = t(0, h2.length - v.length), d = [], A = 0; A < c; A++)
-          d[A] = "$" + A;
-        if (m = Function("binder", "return function (" + s(d, ",") + "){ return binder.apply(this,arguments); }")(b), h2.prototype) {
-          var l = function() {
-          };
-          l.prototype = h2.prototype, m.prototype = new l(), l.prototype = null;
-        }
-        return m;
-      }, Ur;
-    }
-    var Lr, pn;
-    function rr() {
-      if (pn) return Lr;
-      pn = 1;
-      var e = Ba();
-      return Lr = Function.prototype.bind || e, Lr;
-    }
-    var Br, yn;
-    function dt() {
-      return yn || (yn = 1, Br = Function.prototype.call), Br;
-    }
-    var Gr, dn;
-    function ho() {
-      return dn || (dn = 1, Gr = Function.prototype.apply), Gr;
-    }
-    var Wr, hn;
-    function Ga() {
-      return hn || (hn = 1, Wr = typeof Reflect < "u" && Reflect && Reflect.apply), Wr;
-    }
-    var zr, gn;
-    function Wa() {
-      if (gn) return zr;
-      gn = 1;
-      var e = rr(), r = ho(), t = dt(), n = Ga();
-      return zr = n || e.call(t, r), zr;
-    }
-    var Hr, vn;
-    function go() {
-      if (vn) return Hr;
-      vn = 1;
-      var e = rr(), r = /* @__PURE__ */ Ne(), t = dt(), n = Wa();
-      return Hr = function(i) {
-        if (i.length < 1 || typeof i[0] != "function")
-          throw new r("a function is required");
-        return n(e, t, i);
-      }, Hr;
-    }
-    var Kr, mn;
-    function za() {
-      if (mn) return Kr;
-      mn = 1;
-      var e = go(), r = /* @__PURE__ */ so(), t;
-      try {
-        t = /** @type {{ __proto__?: typeof Array.prototype }} */
-        [].__proto__ === Array.prototype;
-      } catch (s) {
-        if (!s || typeof s != "object" || !("code" in s) || s.code !== "ERR_PROTO_ACCESS")
-          throw s;
-      }
-      var n = !!t && r && r(
-        Object.prototype,
-        /** @type {keyof typeof Object.prototype} */
-        "__proto__"
-      ), o = Object, i = o.getPrototypeOf;
-      return Kr = n && typeof n.get == "function" ? e([n.get]) : typeof i == "function" ? (
-        /** @type {import('./get')} */
-        function(f) {
-          return i(f == null ? f : o(f));
-        }
-      ) : false, Kr;
-    }
-    var Vr, bn;
-    function Ha() {
-      if (bn) return Vr;
-      bn = 1;
-      var e = po(), r = yo(), t = /* @__PURE__ */ za();
-      return Vr = e ? function(o) {
-        return e(o);
-      } : r ? function(o) {
-        if (!o || typeof o != "object" && typeof o != "function")
-          throw new TypeError("getProto: not an object");
-        return r(o);
-      } : t ? function(o) {
-        return t(o);
-      } : null, Vr;
-    }
-    var kr, Sn;
-    function Ka() {
-      if (Sn) return kr;
-      Sn = 1;
-      var e = Function.prototype.call, r = Object.prototype.hasOwnProperty, t = rr();
-      return kr = t.call(e, r), kr;
-    }
-    var Zr, wn;
-    function ht() {
-      if (wn) return Zr;
-      wn = 1;
-      var e, r = /* @__PURE__ */ lo(), t = /* @__PURE__ */ Oa(), n = /* @__PURE__ */ xa(), o = /* @__PURE__ */ _a(), i = /* @__PURE__ */ Ea(), s = /* @__PURE__ */ $a(), f = /* @__PURE__ */ Ne(), g = /* @__PURE__ */ Pa(), h2 = /* @__PURE__ */ Ta(), v = /* @__PURE__ */ Ra(), m = /* @__PURE__ */ Ia(), b = /* @__PURE__ */ Ca(), c = /* @__PURE__ */ Ma(), d = /* @__PURE__ */ Fa(), A = /* @__PURE__ */ Da(), l = Function, p = function(W) {
-        try {
-          return l('"use strict"; return (' + W + ").constructor;")();
-        } catch {
-        }
-      }, y = /* @__PURE__ */ so(), w = /* @__PURE__ */ Na(), S = function() {
-        throw new f();
-      }, O = y ? function() {
-        try {
-          return arguments.callee, S;
-        } catch {
-          try {
-            return y(arguments, "callee").get;
-          } catch {
-            return S;
-          }
-        }
-      }() : S, x = La()(), _ = Ha(), $ = yo(), M = po(), P = ho(), F = dt(), E = {}, z = typeof Uint8Array > "u" || !_ ? e : _(Uint8Array), B = {
-        __proto__: null,
-        "%AggregateError%": typeof AggregateError > "u" ? e : AggregateError,
-        "%Array%": Array,
-        "%ArrayBuffer%": typeof ArrayBuffer > "u" ? e : ArrayBuffer,
-        "%ArrayIteratorPrototype%": x && _ ? _([][Symbol.iterator]()) : e,
-        "%AsyncFromSyncIteratorPrototype%": e,
-        "%AsyncFunction%": E,
-        "%AsyncGenerator%": E,
-        "%AsyncGeneratorFunction%": E,
-        "%AsyncIteratorPrototype%": E,
-        "%Atomics%": typeof Atomics > "u" ? e : Atomics,
-        "%BigInt%": typeof BigInt > "u" ? e : BigInt,
-        "%BigInt64Array%": typeof BigInt64Array > "u" ? e : BigInt64Array,
-        "%BigUint64Array%": typeof BigUint64Array > "u" ? e : BigUint64Array,
-        "%Boolean%": Boolean,
-        "%DataView%": typeof DataView > "u" ? e : DataView,
-        "%Date%": Date,
-        "%decodeURI%": decodeURI,
-        "%decodeURIComponent%": decodeURIComponent,
-        "%encodeURI%": encodeURI,
-        "%encodeURIComponent%": encodeURIComponent,
-        "%Error%": t,
-        "%eval%": eval,
-        // eslint-disable-line no-eval
-        "%EvalError%": n,
-        "%Float32Array%": typeof Float32Array > "u" ? e : Float32Array,
-        "%Float64Array%": typeof Float64Array > "u" ? e : Float64Array,
-        "%FinalizationRegistry%": typeof FinalizationRegistry > "u" ? e : FinalizationRegistry,
-        "%Function%": l,
-        "%GeneratorFunction%": E,
-        "%Int8Array%": typeof Int8Array > "u" ? e : Int8Array,
-        "%Int16Array%": typeof Int16Array > "u" ? e : Int16Array,
-        "%Int32Array%": typeof Int32Array > "u" ? e : Int32Array,
-        "%isFinite%": isFinite,
-        "%isNaN%": isNaN,
-        "%IteratorPrototype%": x && _ ? _(_([][Symbol.iterator]())) : e,
-        "%JSON%": typeof JSON == "object" ? JSON : e,
-        "%Map%": typeof Map > "u" ? e : Map,
-        "%MapIteratorPrototype%": typeof Map > "u" || !x || !_ ? e : _((/* @__PURE__ */ new Map())[Symbol.iterator]()),
-        "%Math%": Math,
-        "%Number%": Number,
-        "%Object%": r,
-        "%Object.getOwnPropertyDescriptor%": y,
-        "%parseFloat%": parseFloat,
-        "%parseInt%": parseInt,
-        "%Promise%": typeof Promise > "u" ? e : Promise,
-        "%Proxy%": typeof Proxy > "u" ? e : Proxy,
-        "%RangeError%": o,
-        "%ReferenceError%": i,
-        "%Reflect%": typeof Reflect > "u" ? e : Reflect,
-        "%RegExp%": RegExp,
-        "%Set%": typeof Set > "u" ? e : Set,
-        "%SetIteratorPrototype%": typeof Set > "u" || !x || !_ ? e : _((/* @__PURE__ */ new Set())[Symbol.iterator]()),
-        "%SharedArrayBuffer%": typeof SharedArrayBuffer > "u" ? e : SharedArrayBuffer,
-        "%String%": String,
-        "%StringIteratorPrototype%": x && _ ? _(""[Symbol.iterator]()) : e,
-        "%Symbol%": x ? Symbol : e,
-        "%SyntaxError%": s,
-        "%ThrowTypeError%": O,
-        "%TypedArray%": z,
-        "%TypeError%": f,
-        "%Uint8Array%": typeof Uint8Array > "u" ? e : Uint8Array,
-        "%Uint8ClampedArray%": typeof Uint8ClampedArray > "u" ? e : Uint8ClampedArray,
-        "%Uint16Array%": typeof Uint16Array > "u" ? e : Uint16Array,
-        "%Uint32Array%": typeof Uint32Array > "u" ? e : Uint32Array,
-        "%URIError%": g,
-        "%WeakMap%": typeof WeakMap > "u" ? e : WeakMap,
-        "%WeakRef%": typeof WeakRef > "u" ? e : WeakRef,
-        "%WeakSet%": typeof WeakSet > "u" ? e : WeakSet,
-        "%Function.prototype.call%": F,
-        "%Function.prototype.apply%": P,
-        "%Object.defineProperty%": w,
-        "%Object.getPrototypeOf%": $,
-        "%Math.abs%": h2,
-        "%Math.floor%": v,
-        "%Math.max%": m,
-        "%Math.min%": b,
-        "%Math.pow%": c,
-        "%Math.round%": d,
-        "%Math.sign%": A,
-        "%Reflect.getPrototypeOf%": M
-      };
-      if (_)
-        try {
-          null.error;
-        } catch (W) {
-          var k = _(_(W));
-          B["%Error.prototype%"] = k;
-        }
-      var oe = function W(I) {
-        var L;
-        if (I === "%AsyncFunction%")
-          L = p("async function () {}");
-        else if (I === "%GeneratorFunction%")
-          L = p("function* () {}");
-        else if (I === "%AsyncGeneratorFunction%")
-          L = p("async function* () {}");
-        else if (I === "%AsyncGenerator%") {
-          var j = W("%AsyncGeneratorFunction%");
-          j && (L = j.prototype);
-        } else if (I === "%AsyncIteratorPrototype%") {
-          var G = W("%AsyncGenerator%");
-          G && _ && (L = _(G.prototype));
-        }
-        return B[I] = L, L;
-      }, ae = {
-        __proto__: null,
-        "%ArrayBufferPrototype%": ["ArrayBuffer", "prototype"],
-        "%ArrayPrototype%": ["Array", "prototype"],
-        "%ArrayProto_entries%": ["Array", "prototype", "entries"],
-        "%ArrayProto_forEach%": ["Array", "prototype", "forEach"],
-        "%ArrayProto_keys%": ["Array", "prototype", "keys"],
-        "%ArrayProto_values%": ["Array", "prototype", "values"],
-        "%AsyncFunctionPrototype%": ["AsyncFunction", "prototype"],
-        "%AsyncGenerator%": ["AsyncGeneratorFunction", "prototype"],
-        "%AsyncGeneratorPrototype%": ["AsyncGeneratorFunction", "prototype", "prototype"],
-        "%BooleanPrototype%": ["Boolean", "prototype"],
-        "%DataViewPrototype%": ["DataView", "prototype"],
-        "%DatePrototype%": ["Date", "prototype"],
-        "%ErrorPrototype%": ["Error", "prototype"],
-        "%EvalErrorPrototype%": ["EvalError", "prototype"],
-        "%Float32ArrayPrototype%": ["Float32Array", "prototype"],
-        "%Float64ArrayPrototype%": ["Float64Array", "prototype"],
-        "%FunctionPrototype%": ["Function", "prototype"],
-        "%Generator%": ["GeneratorFunction", "prototype"],
-        "%GeneratorPrototype%": ["GeneratorFunction", "prototype", "prototype"],
-        "%Int8ArrayPrototype%": ["Int8Array", "prototype"],
-        "%Int16ArrayPrototype%": ["Int16Array", "prototype"],
-        "%Int32ArrayPrototype%": ["Int32Array", "prototype"],
-        "%JSONParse%": ["JSON", "parse"],
-        "%JSONStringify%": ["JSON", "stringify"],
-        "%MapPrototype%": ["Map", "prototype"],
-        "%NumberPrototype%": ["Number", "prototype"],
-        "%ObjectPrototype%": ["Object", "prototype"],
-        "%ObjProto_toString%": ["Object", "prototype", "toString"],
-        "%ObjProto_valueOf%": ["Object", "prototype", "valueOf"],
-        "%PromisePrototype%": ["Promise", "prototype"],
-        "%PromiseProto_then%": ["Promise", "prototype", "then"],
-        "%Promise_all%": ["Promise", "all"],
-        "%Promise_reject%": ["Promise", "reject"],
-        "%Promise_resolve%": ["Promise", "resolve"],
-        "%RangeErrorPrototype%": ["RangeError", "prototype"],
-        "%ReferenceErrorPrototype%": ["ReferenceError", "prototype"],
-        "%RegExpPrototype%": ["RegExp", "prototype"],
-        "%SetPrototype%": ["Set", "prototype"],
-        "%SharedArrayBufferPrototype%": ["SharedArrayBuffer", "prototype"],
-        "%StringPrototype%": ["String", "prototype"],
-        "%SymbolPrototype%": ["Symbol", "prototype"],
-        "%SyntaxErrorPrototype%": ["SyntaxError", "prototype"],
-        "%TypedArrayPrototype%": ["TypedArray", "prototype"],
-        "%TypeErrorPrototype%": ["TypeError", "prototype"],
-        "%Uint8ArrayPrototype%": ["Uint8Array", "prototype"],
-        "%Uint8ClampedArrayPrototype%": ["Uint8ClampedArray", "prototype"],
-        "%Uint16ArrayPrototype%": ["Uint16Array", "prototype"],
-        "%Uint32ArrayPrototype%": ["Uint32Array", "prototype"],
-        "%URIErrorPrototype%": ["URIError", "prototype"],
-        "%WeakMapPrototype%": ["WeakMap", "prototype"],
-        "%WeakSetPrototype%": ["WeakSet", "prototype"]
-      }, R = rr(), Z = /* @__PURE__ */ Ka(), ie = R.call(F, Array.prototype.concat), Se = R.call(P, Array.prototype.splice), se = R.call(F, String.prototype.replace), pe = R.call(F, String.prototype.slice), ye = R.call(F, RegExp.prototype.exec), ue = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g, J = /\\(\\)?/g, de = function(I) {
-        var L = pe(I, 0, 1), j = pe(I, -1);
-        if (L === "%" && j !== "%")
-          throw new s("invalid intrinsic syntax, expected closing `%`");
-        if (j === "%" && L !== "%")
-          throw new s("invalid intrinsic syntax, expected opening `%`");
-        var G = [];
-        return se(I, ue, function(H, Y, K, V) {
-          G[G.length] = K ? se(V, J, "$1") : Y || H;
-        }), G;
-      }, he = function(I, L) {
-        var j = I, G;
-        if (Z(ae, j) && (G = ae[j], j = "%" + G[0] + "%"), Z(B, j)) {
-          var H = B[j];
-          if (H === E && (H = oe(j)), typeof H > "u" && !L)
-            throw new f("intrinsic " + I + " exists, but is not available. Please file an issue!");
-          return {
-            alias: G,
-            name: j,
-            value: H
-          };
-        }
-        throw new s("intrinsic " + I + " does not exist!");
-      };
-      return Zr = function(I, L) {
-        if (typeof I != "string" || I.length === 0)
-          throw new f("intrinsic name must be a non-empty string");
-        if (arguments.length > 1 && typeof L != "boolean")
-          throw new f('"allowMissing" argument must be a boolean');
-        if (ye(/^%?[^%]*%?$/, I) === null)
-          throw new s("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
-        var j = de(I), G = j.length > 0 ? j[0] : "", H = he("%" + G + "%", L), Y = H.name, K = H.value, V = false, X = H.alias;
-        X && (G = X[0], Se(j, ie([0, 1], X)));
-        for (var Pe = 1, ge = true; Pe < j.length; Pe += 1) {
-          var ee = j[Pe], Te = pe(ee, 0, 1), Re = pe(ee, -1);
-          if ((Te === '"' || Te === "'" || Te === "`" || Re === '"' || Re === "'" || Re === "`") && Te !== Re)
-            throw new s("property names with quotes must have matching quotes");
-          if ((ee === "constructor" || !ge) && (V = true), G += "." + ee, Y = "%" + G + "%", Z(B, Y))
-            K = B[Y];
-          else if (K != null) {
-            if (!(ee in K)) {
-              if (!L)
-                throw new f("base intrinsic for " + I + " exists, but the property is not available.");
-              return;
-            }
-            if (y && Pe + 1 >= j.length) {
-              var Ie = y(K, ee);
-              ge = !!Ie, ge && "get" in Ie && !("originalValue" in Ie.get) ? K = Ie.get : K = K[ee];
-            } else
-              ge = Z(K, ee), K = K[ee];
-            ge && !V && (B[Y] = K);
-          }
-        }
-        return K;
-      }, Zr;
-    }
-    var Qr, An;
-    function vo() {
-      if (An) return Qr;
-      An = 1;
-      var e = /* @__PURE__ */ ht(), r = go(), t = r([e("%String.prototype.indexOf%")]);
-      return Qr = function(o, i) {
-        var s = (
-          /** @type {Parameters<typeof callBindBasic>[0][0]} */
-          e(o, !!i)
-        );
-        return typeof s == "function" && t(o, ".prototype.") > -1 ? r([s]) : s;
-      }, Qr;
-    }
-    var Jr, On;
-    function mo() {
-      if (On) return Jr;
-      On = 1;
-      var e = /* @__PURE__ */ ht(), r = /* @__PURE__ */ vo(), t = /* @__PURE__ */ er(), n = /* @__PURE__ */ Ne(), o = e("%Map%", true), i = r("Map.prototype.get", true), s = r("Map.prototype.set", true), f = r("Map.prototype.has", true), g = r("Map.prototype.delete", true), h2 = r("Map.prototype.size", true);
-      return Jr = !!o && /** @type {Exclude<import('.'), false>} */
-      function() {
-        var m, b = {
-          assert: function(c) {
-            if (!b.has(c))
-              throw new n("Side channel does not contain " + t(c));
-          },
-          delete: function(c) {
-            if (m) {
-              var d = g(m, c);
-              return h2(m) === 0 && (m = void 0), d;
-            }
-            return false;
-          },
-          get: function(c) {
-            if (m)
-              return i(m, c);
-          },
-          has: function(c) {
-            return m ? f(m, c) : false;
-          },
-          set: function(c, d) {
-            m || (m = new o()), s(m, c, d);
-          }
-        };
-        return b;
-      }, Jr;
-    }
-    var Yr, xn;
-    function Va() {
-      if (xn) return Yr;
-      xn = 1;
-      var e = /* @__PURE__ */ ht(), r = /* @__PURE__ */ vo(), t = /* @__PURE__ */ er(), n = mo(), o = /* @__PURE__ */ Ne(), i = e("%WeakMap%", true), s = r("WeakMap.prototype.get", true), f = r("WeakMap.prototype.set", true), g = r("WeakMap.prototype.has", true), h2 = r("WeakMap.prototype.delete", true);
-      return Yr = i ? (
-        /** @type {Exclude<import('.'), false>} */
-        function() {
-          var m, b, c = {
-            assert: function(d) {
-              if (!c.has(d))
-                throw new o("Side channel does not contain " + t(d));
-            },
-            delete: function(d) {
-              if (i && d && (typeof d == "object" || typeof d == "function")) {
-                if (m)
-                  return h2(m, d);
-              } else if (n && b)
-                return b.delete(d);
-              return false;
-            },
-            get: function(d) {
-              return i && d && (typeof d == "object" || typeof d == "function") && m ? s(m, d) : b && b.get(d);
-            },
-            has: function(d) {
-              return i && d && (typeof d == "object" || typeof d == "function") && m ? g(m, d) : !!b && b.has(d);
-            },
-            set: function(d, A) {
-              i && d && (typeof d == "object" || typeof d == "function") ? (m || (m = new i()), f(m, d, A)) : n && (b || (b = n()), b.set(d, A));
-            }
-          };
-          return c;
-        }
-      ) : n, Yr;
-    }
-    var Xr, _n;
-    function ka() {
-      if (_n) return Xr;
-      _n = 1;
-      var e = /* @__PURE__ */ Ne(), r = /* @__PURE__ */ er(), t = Aa(), n = mo(), o = Va(), i = o || n || t;
-      return Xr = function() {
-        var f, g = {
-          assert: function(h2) {
-            if (!g.has(h2))
-              throw new e("Side channel does not contain " + r(h2));
-          },
-          delete: function(h2) {
-            return !!f && f.delete(h2);
-          },
-          get: function(h2) {
-            return f && f.get(h2);
-          },
-          has: function(h2) {
-            return !!f && f.has(h2);
-          },
-          set: function(h2, v) {
-            f || (f = i()), f.set(h2, v);
-          }
-        };
-        return g;
-      }, Xr;
-    }
-    var et, En;
-    function gt() {
-      if (En) return et;
-      En = 1;
-      var e = String.prototype.replace, r = /%20/g, t = {
-        RFC1738: "RFC1738",
-        RFC3986: "RFC3986"
-      };
-      return et = {
-        default: t.RFC3986,
-        formatters: {
-          RFC1738: function(n) {
-            return e.call(n, r, "+");
-          },
-          RFC3986: function(n) {
-            return String(n);
-          }
-        },
-        RFC1738: t.RFC1738,
-        RFC3986: t.RFC3986
-      }, et;
-    }
-    var rt, $n;
-    function bo() {
-      if ($n) return rt;
-      $n = 1;
-      var e = /* @__PURE__ */ gt(), r = Object.prototype.hasOwnProperty, t = Array.isArray, n = function() {
-        for (var l = [], p = 0; p < 256; ++p)
-          l.push("%" + ((p < 16 ? "0" : "") + p.toString(16)).toUpperCase());
-        return l;
-      }(), o = function(p) {
-        for (; p.length > 1; ) {
-          var y = p.pop(), w = y.obj[y.prop];
-          if (t(w)) {
-            for (var S = [], O = 0; O < w.length; ++O)
-              typeof w[O] < "u" && S.push(w[O]);
-            y.obj[y.prop] = S;
-          }
-        }
-      }, i = function(p, y) {
-        for (var w = y && y.plainObjects ? { __proto__: null } : {}, S = 0; S < p.length; ++S)
-          typeof p[S] < "u" && (w[S] = p[S]);
-        return w;
-      }, s = function l(p, y, w) {
-        if (!y)
-          return p;
-        if (typeof y != "object" && typeof y != "function") {
-          if (t(p))
-            p.push(y);
-          else if (p && typeof p == "object")
-            (w && (w.plainObjects || w.allowPrototypes) || !r.call(Object.prototype, y)) && (p[y] = true);
-          else
-            return [p, y];
-          return p;
-        }
-        if (!p || typeof p != "object")
-          return [p].concat(y);
-        var S = p;
-        return t(p) && !t(y) && (S = i(p, w)), t(p) && t(y) ? (y.forEach(function(O, x) {
-          if (r.call(p, x)) {
-            var _ = p[x];
-            _ && typeof _ == "object" && O && typeof O == "object" ? p[x] = l(_, O, w) : p.push(O);
-          } else
-            p[x] = O;
-        }), p) : Object.keys(y).reduce(function(O, x) {
-          var _ = y[x];
-          return r.call(O, x) ? O[x] = l(O[x], _, w) : O[x] = _, O;
-        }, S);
-      }, f = function(p, y) {
-        return Object.keys(y).reduce(function(w, S) {
-          return w[S] = y[S], w;
-        }, p);
-      }, g = function(l, p, y) {
-        var w = l.replace(/\+/g, " ");
-        if (y === "iso-8859-1")
-          return w.replace(/%[0-9a-f]{2}/gi, unescape);
-        try {
-          return decodeURIComponent(w);
-        } catch {
-          return w;
-        }
-      }, h2 = 1024, v = function(p, y, w, S, O) {
-        if (p.length === 0)
-          return p;
-        var x = p;
-        if (typeof p == "symbol" ? x = Symbol.prototype.toString.call(p) : typeof p != "string" && (x = String(p)), w === "iso-8859-1")
-          return escape(x).replace(/%u[0-9a-f]{4}/gi, function(z) {
-            return "%26%23" + parseInt(z.slice(2), 16) + "%3B";
-          });
-        for (var _ = "", $ = 0; $ < x.length; $ += h2) {
-          for (var M = x.length >= h2 ? x.slice($, $ + h2) : x, P = [], F = 0; F < M.length; ++F) {
-            var E = M.charCodeAt(F);
-            if (E === 45 || E === 46 || E === 95 || E === 126 || E >= 48 && E <= 57 || E >= 65 && E <= 90 || E >= 97 && E <= 122 || O === e.RFC1738 && (E === 40 || E === 41)) {
-              P[P.length] = M.charAt(F);
-              continue;
-            }
-            if (E < 128) {
-              P[P.length] = n[E];
-              continue;
-            }
-            if (E < 2048) {
-              P[P.length] = n[192 | E >> 6] + n[128 | E & 63];
-              continue;
-            }
-            if (E < 55296 || E >= 57344) {
-              P[P.length] = n[224 | E >> 12] + n[128 | E >> 6 & 63] + n[128 | E & 63];
-              continue;
-            }
-            F += 1, E = 65536 + ((E & 1023) << 10 | M.charCodeAt(F) & 1023), P[P.length] = n[240 | E >> 18] + n[128 | E >> 12 & 63] + n[128 | E >> 6 & 63] + n[128 | E & 63];
-          }
-          _ += P.join("");
-        }
-        return _;
-      }, m = function(p) {
-        for (var y = [{ obj: { o: p }, prop: "o" }], w = [], S = 0; S < y.length; ++S)
-          for (var O = y[S], x = O.obj[O.prop], _ = Object.keys(x), $ = 0; $ < _.length; ++$) {
-            var M = _[$], P = x[M];
-            typeof P == "object" && P !== null && w.indexOf(P) === -1 && (y.push({ obj: x, prop: M }), w.push(P));
-          }
-        return o(y), p;
-      }, b = function(p) {
-        return Object.prototype.toString.call(p) === "[object RegExp]";
-      }, c = function(p) {
-        return !p || typeof p != "object" ? false : !!(p.constructor && p.constructor.isBuffer && p.constructor.isBuffer(p));
-      }, d = function(p, y) {
-        return [].concat(p, y);
-      }, A = function(p, y) {
-        if (t(p)) {
-          for (var w = [], S = 0; S < p.length; S += 1)
-            w.push(y(p[S]));
-          return w;
-        }
-        return y(p);
-      };
-      return rt = {
-        arrayToObject: i,
-        assign: f,
-        combine: d,
-        compact: m,
-        decode: g,
-        encode: v,
-        isBuffer: c,
-        isRegExp: b,
-        maybeMap: A,
-        merge: s
-      }, rt;
-    }
-    var tt, Pn;
-    function Za() {
-      if (Pn) return tt;
-      Pn = 1;
-      var e = ka(), r = /* @__PURE__ */ bo(), t = /* @__PURE__ */ gt(), n = Object.prototype.hasOwnProperty, o = {
-        brackets: function(l) {
-          return l + "[]";
-        },
-        comma: "comma",
-        indices: function(l, p) {
-          return l + "[" + p + "]";
-        },
-        repeat: function(l) {
-          return l;
-        }
-      }, i = Array.isArray, s = Array.prototype.push, f = function(A, l) {
-        s.apply(A, i(l) ? l : [l]);
-      }, g = Date.prototype.toISOString, h2 = t.default, v = {
-        addQueryPrefix: false,
-        allowDots: false,
-        allowEmptyArrays: false,
-        arrayFormat: "indices",
-        charset: "utf-8",
-        charsetSentinel: false,
-        commaRoundTrip: false,
-        delimiter: "&",
-        encode: true,
-        encodeDotInKeys: false,
-        encoder: r.encode,
-        encodeValuesOnly: false,
-        filter: void 0,
-        format: h2,
-        formatter: t.formatters[h2],
-        // deprecated
-        indices: false,
-        serializeDate: function(l) {
-          return g.call(l);
-        },
-        skipNulls: false,
-        strictNullHandling: false
-      }, m = function(l) {
-        return typeof l == "string" || typeof l == "number" || typeof l == "boolean" || typeof l == "symbol" || typeof l == "bigint";
-      }, b = {}, c = function A(l, p, y, w, S, O, x, _, $, M, P, F, E, z, B, k, oe, ae) {
-        for (var R = l, Z = ae, ie = 0, Se = false; (Z = Z.get(b)) !== void 0 && !Se; ) {
-          var se = Z.get(l);
-          if (ie += 1, typeof se < "u") {
-            if (se === ie)
-              throw new RangeError("Cyclic object value");
-            Se = true;
-          }
-          typeof Z.get(b) > "u" && (ie = 0);
-        }
-        if (typeof M == "function" ? R = M(p, R) : R instanceof Date ? R = E(R) : y === "comma" && i(R) && (R = r.maybeMap(R, function(Y) {
-          return Y instanceof Date ? E(Y) : Y;
-        })), R === null) {
-          if (O)
-            return $ && !k ? $(p, v.encoder, oe, "key", z) : p;
-          R = "";
-        }
-        if (m(R) || r.isBuffer(R)) {
-          if ($) {
-            var pe = k ? p : $(p, v.encoder, oe, "key", z);
-            return [B(pe) + "=" + B($(R, v.encoder, oe, "value", z))];
-          }
-          return [B(p) + "=" + B(String(R))];
-        }
-        var ye = [];
-        if (typeof R > "u")
-          return ye;
-        var ue;
-        if (y === "comma" && i(R))
-          k && $ && (R = r.maybeMap(R, $)), ue = [{ value: R.length > 0 ? R.join(",") || null : void 0 }];
-        else if (i(M))
-          ue = M;
-        else {
-          var J = Object.keys(R);
-          ue = P ? J.sort(P) : J;
-        }
-        var de = _ ? String(p).replace(/\./g, "%2E") : String(p), he = w && i(R) && R.length === 1 ? de + "[]" : de;
-        if (S && i(R) && R.length === 0)
-          return he + "[]";
-        for (var W = 0; W < ue.length; ++W) {
-          var I = ue[W], L = typeof I == "object" && I && typeof I.value < "u" ? I.value : R[I];
-          if (!(x && L === null)) {
-            var j = F && _ ? String(I).replace(/\./g, "%2E") : String(I), G = i(R) ? typeof y == "function" ? y(he, j) : he : he + (F ? "." + j : "[" + j + "]");
-            ae.set(l, ie);
-            var H = e();
-            H.set(b, ae), f(ye, A(
-              L,
-              G,
-              y,
-              w,
-              S,
-              O,
-              x,
-              _,
-              y === "comma" && k && i(R) ? null : $,
-              M,
-              P,
-              F,
-              E,
-              z,
-              B,
-              k,
-              oe,
-              H
-            ));
-          }
-        }
-        return ye;
-      }, d = function(l) {
-        if (!l)
-          return v;
-        if (typeof l.allowEmptyArrays < "u" && typeof l.allowEmptyArrays != "boolean")
-          throw new TypeError("`allowEmptyArrays` option can only be `true` or `false`, when provided");
-        if (typeof l.encodeDotInKeys < "u" && typeof l.encodeDotInKeys != "boolean")
-          throw new TypeError("`encodeDotInKeys` option can only be `true` or `false`, when provided");
-        if (l.encoder !== null && typeof l.encoder < "u" && typeof l.encoder != "function")
-          throw new TypeError("Encoder has to be a function.");
-        var p = l.charset || v.charset;
-        if (typeof l.charset < "u" && l.charset !== "utf-8" && l.charset !== "iso-8859-1")
-          throw new TypeError("The charset option must be either utf-8, iso-8859-1, or undefined");
-        var y = t.default;
-        if (typeof l.format < "u") {
-          if (!n.call(t.formatters, l.format))
-            throw new TypeError("Unknown format option provided.");
-          y = l.format;
-        }
-        var w = t.formatters[y], S = v.filter;
-        (typeof l.filter == "function" || i(l.filter)) && (S = l.filter);
-        var O;
-        if (l.arrayFormat in o ? O = l.arrayFormat : "indices" in l ? O = l.indices ? "indices" : "repeat" : O = v.arrayFormat, "commaRoundTrip" in l && typeof l.commaRoundTrip != "boolean")
-          throw new TypeError("`commaRoundTrip` must be a boolean, or absent");
-        var x = typeof l.allowDots > "u" ? l.encodeDotInKeys === true ? true : v.allowDots : !!l.allowDots;
-        return {
-          addQueryPrefix: typeof l.addQueryPrefix == "boolean" ? l.addQueryPrefix : v.addQueryPrefix,
-          allowDots: x,
-          allowEmptyArrays: typeof l.allowEmptyArrays == "boolean" ? !!l.allowEmptyArrays : v.allowEmptyArrays,
-          arrayFormat: O,
-          charset: p,
-          charsetSentinel: typeof l.charsetSentinel == "boolean" ? l.charsetSentinel : v.charsetSentinel,
-          commaRoundTrip: !!l.commaRoundTrip,
-          delimiter: typeof l.delimiter > "u" ? v.delimiter : l.delimiter,
-          encode: typeof l.encode == "boolean" ? l.encode : v.encode,
-          encodeDotInKeys: typeof l.encodeDotInKeys == "boolean" ? l.encodeDotInKeys : v.encodeDotInKeys,
-          encoder: typeof l.encoder == "function" ? l.encoder : v.encoder,
-          encodeValuesOnly: typeof l.encodeValuesOnly == "boolean" ? l.encodeValuesOnly : v.encodeValuesOnly,
-          filter: S,
-          format: y,
-          formatter: w,
-          serializeDate: typeof l.serializeDate == "function" ? l.serializeDate : v.serializeDate,
-          skipNulls: typeof l.skipNulls == "boolean" ? l.skipNulls : v.skipNulls,
-          sort: typeof l.sort == "function" ? l.sort : null,
-          strictNullHandling: typeof l.strictNullHandling == "boolean" ? l.strictNullHandling : v.strictNullHandling
-        };
-      };
-      return tt = function(A, l) {
-        var p = A, y = d(l), w, S;
-        typeof y.filter == "function" ? (S = y.filter, p = S("", p)) : i(y.filter) && (S = y.filter, w = S);
-        var O = [];
-        if (typeof p != "object" || p === null)
-          return "";
-        var x = o[y.arrayFormat], _ = x === "comma" && y.commaRoundTrip;
-        w || (w = Object.keys(p)), y.sort && w.sort(y.sort);
-        for (var $ = e(), M = 0; M < w.length; ++M) {
-          var P = w[M], F = p[P];
-          y.skipNulls && F === null || f(O, c(
-            F,
-            P,
-            x,
-            _,
-            y.allowEmptyArrays,
-            y.strictNullHandling,
-            y.skipNulls,
-            y.encodeDotInKeys,
-            y.encode ? y.encoder : null,
-            y.filter,
-            y.sort,
-            y.allowDots,
-            y.serializeDate,
-            y.format,
-            y.formatter,
-            y.encodeValuesOnly,
-            y.charset,
-            $
-          ));
-        }
-        var E = O.join(y.delimiter), z = y.addQueryPrefix === true ? "?" : "";
-        return y.charsetSentinel && (y.charset === "iso-8859-1" ? z += "utf8=%26%2310003%3B&" : z += "utf8=%E2%9C%93&"), E.length > 0 ? z + E : "";
-      }, tt;
-    }
-    var nt, Tn;
-    function Qa() {
-      if (Tn) return nt;
-      Tn = 1;
-      var e = /* @__PURE__ */ bo(), r = Object.prototype.hasOwnProperty, t = Array.isArray, n = {
-        allowDots: false,
-        allowEmptyArrays: false,
-        allowPrototypes: false,
-        allowSparse: false,
-        arrayLimit: 20,
-        charset: "utf-8",
-        charsetSentinel: false,
-        comma: false,
-        decodeDotInKeys: false,
-        decoder: e.decode,
-        delimiter: "&",
-        depth: 5,
-        duplicates: "combine",
-        ignoreQueryPrefix: false,
-        interpretNumericEntities: false,
-        parameterLimit: 1e3,
-        parseArrays: true,
-        plainObjects: false,
-        strictDepth: false,
-        strictNullHandling: false,
-        throwOnLimitExceeded: false
-      }, o = function(b) {
-        return b.replace(/&#(\d+);/g, function(c, d) {
-          return String.fromCharCode(parseInt(d, 10));
-        });
-      }, i = function(b, c, d) {
-        if (b && typeof b == "string" && c.comma && b.indexOf(",") > -1)
-          return b.split(",");
-        if (c.throwOnLimitExceeded && d >= c.arrayLimit)
-          throw new RangeError("Array limit exceeded. Only " + c.arrayLimit + " element" + (c.arrayLimit === 1 ? "" : "s") + " allowed in an array.");
-        return b;
-      }, s = "utf8=%26%2310003%3B", f = "utf8=%E2%9C%93", g = function(c, d) {
-        var A = { __proto__: null }, l = d.ignoreQueryPrefix ? c.replace(/^\?/, "") : c;
-        l = l.replace(/%5B/gi, "[").replace(/%5D/gi, "]");
-        var p = d.parameterLimit === 1 / 0 ? void 0 : d.parameterLimit, y = l.split(
-          d.delimiter,
-          d.throwOnLimitExceeded ? p + 1 : p
-        );
-        if (d.throwOnLimitExceeded && y.length > p)
-          throw new RangeError("Parameter limit exceeded. Only " + p + " parameter" + (p === 1 ? "" : "s") + " allowed.");
-        var w = -1, S, O = d.charset;
-        if (d.charsetSentinel)
-          for (S = 0; S < y.length; ++S)
-            y[S].indexOf("utf8=") === 0 && (y[S] === f ? O = "utf-8" : y[S] === s && (O = "iso-8859-1"), w = S, S = y.length);
-        for (S = 0; S < y.length; ++S)
-          if (S !== w) {
-            var x = y[S], _ = x.indexOf("]="), $ = _ === -1 ? x.indexOf("=") : _ + 1, M, P;
-            $ === -1 ? (M = d.decoder(x, n.decoder, O, "key"), P = d.strictNullHandling ? null : "") : (M = d.decoder(x.slice(0, $), n.decoder, O, "key"), P = e.maybeMap(
-              i(
-                x.slice($ + 1),
-                d,
-                t(A[M]) ? A[M].length : 0
-              ),
-              function(E) {
-                return d.decoder(E, n.decoder, O, "value");
-              }
-            )), P && d.interpretNumericEntities && O === "iso-8859-1" && (P = o(String(P))), x.indexOf("[]=") > -1 && (P = t(P) ? [P] : P);
-            var F = r.call(A, M);
-            F && d.duplicates === "combine" ? A[M] = e.combine(A[M], P) : (!F || d.duplicates === "last") && (A[M] = P);
-          }
-        return A;
-      }, h2 = function(b, c, d, A) {
-        var l = 0;
-        if (b.length > 0 && b[b.length - 1] === "[]") {
-          var p = b.slice(0, -1).join("");
-          l = Array.isArray(c) && c[p] ? c[p].length : 0;
-        }
-        for (var y = A ? c : i(c, d, l), w = b.length - 1; w >= 0; --w) {
-          var S, O = b[w];
-          if (O === "[]" && d.parseArrays)
-            S = d.allowEmptyArrays && (y === "" || d.strictNullHandling && y === null) ? [] : e.combine([], y);
-          else {
-            S = d.plainObjects ? { __proto__: null } : {};
-            var x = O.charAt(0) === "[" && O.charAt(O.length - 1) === "]" ? O.slice(1, -1) : O, _ = d.decodeDotInKeys ? x.replace(/%2E/g, ".") : x, $ = parseInt(_, 10);
-            !d.parseArrays && _ === "" ? S = { 0: y } : !isNaN($) && O !== _ && String($) === _ && $ >= 0 && d.parseArrays && $ <= d.arrayLimit ? (S = [], S[$] = y) : _ !== "__proto__" && (S[_] = y);
-          }
-          y = S;
-        }
-        return y;
-      }, v = function(c, d, A, l) {
-        if (c) {
-          var p = A.allowDots ? c.replace(/\.([^.[]+)/g, "[$1]") : c, y = /(\[[^[\]]*])/, w = /(\[[^[\]]*])/g, S = A.depth > 0 && y.exec(p), O = S ? p.slice(0, S.index) : p, x = [];
-          if (O) {
-            if (!A.plainObjects && r.call(Object.prototype, O) && !A.allowPrototypes)
-              return;
-            x.push(O);
-          }
-          for (var _ = 0; A.depth > 0 && (S = w.exec(p)) !== null && _ < A.depth; ) {
-            if (_ += 1, !A.plainObjects && r.call(Object.prototype, S[1].slice(1, -1)) && !A.allowPrototypes)
-              return;
-            x.push(S[1]);
-          }
-          if (S) {
-            if (A.strictDepth === true)
-              throw new RangeError("Input depth exceeded depth option of " + A.depth + " and strictDepth is true");
-            x.push("[" + p.slice(S.index) + "]");
-          }
-          return h2(x, d, A, l);
-        }
-      }, m = function(c) {
-        if (!c)
-          return n;
-        if (typeof c.allowEmptyArrays < "u" && typeof c.allowEmptyArrays != "boolean")
-          throw new TypeError("`allowEmptyArrays` option can only be `true` or `false`, when provided");
-        if (typeof c.decodeDotInKeys < "u" && typeof c.decodeDotInKeys != "boolean")
-          throw new TypeError("`decodeDotInKeys` option can only be `true` or `false`, when provided");
-        if (c.decoder !== null && typeof c.decoder < "u" && typeof c.decoder != "function")
-          throw new TypeError("Decoder has to be a function.");
-        if (typeof c.charset < "u" && c.charset !== "utf-8" && c.charset !== "iso-8859-1")
-          throw new TypeError("The charset option must be either utf-8, iso-8859-1, or undefined");
-        if (typeof c.throwOnLimitExceeded < "u" && typeof c.throwOnLimitExceeded != "boolean")
-          throw new TypeError("`throwOnLimitExceeded` option must be a boolean");
-        var d = typeof c.charset > "u" ? n.charset : c.charset, A = typeof c.duplicates > "u" ? n.duplicates : c.duplicates;
-        if (A !== "combine" && A !== "first" && A !== "last")
-          throw new TypeError("The duplicates option must be either combine, first, or last");
-        var l = typeof c.allowDots > "u" ? c.decodeDotInKeys === true ? true : n.allowDots : !!c.allowDots;
-        return {
-          allowDots: l,
-          allowEmptyArrays: typeof c.allowEmptyArrays == "boolean" ? !!c.allowEmptyArrays : n.allowEmptyArrays,
-          allowPrototypes: typeof c.allowPrototypes == "boolean" ? c.allowPrototypes : n.allowPrototypes,
-          allowSparse: typeof c.allowSparse == "boolean" ? c.allowSparse : n.allowSparse,
-          arrayLimit: typeof c.arrayLimit == "number" ? c.arrayLimit : n.arrayLimit,
-          charset: d,
-          charsetSentinel: typeof c.charsetSentinel == "boolean" ? c.charsetSentinel : n.charsetSentinel,
-          comma: typeof c.comma == "boolean" ? c.comma : n.comma,
-          decodeDotInKeys: typeof c.decodeDotInKeys == "boolean" ? c.decodeDotInKeys : n.decodeDotInKeys,
-          decoder: typeof c.decoder == "function" ? c.decoder : n.decoder,
-          delimiter: typeof c.delimiter == "string" || e.isRegExp(c.delimiter) ? c.delimiter : n.delimiter,
-          // eslint-disable-next-line no-implicit-coercion, no-extra-parens
-          depth: typeof c.depth == "number" || c.depth === false ? +c.depth : n.depth,
-          duplicates: A,
-          ignoreQueryPrefix: c.ignoreQueryPrefix === true,
-          interpretNumericEntities: typeof c.interpretNumericEntities == "boolean" ? c.interpretNumericEntities : n.interpretNumericEntities,
-          parameterLimit: typeof c.parameterLimit == "number" ? c.parameterLimit : n.parameterLimit,
-          parseArrays: c.parseArrays !== false,
-          plainObjects: typeof c.plainObjects == "boolean" ? c.plainObjects : n.plainObjects,
-          strictDepth: typeof c.strictDepth == "boolean" ? !!c.strictDepth : n.strictDepth,
-          strictNullHandling: typeof c.strictNullHandling == "boolean" ? c.strictNullHandling : n.strictNullHandling,
-          throwOnLimitExceeded: typeof c.throwOnLimitExceeded == "boolean" ? c.throwOnLimitExceeded : false
-        };
-      };
-      return nt = function(b, c) {
-        var d = m(c);
-        if (b === "" || b === null || typeof b > "u")
-          return d.plainObjects ? { __proto__: null } : {};
-        for (var A = typeof b == "string" ? g(b, d) : b, l = d.plainObjects ? { __proto__: null } : {}, p = Object.keys(A), y = 0; y < p.length; ++y) {
-          var w = p[y], S = v(w, A[w], d, typeof b == "string");
-          l = e.merge(l, S, d);
-        }
-        return d.allowSparse === true ? l : e.compact(l);
-      }, nt;
-    }
-    var ot, Rn;
-    function Ja() {
-      if (Rn) return ot;
-      Rn = 1;
-      var e = /* @__PURE__ */ Za(), r = /* @__PURE__ */ Qa(), t = /* @__PURE__ */ gt();
-      return ot = {
-        formats: t,
-        parse: r,
-        stringify: e
-      }, ot;
-    }
-    var So = /* @__PURE__ */ Ja();
-    class at {
-      /**
-       * @param {String} name - Route name.
-       * @param {Object} definition - Route definition.
-       * @param {Object} config - Ziggy configuration.
-       */
-      constructor(r, t, n) {
-        this.name = r, this.definition = t, this.bindings = t.bindings ?? {}, this.wheres = t.wheres ?? {}, this.config = n;
-      }
-      /**
-       * Get a 'template' of the complete URL for this route.
-       *
-       * @example
-       * https://{team}.ziggy.dev/user/{user}
-       *
-       * @return {String} Route template.
-       */
-      get template() {
-        const r = `${this.origin}/${this.definition.uri}`.replace(/\/+$/, "");
-        return r === "" ? "/" : r;
-      }
-      /**
-       * Get a template of the origin for this route.
-       *
-       * @example
-       * https://{team}.ziggy.dev/
-       *
-       * @return {String} Route origin template.
-       */
-      get origin() {
-        return this.config.absolute ? this.definition.domain ? `${this.config.url.match(/^\w+:\/\//)[0]}${this.definition.domain}${this.config.port ? `:${this.config.port}` : ""}` : this.config.url : "";
-      }
-      /**
-       * Get an array of objects representing the parameters that this route accepts.
-       *
-       * @example
-       * [{ name: 'team', required: true }, { name: 'user', required: false }]
-       *
-       * @return {Array} Parameter segments.
-       */
-      get parameterSegments() {
-        var r;
-        return ((r = this.template.match(/{[^}?]+\??}/g)) == null ? void 0 : r.map((t) => ({
-          name: t.replace(/{|\??}/g, ""),
-          required: !/\?}$/.test(t)
-        }))) ?? [];
-      }
-      /**
-       * Get whether this route's template matches the given URL.
-       *
-       * @param {String} url - URL to check.
-       * @return {Object|false} - If this route matches, returns the matched parameters.
-       */
-      matchesUrl(r) {
-        if (!this.definition.methods.includes("GET")) return false;
-        const t = this.template.replace(/(\/?){([^}?]*)(\??)}/g, (s, f, g, h2) => {
-          var m;
-          const v = `(?<${g}>${((m = this.wheres[g]) == null ? void 0 : m.replace(/(^\^)|(\$$)/g, "")) || "[^/?]+"})`;
-          return h2 ? `(${f}${v})?` : `${f}${v}`;
-        }).replace(/^\w+:\/\//, ""), [n, o] = r.replace(/^\w+:\/\//, "").split("?"), i = new RegExp(`^${t}/?$`).exec(decodeURI(n));
-        if (i) {
-          for (const s in i.groups)
-            i.groups[s] = typeof i.groups[s] == "string" ? decodeURIComponent(i.groups[s]) : i.groups[s];
-          return { params: i.groups, query: So.parse(o) };
-        }
-        return false;
-      }
-      /**
-       * Hydrate and return a complete URL for this route with the given parameters.
-       *
-       * @param {Object} params
-       * @return {String}
-       */
-      compile(r) {
-        return this.parameterSegments.length ? this.template.replace(/{([^}?]+)(\??)}/g, (n, o, i) => {
-          if (!i && [null, void 0].includes(r[o]))
-            throw new Error(
-              `Ziggy error: '${o}' parameter is required for route '${this.name}'.`
-            );
-          if (this.wheres[o] && !new RegExp(
-            `^${i ? `(${this.wheres[o]})?` : this.wheres[o]}$`
-          ).test(r[o] ?? ""))
-            throw new Error(
-              `Ziggy error: '${o}' parameter does not match required format '${this.wheres[o]}' for route '${this.name}'.`
-            );
-          return encodeURI(r[o] ?? "").replace(/%7C/g, "|").replace(/%25/g, "%").replace(/\$/g, "%24");
-        }).replace(`${this.origin}//`, `${this.origin}/`).replace(/\/+$/, "") : this.template;
-      }
-    }
-    class Ya extends String {
-      /**
-       * @param {String} [name] - Route name.
-       * @param {(String|Number|Array|Object)} [params] - Route parameters.
-       * @param {Boolean} [absolute] - Whether to include the URL origin.
-       * @param {Object} [config] - Ziggy configuration.
-       */
-      constructor(r, t, n = true, o) {
-        if (super(), this._config = o ?? (typeof Ziggy < "u" ? Ziggy : globalThis == null ? void 0 : globalThis.Ziggy), this._config = { ...this._config, absolute: n }, r) {
-          if (!this._config.routes[r])
-            throw new Error(`Ziggy error: route '${r}' is not in the route list.`);
-          this._route = new at(r, this._config.routes[r], this._config), this._params = this._parse(t);
-        }
-      }
-      /**
-       * Get the compiled URL string for the current route and parameters.
-       *
-       * @example
-       * // with 'posts.show' route 'posts/{post}'
-       * (new Router('posts.show', 1)).toString(); // 'https://ziggy.dev/posts/1'
-       *
-       * @return {String}
-       */
-      toString() {
-        const r = Object.keys(this._params).filter((t) => !this._route.parameterSegments.some(({ name: n }) => n === t)).filter((t) => t !== "_query").reduce((t, n) => ({ ...t, [n]: this._params[n] }), {});
-        return this._route.compile(this._params) + So.stringify(
-          { ...r, ...this._params._query },
-          {
-            addQueryPrefix: true,
-            arrayFormat: "indices",
-            encodeValuesOnly: true,
-            skipNulls: true,
-            encoder: (t, n) => typeof t == "boolean" ? Number(t) : n(t)
-          }
-        );
-      }
-      /**
-       * Get the parameters, values, and metadata from the given URL.
-       *
-       * @param {String} [url] - The URL to inspect, defaults to the current window URL.
-       * @return {{ name: string, params: Object, query: Object, route: Route }}
-       */
-      _unresolve(r) {
-        r ? this._config.absolute && r.startsWith("/") && (r = this._location().host + r) : r = this._currentUrl();
-        let t = {};
-        const [n, o] = Object.entries(this._config.routes).find(
-          ([i, s]) => t = new at(i, s, this._config).matchesUrl(r)
-        ) || [void 0, void 0];
-        return { name: n, ...t, route: o };
-      }
-      _currentUrl() {
-        const { host: r, pathname: t, search: n } = this._location();
-        return (this._config.absolute ? r + t : t.replace(this._config.url.replace(/^\w*:\/\/[^/]+/, ""), "").replace(/^\/+/, "/")) + n;
-      }
-      /**
-       * Get the name of the route matching the current window URL, or, given a route name
-       * and parameters, check if the current window URL and parameters match that route.
-       *
-       * @example
-       * // at URL https://ziggy.dev/posts/4 with 'posts.show' route 'posts/{post}'
-       * route().current(); // 'posts.show'
-       * route().current('posts.index'); // false
-       * route().current('posts.show'); // true
-       * route().current('posts.show', { post: 1 }); // false
-       * route().current('posts.show', { post: 4 }); // true
-       *
-       * @param {String} [name] - Route name to check.
-       * @param {(String|Number|Array|Object)} [params] - Route parameters.
-       * @return {(Boolean|String|undefined)}
-       */
-      current(r, t) {
-        const { name: n, params: o, query: i, route: s } = this._unresolve();
-        if (!r) return n;
-        const f = new RegExp(`^${r.replace(/\./g, "\\.").replace(/\*/g, ".*")}$`).test(
-          n
-        );
-        if ([null, void 0].includes(t) || !f) return f;
-        const g = new at(n, s, this._config);
-        t = this._parse(t, g);
-        const h2 = { ...o, ...i };
-        if (Object.values(t).every((m) => !m) && !Object.values(h2).some((m) => m !== void 0))
-          return true;
-        const v = (m, b) => Object.entries(m).every(([c, d]) => Array.isArray(d) && Array.isArray(b[c]) ? d.every((A) => b[c].includes(A)) : typeof d == "object" && typeof b[c] == "object" && d !== null && b[c] !== null ? v(d, b[c]) : b[c] == d);
-        return v(t, h2);
-      }
-      /**
-       * Get an object representing the current location (by default this will be
-       * the JavaScript `window` global if it's available).
-       *
-       * @return {Object}
-       */
-      _location() {
-        var o, i, s;
-        const {
-          host: r = "",
-          pathname: t = "",
-          search: n = ""
-        } = typeof window < "u" ? window.location : {};
-        return {
-          host: ((o = this._config.location) == null ? void 0 : o.host) ?? r,
-          pathname: ((i = this._config.location) == null ? void 0 : i.pathname) ?? t,
-          search: ((s = this._config.location) == null ? void 0 : s.search) ?? n
-        };
-      }
-      /**
-       * Get all parameter values from the current window URL.
-       *
-       * @example
-       * // at URL https://tighten.ziggy.dev/posts/4?lang=en with 'posts.show' route 'posts/{post}' and domain '{team}.ziggy.dev'
-       * route().params; // { team: 'tighten', post: 4, lang: 'en' }
-       *
-       * @return {Object}
-       */
-      get params() {
-        const { params: r, query: t } = this._unresolve();
-        return { ...r, ...t };
-      }
-      /**
-       * Check whether the given route exists.
-       *
-       * @param {String} name
-       * @return {Boolean}
-       */
-      has(r) {
-        return Object.keys(this._config.routes).includes(r);
-      }
-      /**
-       * Parse Laravel-style route parameters of any type into a normalized object.
-       *
-       * @example
-       * // with route parameter names 'event' and 'venue'
-       * _parse(1); // { event: 1 }
-       * _parse({ event: 2, venue: 3 }); // { event: 2, venue: 3 }
-       * _parse(['Taylor', 'Matt']); // { event: 'Taylor', venue: 'Matt' }
-       * _parse([4, { uuid: 56789, name: 'Grand Canyon' }]); // { event: 4, venue: 56789 }
-       *
-       * @param {(String|Number|Array|Object)} params - Route parameters.
-       * @param {Route} route - Route instance.
-       * @return {Object} Normalized complete route parameters.
-       */
-      _parse(r = {}, t = this._route) {
-        r ?? (r = {}), r = ["string", "number"].includes(typeof r) ? [r] : r;
-        const n = t.parameterSegments.filter(({ name: o }) => !this._config.defaults[o]);
-        return Array.isArray(r) ? r = r.reduce(
-          (o, i, s) => n[s] ? { ...o, [n[s].name]: i } : typeof i == "object" ? { ...o, ...i } : { ...o, [i]: "" },
-          {}
-        ) : n.length === 1 && !r[n[0].name] && (r.hasOwnProperty(Object.values(t.bindings)[0]) || r.hasOwnProperty("id")) && (r = { [n[0].name]: r }), {
-          ...this._defaults(t),
-          ...this._substituteBindings(r, t)
-        };
-      }
-      /**
-       * Populate default parameters for the given route.
-       *
-       * @example
-       * // with default parameters { locale: 'en', country: 'US' } and 'posts.show' route '{locale}/posts/{post}'
-       * defaults(...); // { locale: 'en' }
-       *
-       * @param {Route} route
-       * @return {Object} Default route parameters.
-       */
-      _defaults(r) {
-        return r.parameterSegments.filter(({ name: t }) => this._config.defaults[t]).reduce(
-          (t, { name: n }, o) => ({ ...t, [n]: this._config.defaults[n] }),
-          {}
-        );
-      }
-      /**
-       * Substitute Laravel route model bindings in the given parameters.
-       *
-       * @example
-       * _substituteBindings({ post: { id: 4, slug: 'hello-world', title: 'Hello, world!' } }, { bindings: { post: 'slug' } }); // { post: 'hello-world' }
-       *
-       * @param {Object} params - Route parameters.
-       * @param {Object} route - Route definition.
-       * @return {Object} Normalized route parameters.
-       */
-      _substituteBindings(r, { bindings: t, parameterSegments: n }) {
-        return Object.entries(r).reduce((o, [i, s]) => {
-          if (!s || typeof s != "object" || Array.isArray(s) || !n.some(({ name: f }) => f === i))
-            return { ...o, [i]: s };
-          if (!s.hasOwnProperty(t[i]))
-            if (s.hasOwnProperty("id"))
-              t[i] = "id";
-            else
-              throw new Error(
-                `Ziggy error: object passed as '${i}' parameter is missing route model binding key '${t[i]}'.`
-              );
-          return { ...o, [i]: s[t[i]] };
-        }, {});
-      }
-      valueOf() {
-        return this.toString();
-      }
-    }
-    function Xa(e, r, t, n) {
-      const o = new Ya(e, r, t, n);
-      return e ? o.toString() : o;
-    }
-    const Fe = reactive({});
-    function hs(e) {
-      return e.initialPage.props.ziggy && (Object.keys(e.initialPage.props.ziggy).forEach((r) => {
-        Fe[r] = e.initialPage.props.ziggy[r];
-      }), Fe.location = new URL(Fe.location)), {
-        /**
-         * @param { import("vue").App } app
-         */
-        install: (r, t = {}) => {
-          const n = t.global ?? true, o = (i, s, f, g = Fe) => (Fe.location && typeof window < "u" && (Fe.location = null), Xa(i, s, f, g));
-          r.provide(co, o), n && (r.config.globalProperties.$route = o);
-        }
-      };
-    }
-    function ei(e) {
-      return getCurrentScope() ? (onScopeDispose(e), true) : false;
-    }
-    const ri = typeof window < "u" && typeof document < "u";
-    typeof WorkerGlobalScope < "u" && globalThis instanceof WorkerGlobalScope;
-    const ti = Object.prototype.toString, ni = (e) => ti.call(e) === "[object Object]";
-    function oi(e) {
-      return Object.entries(e);
-    }
-    function it(e) {
-      return Array.isArray(e) ? e : [e];
-    }
-    function ai(e, r, t) {
-      return watch(
-        e,
-        r,
-        {
-          ...t,
-          immediate: true
-        }
-      );
-    }
-    const wo = ri ? window : void 0;
-    function ii(e) {
-      var r;
-      const t = toValue(e);
-      return (r = t == null ? void 0 : t.$el) != null ? r : t;
-    }
-    function In(...e) {
-      const r = [], t = () => {
-        r.forEach((f) => f()), r.length = 0;
-      }, n = (f, g, h2, v) => (f.addEventListener(g, h2, v), () => f.removeEventListener(g, h2, v)), o = computed(() => {
-        const f = it(toValue(e[0])).filter((g) => g != null);
-        return f.every((g) => typeof g != "string") ? f : void 0;
-      }), i = ai(
-        () => {
-          var f, g;
-          return [
-            (g = (f = o.value) == null ? void 0 : f.map((h2) => ii(h2))) != null ? g : [wo].filter((h2) => h2 != null),
-            it(toValue(o.value ? e[1] : e[0])),
-            it(unref(o.value ? e[2] : e[1])),
-            // @ts-expect-error - TypeScript gets the correct types, but somehow still complains
-            toValue(o.value ? e[3] : e[2])
-          ];
-        },
-        ([f, g, h2, v]) => {
-          if (t(), !(f != null && f.length) || !(g != null && g.length) || !(h2 != null && h2.length))
-            return;
-          const m = ni(v) ? { ...v } : v;
-          r.push(
-            ...f.flatMap(
-              (b) => g.flatMap(
-                (c) => h2.map((d) => n(b, c, d, m))
-              )
-            )
-          );
-        },
-        { flush: "post" }
-      ), s = () => {
-        i(), t();
-      };
-      return ei(t), s;
-    }
-    const Cn = [
-      "hash",
-      "host",
-      "hostname",
-      "href",
-      "pathname",
-      "port",
-      "protocol",
-      "search"
-    ];
-    function ui(e = {}) {
-      const { window: r = wo } = e, t = Object.fromEntries(
-        Cn.map((i) => [i, ref()])
-      );
-      for (const [i, s] of oi(t))
-        watch(s, (f) => {
-          !(r != null && r.location) || r.location[i] === f || (r.location[i] = f);
-        });
-      const n = (i) => {
-        var s;
-        const { state: f, length: g } = (r == null ? void 0 : r.history) || {}, { origin: h2 } = (r == null ? void 0 : r.location) || {};
-        for (const v of Cn)
-          t[v].value = (s = r == null ? void 0 : r.location) == null ? void 0 : s[v];
-        return reactive({
-          trigger: i,
-          state: f,
-          length: g,
-          origin: h2,
-          ...t
-        });
-      }, o = ref(n("load"));
-      if (r) {
-        const i = { passive: true };
-        In(r, "popstate", () => o.value = n("popstate"), i), In(r, "hashchange", () => o.value = n("hashchange"), i);
-      }
-      return o;
-    }
-    const fi = (e) => {
-      const r = va();
-      return computed(() => {
-        if (e = toValue(e), e) {
-          if (typeof e == "string" && /^http/.test(e))
-            return e;
-          if (Array.isArray(e)) {
-            const [t, n] = toValue(e);
-            return t ? typeof n != "object" ? r(t) : r(t, toValue(n)) : "#";
-          } else return e ? r(e) : "#";
-        } else return console.warn("[Inertia Routes] You must pass a route string or tuple to useRouteProp"), "#";
-      });
-    };
-    var Ao = typeof global == "object" && global && global.Object === Object && global, ci = typeof self == "object" && self && self.Object === Object && self, ne = Ao || ci || Function("return this")(), te = ne.Symbol, Oo = Object.prototype, li = Oo.hasOwnProperty, si = Oo.toString, We = te ? te.toStringTag : void 0;
-    function pi(e) {
-      var r = li.call(e, We), t = e[We];
-      try {
-        e[We] = void 0;
-        var n = true;
-      } catch {
-      }
-      var o = si.call(e);
-      return n && (r ? e[We] = t : delete e[We]), o;
-    }
-    var yi = Object.prototype, di = yi.toString;
-    function hi(e) {
-      return di.call(e);
-    }
-    var gi = "[object Null]", vi = "[object Undefined]", Mn = te ? te.toStringTag : void 0;
-    function xe(e) {
-      return e == null ? e === void 0 ? vi : gi : Mn && Mn in Object(e) ? pi(e) : hi(e);
-    }
-    function _e(e) {
-      return e != null && typeof e == "object";
-    }
-    var mi = "[object Symbol]";
-    function vt(e) {
-      return typeof e == "symbol" || _e(e) && xe(e) == mi;
-    }
-    function xo(e, r) {
-      for (var t = -1, n = e == null ? 0 : e.length, o = Array(n); ++t < n; )
-        o[t] = r(e[t], t, e);
-      return o;
-    }
-    var ce = Array.isArray, Fn = te ? te.prototype : void 0, jn = Fn ? Fn.toString : void 0;
-    function _o(e) {
-      if (typeof e == "string")
-        return e;
-      if (ce(e))
-        return xo(e, _o) + "";
-      if (vt(e))
-        return jn ? jn.call(e) : "";
-      var r = e + "";
-      return r == "0" && 1 / e == -1 / 0 ? "-0" : r;
-    }
-    function De(e) {
-      var r = typeof e;
-      return e != null && (r == "object" || r == "function");
-    }
-    function bi(e) {
-      return e;
-    }
-    var Si = "[object AsyncFunction]", wi = "[object Function]", Ai = "[object GeneratorFunction]", Oi = "[object Proxy]";
-    function Eo(e) {
-      if (!De(e))
-        return false;
-      var r = xe(e);
-      return r == wi || r == Ai || r == Si || r == Oi;
-    }
-    var ut = ne["__core-js_shared__"], Dn = function() {
-      var e = /[^.]+$/.exec(ut && ut.keys && ut.keys.IE_PROTO || "");
-      return e ? "Symbol(src)_1." + e : "";
-    }();
-    function xi(e) {
-      return !!Dn && Dn in e;
-    }
-    var _i = Function.prototype, Ei = _i.toString;
-    function Ee(e) {
-      if (e != null) {
-        try {
-          return Ei.call(e);
-        } catch {
-        }
-        try {
-          return e + "";
-        } catch {
-        }
-      }
-      return "";
-    }
-    var $i = /[\\^$.*+?()[\]{}|]/g, Pi = /^\[object .+?Constructor\]$/, Ti = Function.prototype, Ri = Object.prototype, Ii = Ti.toString, Ci = Ri.hasOwnProperty, Mi = RegExp(
-      "^" + Ii.call(Ci).replace($i, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
-    );
-    function Fi(e) {
-      if (!De(e) || xi(e))
-        return false;
-      var r = Eo(e) ? Mi : Pi;
-      return r.test(Ee(e));
-    }
-    function ji(e, r) {
-      return e == null ? void 0 : e[r];
-    }
-    function $e(e, r) {
-      var t = ji(e, r);
-      return Fi(t) ? t : void 0;
-    }
-    var lt = $e(ne, "WeakMap");
-    function Di(e, r, t) {
-      switch (t.length) {
-        case 0:
-          return e.call(r);
-        case 1:
-          return e.call(r, t[0]);
-        case 2:
-          return e.call(r, t[0], t[1]);
-        case 3:
-          return e.call(r, t[0], t[1], t[2]);
-      }
-      return e.apply(r, t);
-    }
-    var qi = 800, Ni = 16, Ui = Date.now;
-    function Li(e) {
-      var r = 0, t = 0;
-      return function() {
-        var n = Ui(), o = Ni - (n - t);
-        if (t = n, o > 0) {
-          if (++r >= qi)
-            return arguments[0];
-        } else
-          r = 0;
-        return e.apply(void 0, arguments);
-      };
-    }
-    function Bi(e) {
-      return function() {
-        return e;
-      };
-    }
-    var Xe = function() {
-      try {
-        var e = $e(Object, "defineProperty");
-        return e({}, "", {}), e;
-      } catch {
-      }
-    }(), Gi = Xe ? function(e, r) {
-      return Xe(e, "toString", {
-        configurable: true,
-        enumerable: false,
-        value: Bi(r),
-        writable: true
-      });
-    } : bi, Wi = Li(Gi);
-    function zi(e, r) {
-      for (var t = -1, n = e == null ? 0 : e.length; ++t < n && r(e[t], t, e) !== false; )
-        ;
-      return e;
-    }
-    var Hi = 9007199254740991, Ki = /^(?:0|[1-9]\d*)$/;
-    function mt(e, r) {
-      var t = typeof e;
-      return r = r ?? Hi, !!r && (t == "number" || t != "symbol" && Ki.test(e)) && e > -1 && e % 1 == 0 && e < r;
-    }
-    function $o(e, r, t) {
-      r == "__proto__" && Xe ? Xe(e, r, {
-        configurable: true,
-        enumerable: true,
-        value: t,
-        writable: true
-      }) : e[r] = t;
-    }
-    function Po(e, r) {
-      return e === r || e !== e && r !== r;
-    }
-    var Vi = Object.prototype, ki = Vi.hasOwnProperty;
-    function bt(e, r, t) {
-      var n = e[r];
-      (!(ki.call(e, r) && Po(n, t)) || t === void 0 && !(r in e)) && $o(e, r, t);
-    }
-    function Zi(e, r, t, n) {
-      var o = !t;
-      t || (t = {});
-      for (var i = -1, s = r.length; ++i < s; ) {
-        var f = r[i], g = void 0;
-        g === void 0 && (g = e[f]), o ? $o(t, f, g) : bt(t, f, g);
-      }
-      return t;
-    }
-    var qn = Math.max;
-    function Qi(e, r, t) {
-      return r = qn(r === void 0 ? e.length - 1 : r, 0), function() {
-        for (var n = arguments, o = -1, i = qn(n.length - r, 0), s = Array(i); ++o < i; )
-          s[o] = n[r + o];
-        o = -1;
-        for (var f = Array(r + 1); ++o < r; )
-          f[o] = n[o];
-        return f[r] = t(s), Di(e, this, f);
-      };
-    }
-    var Ji = 9007199254740991;
-    function St(e) {
-      return typeof e == "number" && e > -1 && e % 1 == 0 && e <= Ji;
-    }
-    function Yi(e) {
-      return e != null && St(e.length) && !Eo(e);
-    }
-    var Xi = Object.prototype;
-    function eu(e) {
-      var r = e && e.constructor, t = typeof r == "function" && r.prototype || Xi;
-      return e === t;
-    }
-    function ru(e, r) {
-      for (var t = -1, n = Array(e); ++t < e; )
-        n[t] = r(t);
-      return n;
-    }
-    var tu = "[object Arguments]";
-    function Nn(e) {
-      return _e(e) && xe(e) == tu;
-    }
-    var To = Object.prototype, nu = To.hasOwnProperty, ou = To.propertyIsEnumerable, wt = Nn(/* @__PURE__ */ function() {
-      return arguments;
-    }()) ? Nn : function(e) {
-      return _e(e) && nu.call(e, "callee") && !ou.call(e, "callee");
-    };
-    function au() {
-      return false;
-    }
-    var Ro = typeof exports == "object" && exports && !exports.nodeType && exports, Un = Ro && typeof module == "object" && module && !module.nodeType && module, iu = Un && Un.exports === Ro, Ln = iu ? ne.Buffer : void 0, uu = Ln ? Ln.isBuffer : void 0, Io = uu || au, fu = "[object Arguments]", cu = "[object Array]", lu = "[object Boolean]", su = "[object Date]", pu = "[object Error]", yu = "[object Function]", du = "[object Map]", hu = "[object Number]", gu = "[object Object]", vu = "[object RegExp]", mu = "[object Set]", bu = "[object String]", Su = "[object WeakMap]", wu = "[object ArrayBuffer]", Au = "[object DataView]", Ou = "[object Float32Array]", xu = "[object Float64Array]", _u = "[object Int8Array]", Eu = "[object Int16Array]", $u = "[object Int32Array]", Pu = "[object Uint8Array]", Tu = "[object Uint8ClampedArray]", Ru = "[object Uint16Array]", Iu = "[object Uint32Array]", U = {};
-    U[Ou] = U[xu] = U[_u] = U[Eu] = U[$u] = U[Pu] = U[Tu] = U[Ru] = U[Iu] = true;
-    U[fu] = U[cu] = U[wu] = U[lu] = U[Au] = U[su] = U[pu] = U[yu] = U[du] = U[hu] = U[gu] = U[vu] = U[mu] = U[bu] = U[Su] = false;
-    function Cu(e) {
-      return _e(e) && St(e.length) && !!U[xe(e)];
-    }
-    function At(e) {
-      return function(r) {
-        return e(r);
-      };
-    }
-    var Co = typeof exports == "object" && exports && !exports.nodeType && exports, Ke = Co && typeof module == "object" && module && !module.nodeType && module, Mu = Ke && Ke.exports === Co, ft = Mu && Ao.process, qe = function() {
-      try {
-        var e = Ke && Ke.require && Ke.require("util").types;
-        return e || ft && ft.binding && ft.binding("util");
-      } catch {
-      }
-    }(), Bn = qe && qe.isTypedArray, Fu = Bn ? At(Bn) : Cu;
-    function ju(e, r) {
-      var t = ce(e), n = !t && wt(e), o = !t && !n && Io(e), i = !t && !n && !o && Fu(e), s = t || n || o || i, f = s ? ru(e.length, String) : [], g = f.length;
-      for (var h2 in e)
-        s && // Safari 9 has enumerable `arguments.length` in strict mode.
-        (h2 == "length" || // Node.js 0.10 has enumerable non-index properties on buffers.
-        o && (h2 == "offset" || h2 == "parent") || // PhantomJS 2 has enumerable non-index properties on typed arrays.
-        i && (h2 == "buffer" || h2 == "byteLength" || h2 == "byteOffset") || // Skip index properties.
-        mt(h2, g)) || f.push(h2);
-      return f;
-    }
-    function Du(e, r) {
-      return function(t) {
-        return e(r(t));
-      };
-    }
-    function qu(e) {
-      var r = [];
-      if (e != null)
-        for (var t in Object(e))
-          r.push(t);
-      return r;
-    }
-    var Nu = Object.prototype, Uu = Nu.hasOwnProperty;
-    function Lu(e) {
-      if (!De(e))
-        return qu(e);
-      var r = eu(e), t = [];
-      for (var n in e)
-        n == "constructor" && (r || !Uu.call(e, n)) || t.push(n);
-      return t;
-    }
-    function Bu(e) {
-      return Yi(e) ? ju(e) : Lu(e);
-    }
-    var Gu = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/, Wu = /^\w*$/;
-    function zu(e, r) {
-      if (ce(e))
-        return false;
-      var t = typeof e;
-      return t == "number" || t == "symbol" || t == "boolean" || e == null || vt(e) ? true : Wu.test(e) || !Gu.test(e) || r != null && e in Object(r);
-    }
-    var Ve = $e(Object, "create");
-    function Hu() {
-      this.__data__ = Ve ? Ve(null) : {}, this.size = 0;
-    }
-    function Ku(e) {
-      var r = this.has(e) && delete this.__data__[e];
-      return this.size -= r ? 1 : 0, r;
-    }
-    var Vu = "__lodash_hash_undefined__", ku = Object.prototype, Zu = ku.hasOwnProperty;
-    function Qu(e) {
-      var r = this.__data__;
-      if (Ve) {
-        var t = r[e];
-        return t === Vu ? void 0 : t;
-      }
-      return Zu.call(r, e) ? r[e] : void 0;
-    }
-    var Ju = Object.prototype, Yu = Ju.hasOwnProperty;
-    function Xu(e) {
-      var r = this.__data__;
-      return Ve ? r[e] !== void 0 : Yu.call(r, e);
-    }
-    var ef = "__lodash_hash_undefined__";
-    function rf(e, r) {
-      var t = this.__data__;
-      return this.size += this.has(e) ? 0 : 1, t[e] = Ve && r === void 0 ? ef : r, this;
-    }
-    function Oe(e) {
-      var r = -1, t = e == null ? 0 : e.length;
-      for (this.clear(); ++r < t; ) {
-        var n = e[r];
-        this.set(n[0], n[1]);
-      }
-    }
-    Oe.prototype.clear = Hu;
-    Oe.prototype.delete = Ku;
-    Oe.prototype.get = Qu;
-    Oe.prototype.has = Xu;
-    Oe.prototype.set = rf;
-    function tf() {
-      this.__data__ = [], this.size = 0;
-    }
-    function tr(e, r) {
-      for (var t = e.length; t--; )
-        if (Po(e[t][0], r))
-          return t;
-      return -1;
-    }
-    var nf = Array.prototype, of = nf.splice;
-    function af(e) {
-      var r = this.__data__, t = tr(r, e);
-      if (t < 0)
-        return false;
-      var n = r.length - 1;
-      return t == n ? r.pop() : of.call(r, t, 1), --this.size, true;
-    }
-    function uf(e) {
-      var r = this.__data__, t = tr(r, e);
-      return t < 0 ? void 0 : r[t][1];
-    }
-    function ff(e) {
-      return tr(this.__data__, e) > -1;
-    }
-    function cf(e, r) {
-      var t = this.__data__, n = tr(t, e);
-      return n < 0 ? (++this.size, t.push([e, r])) : t[n][1] = r, this;
-    }
-    function le(e) {
-      var r = -1, t = e == null ? 0 : e.length;
-      for (this.clear(); ++r < t; ) {
-        var n = e[r];
-        this.set(n[0], n[1]);
-      }
-    }
-    le.prototype.clear = tf;
-    le.prototype.delete = af;
-    le.prototype.get = uf;
-    le.prototype.has = ff;
-    le.prototype.set = cf;
-    var ke = $e(ne, "Map");
-    function lf() {
-      this.size = 0, this.__data__ = {
-        hash: new Oe(),
-        map: new (ke || le)(),
-        string: new Oe()
-      };
-    }
-    function sf(e) {
-      var r = typeof e;
-      return r == "string" || r == "number" || r == "symbol" || r == "boolean" ? e !== "__proto__" : e === null;
-    }
-    function nr(e, r) {
-      var t = e.__data__;
-      return sf(r) ? t[typeof r == "string" ? "string" : "hash"] : t.map;
-    }
-    function pf(e) {
-      var r = nr(this, e).delete(e);
-      return this.size -= r ? 1 : 0, r;
-    }
-    function yf(e) {
-      return nr(this, e).get(e);
-    }
-    function df(e) {
-      return nr(this, e).has(e);
-    }
-    function hf(e, r) {
-      var t = nr(this, e), n = t.size;
-      return t.set(e, r), this.size += t.size == n ? 0 : 1, this;
-    }
-    function be(e) {
-      var r = -1, t = e == null ? 0 : e.length;
-      for (this.clear(); ++r < t; ) {
-        var n = e[r];
-        this.set(n[0], n[1]);
-      }
-    }
-    be.prototype.clear = lf;
-    be.prototype.delete = pf;
-    be.prototype.get = yf;
-    be.prototype.has = df;
-    be.prototype.set = hf;
-    var gf = "Expected a function";
-    function Ot(e, r) {
-      if (typeof e != "function" || r != null && typeof r != "function")
-        throw new TypeError(gf);
-      var t = function() {
-        var n = arguments, o = r ? r.apply(this, n) : n[0], i = t.cache;
-        if (i.has(o))
-          return i.get(o);
-        var s = e.apply(this, n);
-        return t.cache = i.set(o, s) || i, s;
-      };
-      return t.cache = new (Ot.Cache || be)(), t;
-    }
-    Ot.Cache = be;
-    var vf = 500;
-    function mf(e) {
-      var r = Ot(e, function(n) {
-        return t.size === vf && t.clear(), n;
-      }), t = r.cache;
-      return r;
-    }
-    var bf = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g, Sf = /\\(\\)?/g, wf = mf(function(e) {
-      var r = [];
-      return e.charCodeAt(0) === 46 && r.push(""), e.replace(bf, function(t, n, o, i) {
-        r.push(o ? i.replace(Sf, "$1") : n || t);
-      }), r;
-    });
-    function xt(e) {
-      return e == null ? "" : _o(e);
-    }
-    function Ue(e, r) {
-      return ce(e) ? e : zu(e, r) ? [e] : wf(xt(e));
-    }
-    function or(e) {
-      if (typeof e == "string" || vt(e))
-        return e;
-      var r = e + "";
-      return r == "0" && 1 / e == -1 / 0 ? "-0" : r;
-    }
-    function Mo(e, r) {
-      r = Ue(r, e);
-      for (var t = 0, n = r.length; e != null && t < n; )
-        e = e[or(r[t++])];
-      return t && t == n ? e : void 0;
-    }
-    function _t(e, r) {
-      for (var t = -1, n = r.length, o = e.length; ++t < n; )
-        e[o + t] = r[t];
-      return e;
-    }
-    var Gn = te ? te.isConcatSpreadable : void 0;
-    function Af(e) {
-      return ce(e) || wt(e) || !!(Gn && e && e[Gn]);
-    }
-    function Of(e, r, t, n, o) {
-      var i = -1, s = e.length;
-      for (t || (t = Af), o || (o = []); ++i < s; ) {
-        var f = e[i];
-        t(f) ? _t(o, f) : o[o.length] = f;
-      }
-      return o;
-    }
-    function xf(e) {
-      var r = e == null ? 0 : e.length;
-      return r ? Of(e) : [];
-    }
-    function Fo(e) {
-      return Wi(Qi(e, void 0, xf), e + "");
-    }
-    var jo = Du(Object.getPrototypeOf, Object), _f = "[object Object]", Ef = Function.prototype, $f = Object.prototype, Do = Ef.toString, Pf = $f.hasOwnProperty, Tf = Do.call(Object);
-    function Rf(e) {
-      if (!_e(e) || xe(e) != _f)
-        return false;
-      var r = jo(e);
-      if (r === null)
-        return true;
-      var t = Pf.call(r, "constructor") && r.constructor;
-      return typeof t == "function" && t instanceof t && Do.call(t) == Tf;
-    }
-    function If(e, r, t) {
-      var n = -1, o = e.length;
-      r < 0 && (r = -r > o ? 0 : o + r), t = t > o ? o : t, t < 0 && (t += o), o = r > t ? 0 : t - r >>> 0, r >>>= 0;
-      for (var i = Array(o); ++n < o; )
-        i[n] = e[n + r];
-      return i;
-    }
-    function Cf(e, r, t, n) {
-      for (var o = -1, i = e == null ? 0 : e.length; ++o < i; )
-        t = r(t, e[o], o, e);
-      return t;
-    }
-    function Mf(e) {
-      return function(r) {
-        return e == null ? void 0 : e[r];
-      };
-    }
-    var Ff = {
-      // Latin-1 Supplement block.
-      À: "A",
-      Á: "A",
-      Â: "A",
-      Ã: "A",
-      Ä: "A",
-      Å: "A",
-      à: "a",
-      á: "a",
-      â: "a",
-      ã: "a",
-      ä: "a",
-      å: "a",
-      Ç: "C",
-      ç: "c",
-      Ð: "D",
-      ð: "d",
-      È: "E",
-      É: "E",
-      Ê: "E",
-      Ë: "E",
-      è: "e",
-      é: "e",
-      ê: "e",
-      ë: "e",
-      Ì: "I",
-      Í: "I",
-      Î: "I",
-      Ï: "I",
-      ì: "i",
-      í: "i",
-      î: "i",
-      ï: "i",
-      Ñ: "N",
-      ñ: "n",
-      Ò: "O",
-      Ó: "O",
-      Ô: "O",
-      Õ: "O",
-      Ö: "O",
-      Ø: "O",
-      ò: "o",
-      ó: "o",
-      ô: "o",
-      õ: "o",
-      ö: "o",
-      ø: "o",
-      Ù: "U",
-      Ú: "U",
-      Û: "U",
-      Ü: "U",
-      ù: "u",
-      ú: "u",
-      û: "u",
-      ü: "u",
-      Ý: "Y",
-      ý: "y",
-      ÿ: "y",
-      Æ: "Ae",
-      æ: "ae",
-      Þ: "Th",
-      þ: "th",
-      ß: "ss",
-      // Latin Extended-A block.
-      Ā: "A",
-      Ă: "A",
-      Ą: "A",
-      ā: "a",
-      ă: "a",
-      ą: "a",
-      Ć: "C",
-      Ĉ: "C",
-      Ċ: "C",
-      Č: "C",
-      ć: "c",
-      ĉ: "c",
-      ċ: "c",
-      č: "c",
-      Ď: "D",
-      Đ: "D",
-      ď: "d",
-      đ: "d",
-      Ē: "E",
-      Ĕ: "E",
-      Ė: "E",
-      Ę: "E",
-      Ě: "E",
-      ē: "e",
-      ĕ: "e",
-      ė: "e",
-      ę: "e",
-      ě: "e",
-      Ĝ: "G",
-      Ğ: "G",
-      Ġ: "G",
-      Ģ: "G",
-      ĝ: "g",
-      ğ: "g",
-      ġ: "g",
-      ģ: "g",
-      Ĥ: "H",
-      Ħ: "H",
-      ĥ: "h",
-      ħ: "h",
-      Ĩ: "I",
-      Ī: "I",
-      Ĭ: "I",
-      Į: "I",
-      İ: "I",
-      ĩ: "i",
-      ī: "i",
-      ĭ: "i",
-      į: "i",
-      ı: "i",
-      Ĵ: "J",
-      ĵ: "j",
-      Ķ: "K",
-      ķ: "k",
-      ĸ: "k",
-      Ĺ: "L",
-      Ļ: "L",
-      Ľ: "L",
-      Ŀ: "L",
-      Ł: "L",
-      ĺ: "l",
-      ļ: "l",
-      ľ: "l",
-      ŀ: "l",
-      ł: "l",
-      Ń: "N",
-      Ņ: "N",
-      Ň: "N",
-      Ŋ: "N",
-      ń: "n",
-      ņ: "n",
-      ň: "n",
-      ŋ: "n",
-      Ō: "O",
-      Ŏ: "O",
-      Ő: "O",
-      ō: "o",
-      ŏ: "o",
-      ő: "o",
-      Ŕ: "R",
-      Ŗ: "R",
-      Ř: "R",
-      ŕ: "r",
-      ŗ: "r",
-      ř: "r",
-      Ś: "S",
-      Ŝ: "S",
-      Ş: "S",
-      Š: "S",
-      ś: "s",
-      ŝ: "s",
-      ş: "s",
-      š: "s",
-      Ţ: "T",
-      Ť: "T",
-      Ŧ: "T",
-      ţ: "t",
-      ť: "t",
-      ŧ: "t",
-      Ũ: "U",
-      Ū: "U",
-      Ŭ: "U",
-      Ů: "U",
-      Ű: "U",
-      Ų: "U",
-      ũ: "u",
-      ū: "u",
-      ŭ: "u",
-      ů: "u",
-      ű: "u",
-      ų: "u",
-      Ŵ: "W",
-      ŵ: "w",
-      Ŷ: "Y",
-      ŷ: "y",
-      Ÿ: "Y",
-      Ź: "Z",
-      Ż: "Z",
-      Ž: "Z",
-      ź: "z",
-      ż: "z",
-      ž: "z",
-      Ĳ: "IJ",
-      ĳ: "ij",
-      Œ: "Oe",
-      œ: "oe",
-      ŉ: "'n",
-      ſ: "s"
-    }, jf = Mf(Ff), Df = /[\xc0-\xd6\xd8-\xf6\xf8-\xff\u0100-\u017f]/g, qf = "\\u0300-\\u036f", Nf = "\\ufe20-\\ufe2f", Uf = "\\u20d0-\\u20ff", Lf = qf + Nf + Uf, Bf = "[" + Lf + "]", Gf = RegExp(Bf, "g");
-    function Wf(e) {
-      return e = xt(e), e && e.replace(Df, jf).replace(Gf, "");
-    }
-    var zf = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g;
-    function Hf(e) {
-      return e.match(zf) || [];
-    }
-    var Kf = /[a-z][A-Z]|[A-Z]{2}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/;
-    function Vf(e) {
-      return Kf.test(e);
-    }
-    var qo = "\\ud800-\\udfff", kf = "\\u0300-\\u036f", Zf = "\\ufe20-\\ufe2f", Qf = "\\u20d0-\\u20ff", Jf = kf + Zf + Qf, No = "\\u2700-\\u27bf", Uo = "a-z\\xdf-\\xf6\\xf8-\\xff", Yf = "\\xac\\xb1\\xd7\\xf7", Xf = "\\x00-\\x2f\\x3a-\\x40\\x5b-\\x60\\x7b-\\xbf", ec = "\\u2000-\\u206f", rc = " \\t\\x0b\\f\\xa0\\ufeff\\n\\r\\u2028\\u2029\\u1680\\u180e\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200a\\u202f\\u205f\\u3000", Lo = "A-Z\\xc0-\\xd6\\xd8-\\xde", tc = "\\ufe0e\\ufe0f", Bo = Yf + Xf + ec + rc, Go = "['’]", Wn = "[" + Bo + "]", nc = "[" + Jf + "]", Wo = "\\d+", oc = "[" + No + "]", zo = "[" + Uo + "]", Ho = "[^" + qo + Bo + Wo + No + Uo + Lo + "]", ac = "\\ud83c[\\udffb-\\udfff]", ic = "(?:" + nc + "|" + ac + ")", uc = "[^" + qo + "]", Ko = "(?:\\ud83c[\\udde6-\\uddff]){2}", Vo = "[\\ud800-\\udbff][\\udc00-\\udfff]", je = "[" + Lo + "]", fc = "\\u200d", zn = "(?:" + zo + "|" + Ho + ")", cc = "(?:" + je + "|" + Ho + ")", Hn = "(?:" + Go + "(?:d|ll|m|re|s|t|ve))?", Kn = "(?:" + Go + "(?:D|LL|M|RE|S|T|VE))?", ko = ic + "?", Zo = "[" + tc + "]?", lc = "(?:" + fc + "(?:" + [uc, Ko, Vo].join("|") + ")" + Zo + ko + ")*", sc = "\\d*(?:1st|2nd|3rd|(?![123])\\dth)(?=\\b|[A-Z_])", pc = "\\d*(?:1ST|2ND|3RD|(?![123])\\dTH)(?=\\b|[a-z_])", yc = Zo + ko + lc, dc = "(?:" + [oc, Ko, Vo].join("|") + ")" + yc, hc = RegExp([
-      je + "?" + zo + "+" + Hn + "(?=" + [Wn, je, "$"].join("|") + ")",
-      cc + "+" + Kn + "(?=" + [Wn, je + zn, "$"].join("|") + ")",
-      je + "?" + zn + "+" + Hn,
-      je + "+" + Kn,
-      pc,
-      sc,
-      Wo,
-      dc
-    ].join("|"), "g");
-    function gc(e) {
-      return e.match(hc) || [];
-    }
-    function vc(e, r, t) {
-      return e = xt(e), r = r, r === void 0 ? Vf(e) ? gc(e) : Hf(e) : e.match(r) || [];
-    }
-    var mc = "['’]", bc = RegExp(mc, "g");
-    function Sc(e) {
-      return function(r) {
-        return Cf(vc(Wf(r).replace(bc, "")), e, "");
-      };
-    }
-    function wc() {
-      if (!arguments.length)
-        return [];
-      var e = arguments[0];
-      return ce(e) ? e : [e];
-    }
-    function Ac() {
-      this.__data__ = new le(), this.size = 0;
-    }
-    function Oc(e) {
-      var r = this.__data__, t = r.delete(e);
-      return this.size = r.size, t;
-    }
-    function xc(e) {
-      return this.__data__.get(e);
-    }
-    function _c(e) {
-      return this.__data__.has(e);
-    }
-    var Ec = 200;
-    function $c(e, r) {
-      var t = this.__data__;
-      if (t instanceof le) {
-        var n = t.__data__;
-        if (!ke || n.length < Ec - 1)
-          return n.push([e, r]), this.size = ++t.size, this;
-        t = this.__data__ = new be(n);
-      }
-      return t.set(e, r), this.size = t.size, this;
-    }
-    function Le(e) {
-      var r = this.__data__ = new le(e);
-      this.size = r.size;
-    }
-    Le.prototype.clear = Ac;
-    Le.prototype.delete = Oc;
-    Le.prototype.get = xc;
-    Le.prototype.has = _c;
-    Le.prototype.set = $c;
-    var Qo = typeof exports == "object" && exports && !exports.nodeType && exports, Vn = Qo && typeof module == "object" && module && !module.nodeType && module, Pc = Vn && Vn.exports === Qo, kn = Pc ? ne.Buffer : void 0;
-    kn && kn.allocUnsafe;
-    function Tc(e, r) {
-      return e.slice();
-    }
-    function Rc(e, r) {
-      for (var t = -1, n = e == null ? 0 : e.length, o = 0, i = []; ++t < n; ) {
-        var s = e[t];
-        r(s, t, e) && (i[o++] = s);
-      }
-      return i;
-    }
-    function Jo() {
-      return [];
-    }
-    var Ic = Object.prototype, Cc = Ic.propertyIsEnumerable, Zn = Object.getOwnPropertySymbols, Mc = Zn ? function(e) {
-      return e == null ? [] : (e = Object(e), Rc(Zn(e), function(r) {
-        return Cc.call(e, r);
-      }));
-    } : Jo, Fc = Object.getOwnPropertySymbols, jc = Fc ? function(e) {
-      for (var r = []; e; )
-        _t(r, Mc(e)), e = jo(e);
-      return r;
-    } : Jo;
-    function Dc(e, r, t) {
-      var n = r(e);
-      return ce(e) ? n : _t(n, t(e));
-    }
-    function Yo(e) {
-      return Dc(e, Bu, jc);
-    }
-    var st = $e(ne, "DataView"), pt = $e(ne, "Promise"), yt = $e(ne, "Set"), Qn = "[object Map]", qc = "[object Object]", Jn = "[object Promise]", Yn = "[object Set]", Xn = "[object WeakMap]", eo = "[object DataView]", Nc = Ee(st), Uc = Ee(ke), Lc = Ee(pt), Bc = Ee(yt), Gc = Ee(lt), fe = xe;
-    (st && fe(new st(new ArrayBuffer(1))) != eo || ke && fe(new ke()) != Qn || pt && fe(pt.resolve()) != Jn || yt && fe(new yt()) != Yn || lt && fe(new lt()) != Xn) && (fe = function(e) {
-      var r = xe(e), t = r == qc ? e.constructor : void 0, n = t ? Ee(t) : "";
-      if (n)
-        switch (n) {
-          case Nc:
-            return eo;
-          case Uc:
-            return Qn;
-          case Lc:
-            return Jn;
-          case Bc:
-            return Yn;
-          case Gc:
-            return Xn;
-        }
-      return r;
-    });
-    var Wc = Object.prototype, zc = Wc.hasOwnProperty;
-    function Hc(e) {
-      var r = e.length, t = new e.constructor(r);
-      return r && typeof e[0] == "string" && zc.call(e, "index") && (t.index = e.index, t.input = e.input), t;
-    }
-    var ro = ne.Uint8Array;
-    function Et(e) {
-      var r = new e.constructor(e.byteLength);
-      return new ro(r).set(new ro(e)), r;
-    }
-    function Kc(e, r) {
-      var t = Et(e.buffer);
-      return new e.constructor(t, e.byteOffset, e.byteLength);
-    }
-    var Vc = /\w*$/;
-    function kc(e) {
-      var r = new e.constructor(e.source, Vc.exec(e));
-      return r.lastIndex = e.lastIndex, r;
-    }
-    var to = te ? te.prototype : void 0, no = to ? to.valueOf : void 0;
-    function Zc(e) {
-      return no ? Object(no.call(e)) : {};
-    }
-    function Qc(e, r) {
-      var t = Et(e.buffer);
-      return new e.constructor(t, e.byteOffset, e.length);
-    }
-    var Jc = "[object Boolean]", Yc = "[object Date]", Xc = "[object Map]", el = "[object Number]", rl = "[object RegExp]", tl = "[object Set]", nl = "[object String]", ol = "[object Symbol]", al = "[object ArrayBuffer]", il = "[object DataView]", ul = "[object Float32Array]", fl = "[object Float64Array]", cl = "[object Int8Array]", ll = "[object Int16Array]", sl = "[object Int32Array]", pl = "[object Uint8Array]", yl = "[object Uint8ClampedArray]", dl = "[object Uint16Array]", hl = "[object Uint32Array]";
-    function gl(e, r, t) {
-      var n = e.constructor;
-      switch (r) {
-        case al:
-          return Et(e);
-        case Jc:
-        case Yc:
-          return new n(+e);
-        case il:
-          return Kc(e);
-        case ul:
-        case fl:
-        case cl:
-        case ll:
-        case sl:
-        case pl:
-        case yl:
-        case dl:
-        case hl:
-          return Qc(e);
-        case Xc:
-          return new n();
-        case el:
-        case nl:
-          return new n(e);
-        case rl:
-          return kc(e);
-        case tl:
-          return new n();
-        case ol:
-          return Zc(e);
-      }
-    }
-    var vl = "[object Map]";
-    function ml(e) {
-      return _e(e) && fe(e) == vl;
-    }
-    var oo = qe && qe.isMap, bl = oo ? At(oo) : ml, Sl = "[object Set]";
-    function wl(e) {
-      return _e(e) && fe(e) == Sl;
-    }
-    var ao = qe && qe.isSet, Al = ao ? At(ao) : wl, Xo = "[object Arguments]", Ol = "[object Array]", xl = "[object Boolean]", _l = "[object Date]", El = "[object Error]", ea = "[object Function]", $l = "[object GeneratorFunction]", Pl = "[object Map]", Tl = "[object Number]", ra = "[object Object]", Rl = "[object RegExp]", Il = "[object Set]", Cl = "[object String]", Ml = "[object Symbol]", Fl = "[object WeakMap]", jl = "[object ArrayBuffer]", Dl = "[object DataView]", ql = "[object Float32Array]", Nl = "[object Float64Array]", Ul = "[object Int8Array]", Ll = "[object Int16Array]", Bl = "[object Int32Array]", Gl = "[object Uint8Array]", Wl = "[object Uint8ClampedArray]", zl = "[object Uint16Array]", Hl = "[object Uint32Array]", q = {};
-    q[Xo] = q[Ol] = q[jl] = q[Dl] = q[xl] = q[_l] = q[ql] = q[Nl] = q[Ul] = q[Ll] = q[Bl] = q[Pl] = q[Tl] = q[ra] = q[Rl] = q[Il] = q[Cl] = q[Ml] = q[Gl] = q[Wl] = q[zl] = q[Hl] = true;
-    q[El] = q[ea] = q[Fl] = false;
-    function Ye(e, r, t, n, o, i) {
-      var s;
-      if (t && (s = o ? t(e, n, o, i) : t(e)), s !== void 0)
-        return s;
-      if (!De(e))
-        return e;
-      var f = ce(e);
-      if (f)
-        s = Hc(e);
-      else {
-        var g = fe(e), h2 = g == ea || g == $l;
-        if (Io(e))
-          return Tc(e);
-        if (g == ra || g == Xo || h2 && !o)
-          s = {};
-        else {
-          if (!q[g])
-            return o ? e : {};
-          s = gl(e, g);
-        }
-      }
-      i || (i = new Le());
-      var v = i.get(e);
-      if (v)
-        return v;
-      i.set(e, s), Al(e) ? e.forEach(function(c) {
-        s.add(Ye(c, r, t, c, e, i));
-      }) : bl(e) && e.forEach(function(c, d) {
-        s.set(d, Ye(c, r, t, d, e, i));
-      });
-      var m = Yo, b = f ? void 0 : m(e);
-      return zi(b || e, function(c, d) {
-        b && (d = c, c = e[d]), bt(s, d, Ye(c, r, t, d, e, i));
-      }), s;
-    }
-    function Kl(e, r) {
-      return e != null && r in Object(e);
-    }
-    function Vl(e, r, t) {
-      r = Ue(r, e);
-      for (var n = -1, o = r.length, i = false; ++n < o; ) {
-        var s = or(r[n]);
-        if (!(i = e != null && t(e, s)))
-          break;
-        e = e[s];
-      }
-      return i || ++n != o ? i : (o = e == null ? 0 : e.length, !!o && St(o) && mt(s, o) && (ce(e) || wt(e)));
-    }
-    function kl(e, r) {
-      return e != null && Vl(e, r, Kl);
-    }
-    function Zl(e) {
-      var r = e == null ? 0 : e.length;
-      return r ? e[r - 1] : void 0;
-    }
-    function Ql(e, r) {
-      return r.length < 2 ? e : Mo(e, If(r, 0, -1));
-    }
-    var Jl = Sc(function(e, r, t) {
-      return e + (t ? " " : "") + r.toLowerCase();
-    });
-    function Yl(e, r) {
-      return r = Ue(r, e), e = Ql(e, r), e == null || delete e[or(Zl(r))];
-    }
-    function Xl(e) {
-      return Rf(e) ? void 0 : e;
-    }
-    var es = 1, rs = 2, ts = 4, io = Fo(function(e, r) {
-      var t = {};
-      if (e == null)
-        return t;
-      var n = false;
-      r = xo(r, function(i) {
-        return i = Ue(i, e), n || (n = i.length > 1), i;
-      }), Zi(e, Yo(e), t), n && (t = Ye(t, es | rs | ts, Xl));
-      for (var o = r.length; o--; )
-        Yl(t, r[o]);
-      return t;
-    });
-    function ns(e, r, t, n) {
-      if (!De(e))
-        return e;
-      r = Ue(r, e);
-      for (var o = -1, i = r.length, s = i - 1, f = e; f != null && ++o < i; ) {
-        var g = or(r[o]), h2 = t;
-        if (g === "__proto__" || g === "constructor" || g === "prototype")
-          return e;
-        if (o != s) {
-          var v = f[g];
-          h2 = void 0, h2 === void 0 && (h2 = De(v) ? v : mt(r[o + 1]) ? [] : {});
-        }
-        bt(f, g, h2), f = f[g];
-      }
-      return e;
-    }
-    function os(e, r, t) {
-      for (var n = -1, o = r.length, i = {}; ++n < o; ) {
-        var s = r[n], f = Mo(e, s);
-        t(f, s) && ns(i, Ue(s, e), f);
-      }
-      return i;
-    }
-    function as(e, r) {
-      return os(e, r, function(t, n) {
-        return kl(e, n);
-      });
-    }
-    var is = Fo(function(e, r) {
-      return e == null ? {} : as(e, r);
-    });
-    const ze = ref(null), us = [
-      "cache-for",
-      "data",
-      "method",
-      "replace",
-      "prefetch",
-      "preserve-scroll",
-      "preserve-state",
-      "only",
-      "except",
-      "headers",
-      "query-string-array-format",
-      "on-before",
-      "on-start",
-      "on-progress",
-      "on-finish",
-      "on-cancel",
-      "on-cancel-token",
-      "on-error",
-      "on-success",
-      "async"
-    ], fs = (e) => e.replace(/-./g, (r) => r[1].toUpperCase()), cs = (e, r) => ["replace", "preserve-scroll", "preserve-state", "async"].includes(e) ? true : e === "prefetch" ? r ? wc(r) : ["hover"] : ["method"].includes(e) ? Jl(r) : r, ls = (e) => {
-      const r = us.reduce((t, n) => (typeof e[n] < "u" && (t[fs(n)] = cs(n, e[n])), t), {});
-      return r.method || (r.method = "get"), r;
-    }, ss = (e) => {
-      const r = getCurrentInstance(), t = new AbortController(), n = ui();
-      ze.value || (ze.value = `${n.value.origin}${n.value.pathname}`);
-      const o = fi(e.to), i = useAttrs(), s = ls(i);
-      return onMounted(() => {
-        var h2, v;
-        const { prefetch: f } = s, g = () => {
-          router.prefetch(o.value, io(s, ["cacheFor"]), is(s, ["cacheFor"]));
-        };
-        (f == null ? void 0 : f.length) > 0 && (f.includes("mount") && g(), f.includes("hover") && ((h2 = r.proxy) != null && h2.$el) && r.proxy.$el.addEventListener("mouseenter", g, {
-          signal: t.signal
-        }), f.includes("click") && ((v = r.proxy) != null && v.$el) && r.proxy.$el.addEventListener("click", g, {
-          signal: t.signal
-        }));
-      }), onUnmounted(() => t.abort()), {
-        route: computed(() => ({ href: o.value })),
-        isExactActive: computed(() => ze.value === o.value),
-        isActive: computed(() => ze.value.startsWith(o.value)),
-        navigate(f) {
-          f.shiftKey || f.metaKey || f.ctrlKey || (f.preventDefault(), ze.value = o.value, router.visit(o.value, io(s, ["prefetch", "cacheFor"])));
-        }
-      };
-    }, ps = {
-      name: "RouterLink",
-      useLink: ss
-    }, gs = {
-      install: (e) => {
-        e.component("RouterLink", ps);
-      }
-    };
-    const _sfc_main$9 = {
-      __name: "ForgotPassword",
-      __ssrInlineRender: true,
-      setup(__props) {
-        va();
-        useForm({
-          email: ""
-        });
-        return (_ctx, _push, _parent, _attrs) => {
-          _push(`<div${ssrRenderAttrs(_attrs)}>Request reset link form</div>`);
-        };
-      }
-    };
-    const _sfc_setup$9 = _sfc_main$9.setup;
-    _sfc_main$9.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/ForgotPassword.vue");
-      return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
-    };
-    const __vite_glob_0_2$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: _sfc_main$9
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main$8 = {};
-    function _sfc_ssrRender$4(_ctx, _push, _parent, _attrs) {
-      _push(ssrRenderComponent(VApp, _attrs, {
-        default: withCtx((_, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            ssrRenderSlot(_ctx.$slots, "default", {}, null, _push2, _parent2, _scopeId);
-          } else {
-            return [
-              renderSlot(_ctx.$slots, "default")
-            ];
-          }
-        }),
-        _: 3
-      }, _parent));
-    }
-    const _sfc_setup$8 = _sfc_main$8.setup;
-    _sfc_main$8.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/layouts/BlankLayout.vue");
-      return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
-    };
-    const BlankLayout = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["ssrRender", _sfc_ssrRender$4]]);
-    const _sfc_main$7 = /* @__PURE__ */ Object.assign({
-      layout: BlankLayout
-    }, {
-      __name: "Login",
-      __ssrInlineRender: true,
-      setup(__props) {
-        const route = va();
-        const login = useForm({
-          email: "",
-          password: "",
-          remember: false
-        });
-        const isPasswordVisible = ref(false);
-        const onLogin = () => {
-          login.post(route("auth.login.store"), {
-            onSuccess() {
-              console.log("Done");
-            }
-          });
-        };
-        return (_ctx, _push, _parent, _attrs) => {
-          _push(`<div${ssrRenderAttrs(mergeProps({ class: "auth-wrapper d-flex align-center justify-center pa-4" }, _attrs))}>`);
-          _push(ssrRenderComponent(VCard, {
-            class: "auth-card pa-4 pt-7",
-            "max-width": "448"
-          }, {
-            default: withCtx((_, _push2, _parent2, _scopeId) => {
-              if (_push2) {
-                _push2(ssrRenderComponent(VCardItem, { class: "justify-center" }, {
-                  prepend: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                    if (_push3) {
-                      _push3(`<div class="d-flex"${_scopeId2}><div class="d-flex text-primary"${_scopeId2}>${_ctx.logo ?? ""}</div></div>`);
-                    } else {
-                      return [
-                        createVNode("div", { class: "d-flex" }, [
-                          createVNode("div", {
-                            class: "d-flex text-primary",
-                            innerHTML: _ctx.logo
-                          }, null, 8, ["innerHTML"])
-                        ])
-                      ];
-                    }
-                  }),
-                  default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                    if (_push3) {
-                      _push3(ssrRenderComponent(VCardTitle, { class: "text-2xl font-weight-bold" }, {
-                        default: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                          if (_push4) {
-                            _push4(` sneat `);
-                          } else {
-                            return [
-                              createTextVNode(" sneat ")
-                            ];
-                          }
-                        }),
-                        _: 1
-                      }, _parent3, _scopeId2));
-                    } else {
-                      return [
-                        createVNode(VCardTitle, { class: "text-2xl font-weight-bold" }, {
-                          default: withCtx(() => [
-                            createTextVNode(" sneat ")
-                          ]),
-                          _: 1
-                        })
-                      ];
-                    }
-                  }),
-                  _: 1
-                }, _parent2, _scopeId));
-                _push2(ssrRenderComponent(VCardText, { class: "pt-2" }, {
-                  default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                    if (_push3) {
-                      _push3(`<p class="mb-0"${_scopeId2}>Please sign-in to your account</p>`);
-                    } else {
-                      return [
-                        createVNode("p", { class: "mb-0" }, "Please sign-in to your account")
-                      ];
-                    }
-                  }),
-                  _: 1
-                }, _parent2, _scopeId));
-                _push2(ssrRenderComponent(VCardText, null, {
-                  default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                    if (_push3) {
-                      _push3(ssrRenderComponent(VForm, { onSubmit: onLogin }, {
-                        default: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                          if (_push4) {
-                            _push4(ssrRenderComponent(VRow, null, {
-                              default: withCtx((_4, _push5, _parent5, _scopeId4) => {
-                                if (_push5) {
-                                  _push5(ssrRenderComponent(VCol, { cols: "12" }, {
-                                    default: withCtx((_5, _push6, _parent6, _scopeId5) => {
-                                      if (_push6) {
-                                        _push6(ssrRenderComponent(VTextField, {
-                                          modelValue: unref(login).email,
-                                          "onUpdate:modelValue": ($event) => unref(login).email = $event,
-                                          autofocus: "",
-                                          placeholder: "johndoe@email.com",
-                                          label: "Email",
-                                          type: "email",
-                                          "error-messages": unref(login).errors.email
-                                        }, null, _parent6, _scopeId5));
-                                      } else {
-                                        return [
-                                          createVNode(VTextField, {
-                                            modelValue: unref(login).email,
-                                            "onUpdate:modelValue": ($event) => unref(login).email = $event,
-                                            autofocus: "",
-                                            placeholder: "johndoe@email.com",
-                                            label: "Email",
-                                            type: "email",
-                                            "error-messages": unref(login).errors.email
-                                          }, null, 8, ["modelValue", "onUpdate:modelValue", "error-messages"])
-                                        ];
-                                      }
-                                    }),
-                                    _: 1
-                                  }, _parent5, _scopeId4));
-                                  _push5(ssrRenderComponent(VCol, { cols: "12" }, {
-                                    default: withCtx((_5, _push6, _parent6, _scopeId5) => {
-                                      if (_push6) {
-                                        _push6(ssrRenderComponent(VTextField, {
-                                          modelValue: unref(login).password,
-                                          "onUpdate:modelValue": ($event) => unref(login).password = $event,
-                                          label: "Password",
-                                          placeholder: "············",
-                                          type: unref(isPasswordVisible) ? "text" : "password",
-                                          "append-inner-icon": unref(isPasswordVisible) ? "mdi-eye-off" : "mdi-eye",
-                                          "error-messages": unref(login).errors.password,
-                                          "onClick:appendInner": ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
-                                        }, null, _parent6, _scopeId5));
-                                        _push6(`<div class="d-flex align-center justify-space-between flex-wrap mt-1 mb-4"${_scopeId5}>`);
-                                        _push6(ssrRenderComponent(VCheckbox, {
-                                          modelValue: unref(login).remember,
-                                          "onUpdate:modelValue": ($event) => unref(login).remember = $event,
-                                          label: "Remember me?"
-                                        }, null, _parent6, _scopeId5));
-                                        _push6(ssrRenderComponent(VBtn, {
-                                          class: "text-primary text-capitalize ms-2 mb-1",
-                                          variant: "text",
-                                          to: "auth.forgot-password"
-                                        }, {
-                                          default: withCtx((_6, _push7, _parent7, _scopeId6) => {
-                                            if (_push7) {
-                                              _push7(` Forgot Password? `);
-                                            } else {
-                                              return [
-                                                createTextVNode(" Forgot Password? ")
-                                              ];
-                                            }
-                                          }),
-                                          _: 1
-                                        }, _parent6, _scopeId5));
-                                        _push6(`</div>`);
-                                        _push6(ssrRenderComponent(VBtn, {
-                                          block: "",
-                                          type: "submit"
-                                        }, {
-                                          default: withCtx((_6, _push7, _parent7, _scopeId6) => {
-                                            if (_push7) {
-                                              _push7(` Login `);
-                                            } else {
-                                              return [
-                                                createTextVNode(" Login ")
-                                              ];
-                                            }
-                                          }),
-                                          _: 1
-                                        }, _parent6, _scopeId5));
-                                      } else {
-                                        return [
-                                          createVNode(VTextField, {
-                                            modelValue: unref(login).password,
-                                            "onUpdate:modelValue": ($event) => unref(login).password = $event,
-                                            label: "Password",
-                                            placeholder: "············",
-                                            type: unref(isPasswordVisible) ? "text" : "password",
-                                            "append-inner-icon": unref(isPasswordVisible) ? "mdi-eye-off" : "mdi-eye",
-                                            "error-messages": unref(login).errors.password,
-                                            "onClick:appendInner": ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
-                                          }, null, 8, ["modelValue", "onUpdate:modelValue", "type", "append-inner-icon", "error-messages", "onClick:appendInner"]),
-                                          createVNode("div", { class: "d-flex align-center justify-space-between flex-wrap mt-1 mb-4" }, [
-                                            createVNode(VCheckbox, {
-                                              modelValue: unref(login).remember,
-                                              "onUpdate:modelValue": ($event) => unref(login).remember = $event,
-                                              label: "Remember me?"
-                                            }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                                            createVNode(VBtn, {
-                                              class: "text-primary text-capitalize ms-2 mb-1",
-                                              variant: "text",
-                                              to: "auth.forgot-password"
-                                            }, {
-                                              default: withCtx(() => [
-                                                createTextVNode(" Forgot Password? ")
-                                              ]),
-                                              _: 1
-                                            })
-                                          ]),
-                                          createVNode(VBtn, {
-                                            block: "",
-                                            type: "submit"
-                                          }, {
-                                            default: withCtx(() => [
-                                              createTextVNode(" Login ")
-                                            ]),
-                                            _: 1
-                                          })
-                                        ];
-                                      }
-                                    }),
-                                    _: 1
-                                  }, _parent5, _scopeId4));
-                                } else {
-                                  return [
-                                    createVNode(VCol, { cols: "12" }, {
-                                      default: withCtx(() => [
-                                        createVNode(VTextField, {
-                                          modelValue: unref(login).email,
-                                          "onUpdate:modelValue": ($event) => unref(login).email = $event,
-                                          autofocus: "",
-                                          placeholder: "johndoe@email.com",
-                                          label: "Email",
-                                          type: "email",
-                                          "error-messages": unref(login).errors.email
-                                        }, null, 8, ["modelValue", "onUpdate:modelValue", "error-messages"])
-                                      ]),
-                                      _: 1
-                                    }),
-                                    createVNode(VCol, { cols: "12" }, {
-                                      default: withCtx(() => [
-                                        createVNode(VTextField, {
-                                          modelValue: unref(login).password,
-                                          "onUpdate:modelValue": ($event) => unref(login).password = $event,
-                                          label: "Password",
-                                          placeholder: "············",
-                                          type: unref(isPasswordVisible) ? "text" : "password",
-                                          "append-inner-icon": unref(isPasswordVisible) ? "mdi-eye-off" : "mdi-eye",
-                                          "error-messages": unref(login).errors.password,
-                                          "onClick:appendInner": ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
-                                        }, null, 8, ["modelValue", "onUpdate:modelValue", "type", "append-inner-icon", "error-messages", "onClick:appendInner"]),
-                                        createVNode("div", { class: "d-flex align-center justify-space-between flex-wrap mt-1 mb-4" }, [
-                                          createVNode(VCheckbox, {
-                                            modelValue: unref(login).remember,
-                                            "onUpdate:modelValue": ($event) => unref(login).remember = $event,
-                                            label: "Remember me?"
-                                          }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                                          createVNode(VBtn, {
-                                            class: "text-primary text-capitalize ms-2 mb-1",
-                                            variant: "text",
-                                            to: "auth.forgot-password"
-                                          }, {
-                                            default: withCtx(() => [
-                                              createTextVNode(" Forgot Password? ")
-                                            ]),
-                                            _: 1
-                                          })
-                                        ]),
-                                        createVNode(VBtn, {
-                                          block: "",
-                                          type: "submit"
-                                        }, {
-                                          default: withCtx(() => [
-                                            createTextVNode(" Login ")
-                                          ]),
-                                          _: 1
-                                        })
-                                      ]),
-                                      _: 1
-                                    })
-                                  ];
-                                }
-                              }),
-                              _: 1
-                            }, _parent4, _scopeId3));
-                          } else {
-                            return [
-                              createVNode(VRow, null, {
-                                default: withCtx(() => [
-                                  createVNode(VCol, { cols: "12" }, {
-                                    default: withCtx(() => [
-                                      createVNode(VTextField, {
-                                        modelValue: unref(login).email,
-                                        "onUpdate:modelValue": ($event) => unref(login).email = $event,
-                                        autofocus: "",
-                                        placeholder: "johndoe@email.com",
-                                        label: "Email",
-                                        type: "email",
-                                        "error-messages": unref(login).errors.email
-                                      }, null, 8, ["modelValue", "onUpdate:modelValue", "error-messages"])
-                                    ]),
-                                    _: 1
-                                  }),
-                                  createVNode(VCol, { cols: "12" }, {
-                                    default: withCtx(() => [
-                                      createVNode(VTextField, {
-                                        modelValue: unref(login).password,
-                                        "onUpdate:modelValue": ($event) => unref(login).password = $event,
-                                        label: "Password",
-                                        placeholder: "············",
-                                        type: unref(isPasswordVisible) ? "text" : "password",
-                                        "append-inner-icon": unref(isPasswordVisible) ? "mdi-eye-off" : "mdi-eye",
-                                        "error-messages": unref(login).errors.password,
-                                        "onClick:appendInner": ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
-                                      }, null, 8, ["modelValue", "onUpdate:modelValue", "type", "append-inner-icon", "error-messages", "onClick:appendInner"]),
-                                      createVNode("div", { class: "d-flex align-center justify-space-between flex-wrap mt-1 mb-4" }, [
-                                        createVNode(VCheckbox, {
-                                          modelValue: unref(login).remember,
-                                          "onUpdate:modelValue": ($event) => unref(login).remember = $event,
-                                          label: "Remember me?"
-                                        }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                                        createVNode(VBtn, {
-                                          class: "text-primary text-capitalize ms-2 mb-1",
-                                          variant: "text",
-                                          to: "auth.forgot-password"
-                                        }, {
-                                          default: withCtx(() => [
-                                            createTextVNode(" Forgot Password? ")
-                                          ]),
-                                          _: 1
-                                        })
-                                      ]),
-                                      createVNode(VBtn, {
-                                        block: "",
-                                        type: "submit"
-                                      }, {
-                                        default: withCtx(() => [
-                                          createTextVNode(" Login ")
-                                        ]),
-                                        _: 1
-                                      })
-                                    ]),
-                                    _: 1
-                                  })
-                                ]),
-                                _: 1
-                              })
-                            ];
-                          }
-                        }),
-                        _: 1
-                      }, _parent3, _scopeId2));
-                    } else {
-                      return [
-                        createVNode(VForm, {
-                          onSubmit: withModifiers(onLogin, ["prevent"])
-                        }, {
-                          default: withCtx(() => [
-                            createVNode(VRow, null, {
-                              default: withCtx(() => [
-                                createVNode(VCol, { cols: "12" }, {
-                                  default: withCtx(() => [
-                                    createVNode(VTextField, {
-                                      modelValue: unref(login).email,
-                                      "onUpdate:modelValue": ($event) => unref(login).email = $event,
-                                      autofocus: "",
-                                      placeholder: "johndoe@email.com",
-                                      label: "Email",
-                                      type: "email",
-                                      "error-messages": unref(login).errors.email
-                                    }, null, 8, ["modelValue", "onUpdate:modelValue", "error-messages"])
-                                  ]),
-                                  _: 1
-                                }),
-                                createVNode(VCol, { cols: "12" }, {
-                                  default: withCtx(() => [
-                                    createVNode(VTextField, {
-                                      modelValue: unref(login).password,
-                                      "onUpdate:modelValue": ($event) => unref(login).password = $event,
-                                      label: "Password",
-                                      placeholder: "············",
-                                      type: unref(isPasswordVisible) ? "text" : "password",
-                                      "append-inner-icon": unref(isPasswordVisible) ? "mdi-eye-off" : "mdi-eye",
-                                      "error-messages": unref(login).errors.password,
-                                      "onClick:appendInner": ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
-                                    }, null, 8, ["modelValue", "onUpdate:modelValue", "type", "append-inner-icon", "error-messages", "onClick:appendInner"]),
-                                    createVNode("div", { class: "d-flex align-center justify-space-between flex-wrap mt-1 mb-4" }, [
-                                      createVNode(VCheckbox, {
-                                        modelValue: unref(login).remember,
-                                        "onUpdate:modelValue": ($event) => unref(login).remember = $event,
-                                        label: "Remember me?"
-                                      }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                                      createVNode(VBtn, {
-                                        class: "text-primary text-capitalize ms-2 mb-1",
-                                        variant: "text",
-                                        to: "auth.forgot-password"
-                                      }, {
-                                        default: withCtx(() => [
-                                          createTextVNode(" Forgot Password? ")
-                                        ]),
-                                        _: 1
-                                      })
-                                    ]),
-                                    createVNode(VBtn, {
-                                      block: "",
-                                      type: "submit"
-                                    }, {
-                                      default: withCtx(() => [
-                                        createTextVNode(" Login ")
-                                      ]),
-                                      _: 1
-                                    })
-                                  ]),
-                                  _: 1
-                                })
-                              ]),
-                              _: 1
-                            })
-                          ]),
-                          _: 1
-                        })
-                      ];
-                    }
-                  }),
-                  _: 1
-                }, _parent2, _scopeId));
-              } else {
-                return [
-                  createVNode(VCardItem, { class: "justify-center" }, {
-                    prepend: withCtx(() => [
-                      createVNode("div", { class: "d-flex" }, [
-                        createVNode("div", {
-                          class: "d-flex text-primary",
-                          innerHTML: _ctx.logo
-                        }, null, 8, ["innerHTML"])
-                      ])
-                    ]),
-                    default: withCtx(() => [
-                      createVNode(VCardTitle, { class: "text-2xl font-weight-bold" }, {
-                        default: withCtx(() => [
-                          createTextVNode(" sneat ")
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  }),
-                  createVNode(VCardText, { class: "pt-2" }, {
-                    default: withCtx(() => [
-                      createVNode("p", { class: "mb-0" }, "Please sign-in to your account")
-                    ]),
-                    _: 1
-                  }),
-                  createVNode(VCardText, null, {
-                    default: withCtx(() => [
-                      createVNode(VForm, {
-                        onSubmit: withModifiers(onLogin, ["prevent"])
-                      }, {
-                        default: withCtx(() => [
-                          createVNode(VRow, null, {
-                            default: withCtx(() => [
-                              createVNode(VCol, { cols: "12" }, {
-                                default: withCtx(() => [
-                                  createVNode(VTextField, {
-                                    modelValue: unref(login).email,
-                                    "onUpdate:modelValue": ($event) => unref(login).email = $event,
-                                    autofocus: "",
-                                    placeholder: "johndoe@email.com",
-                                    label: "Email",
-                                    type: "email",
-                                    "error-messages": unref(login).errors.email
-                                  }, null, 8, ["modelValue", "onUpdate:modelValue", "error-messages"])
-                                ]),
-                                _: 1
-                              }),
-                              createVNode(VCol, { cols: "12" }, {
-                                default: withCtx(() => [
-                                  createVNode(VTextField, {
-                                    modelValue: unref(login).password,
-                                    "onUpdate:modelValue": ($event) => unref(login).password = $event,
-                                    label: "Password",
-                                    placeholder: "············",
-                                    type: unref(isPasswordVisible) ? "text" : "password",
-                                    "append-inner-icon": unref(isPasswordVisible) ? "mdi-eye-off" : "mdi-eye",
-                                    "error-messages": unref(login).errors.password,
-                                    "onClick:appendInner": ($event) => isPasswordVisible.value = !unref(isPasswordVisible)
-                                  }, null, 8, ["modelValue", "onUpdate:modelValue", "type", "append-inner-icon", "error-messages", "onClick:appendInner"]),
-                                  createVNode("div", { class: "d-flex align-center justify-space-between flex-wrap mt-1 mb-4" }, [
-                                    createVNode(VCheckbox, {
-                                      modelValue: unref(login).remember,
-                                      "onUpdate:modelValue": ($event) => unref(login).remember = $event,
-                                      label: "Remember me?"
-                                    }, null, 8, ["modelValue", "onUpdate:modelValue"]),
-                                    createVNode(VBtn, {
-                                      class: "text-primary text-capitalize ms-2 mb-1",
-                                      variant: "text",
-                                      to: "auth.forgot-password"
-                                    }, {
-                                      default: withCtx(() => [
-                                        createTextVNode(" Forgot Password? ")
-                                      ]),
-                                      _: 1
-                                    })
-                                  ]),
-                                  createVNode(VBtn, {
-                                    block: "",
-                                    type: "submit"
-                                  }, {
-                                    default: withCtx(() => [
-                                      createTextVNode(" Login ")
-                                    ]),
-                                    _: 1
-                                  })
-                                ]),
-                                _: 1
-                              })
-                            ]),
-                            _: 1
-                          })
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    _: 1
-                  })
-                ];
-              }
-            }),
-            _: 1
-          }, _parent));
-          _push(`</div>`);
-        };
-      }
-    });
-    const _sfc_setup$7 = _sfc_main$7.setup;
-    _sfc_main$7.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/Login.vue");
-      return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
-    };
-    const __vite_glob_0_3$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: _sfc_main$7
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main$6 = {
-      __name: "MustVerifyEmail",
-      __ssrInlineRender: true,
-      setup(__props) {
-        va();
-        ref(false);
-        return (_ctx, _push, _parent, _attrs) => {
-          _push(`<div${ssrRenderAttrs(_attrs)}><div class="prose prose-invert"><h1 class="uppercase">Email Verification Required</h1><p>Before you can access the application, we need you to verify your email address.</p><p>You should have received this email when you registered, but you can resend it using the link below.</p></div><div class="flex justify-end py-8"><button>Resend Verification Email</button></div></div>`);
-        };
-      }
-    };
-    const _sfc_setup$6 = _sfc_main$6.setup;
-    _sfc_main$6.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/MustVerifyEmail.vue");
-      return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
-    };
-    const __vite_glob_0_4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: _sfc_main$6
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main$5 = {
-      __name: "ResetPassword",
-      __ssrInlineRender: true,
-      setup(__props) {
-        va();
-        useForm({
-          token: usePage().props.token,
-          email: usePage().props.email,
-          password: "",
-          password_confirmation: ""
-        });
-        return (_ctx, _push, _parent, _attrs) => {
-          _push(`<div${ssrRenderAttrs(_attrs)}>Reset password form with readonly email input</div>`);
-        };
-      }
-    };
-    const _sfc_setup$5 = _sfc_main$5.setup;
-    _sfc_main$5.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/ResetPassword.vue");
-      return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
-    };
-    const __vite_glob_0_5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: _sfc_main$5
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main$4 = {};
-    function _sfc_ssrRender$3(_ctx, _push, _parent, _attrs) {
-      const _component_EvoSidebarNavigation = resolveComponent("EvoSidebarNavigation");
-      const _component_EvoAppBarThemeSwitcher = resolveComponent("EvoAppBarThemeSwitcher");
-      _push(ssrRenderComponent(VApp, _attrs, {
-        default: withCtx((_, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            _push2(ssrRenderComponent(VNavigationDrawer, null, {
-              append: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                if (_push3) {
-                  _push3(ssrRenderComponent(VList, { nav: "" }, {
-                    default: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                      if (_push4) {
-                        _push4(ssrRenderComponent(VListItem, {
-                          title: "Logout",
-                          "prepend-icon": "mdi-logout-variant",
-                          to: "auth.logout",
-                          method: "delete"
-                        }, null, _parent4, _scopeId3));
-                      } else {
-                        return [
-                          createVNode(VListItem, {
-                            title: "Logout",
-                            "prepend-icon": "mdi-logout-variant",
-                            to: "auth.logout",
-                            method: "delete"
-                          })
-                        ];
-                      }
-                    }),
-                    _: 1
-                  }, _parent3, _scopeId2));
-                } else {
-                  return [
-                    createVNode(VList, { nav: "" }, {
-                      default: withCtx(() => [
-                        createVNode(VListItem, {
-                          title: "Logout",
-                          "prepend-icon": "mdi-logout-variant",
-                          to: "auth.logout",
-                          method: "delete"
-                        })
-                      ]),
-                      _: 1
-                    })
-                  ];
-                }
-              }),
-              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                if (_push3) {
-                  _push3(`<div class="text-center py-4"${_scopeId2}>`);
-                  _push3(ssrRenderComponent(VAvatar, null, {
-                    default: withCtx((_3, _push4, _parent4, _scopeId3) => {
-                      if (_push4) {
-                        _push4(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40"${_scopeId3}><path fill="#F06225" d="M20 0c11.046 0 20 8.954 20 20v14a6 6 0 0 1-6 6H21v-8.774c0-2.002.122-4.076 1.172-5.78a10 10 0 0 1 6.904-4.627l.383-.062a.8.8 0 0 0 0-1.514l-.383-.062a10 10 0 0 1-8.257-8.257l-.062-.383a.8.8 0 0 0-1.514 0l-.062.383a9.999 9.999 0 0 1-4.627 6.904C12.85 18.878 10.776 19 8.774 19H.024C.547 8.419 9.29 0 20 0Z"${_scopeId3}></path><path fill="#F06225" d="M0 21h8.774c2.002 0 4.076.122 5.78 1.172a10.02 10.02 0 0 1 3.274 3.274C18.878 27.15 19 29.224 19 31.226V40H6a6 6 0 0 1-6-6V21ZM40 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"${_scopeId3}></path></svg>`);
-                      } else {
-                        return [
-                          (openBlock(), createBlock("svg", {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "40",
-                            height: "40",
-                            fill: "none",
-                            viewBox: "0 0 40 40"
-                          }, [
-                            createVNode("path", {
-                              fill: "#F06225",
-                              d: "M20 0c11.046 0 20 8.954 20 20v14a6 6 0 0 1-6 6H21v-8.774c0-2.002.122-4.076 1.172-5.78a10 10 0 0 1 6.904-4.627l.383-.062a.8.8 0 0 0 0-1.514l-.383-.062a10 10 0 0 1-8.257-8.257l-.062-.383a.8.8 0 0 0-1.514 0l-.062.383a9.999 9.999 0 0 1-4.627 6.904C12.85 18.878 10.776 19 8.774 19H.024C.547 8.419 9.29 0 20 0Z"
-                            }),
-                            createVNode("path", {
-                              fill: "#F06225",
-                              d: "M0 21h8.774c2.002 0 4.076.122 5.78 1.172a10.02 10.02 0 0 1 3.274 3.274C18.878 27.15 19 29.224 19 31.226V40H6a6 6 0 0 1-6-6V21ZM40 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-                            })
-                          ]))
-                        ];
-                      }
-                    }),
-                    _: 1
-                  }, _parent3, _scopeId2));
-                  _push3(`</div>`);
-                  _push3(ssrRenderComponent(VDivider, null, null, _parent3, _scopeId2));
-                  _push3(ssrRenderComponent(_component_EvoSidebarNavigation, null, null, _parent3, _scopeId2));
-                } else {
-                  return [
-                    createVNode("div", { class: "text-center py-4" }, [
-                      createVNode(VAvatar, null, {
-                        default: withCtx(() => [
-                          (openBlock(), createBlock("svg", {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            width: "40",
-                            height: "40",
-                            fill: "none",
-                            viewBox: "0 0 40 40"
-                          }, [
-                            createVNode("path", {
-                              fill: "#F06225",
-                              d: "M20 0c11.046 0 20 8.954 20 20v14a6 6 0 0 1-6 6H21v-8.774c0-2.002.122-4.076 1.172-5.78a10 10 0 0 1 6.904-4.627l.383-.062a.8.8 0 0 0 0-1.514l-.383-.062a10 10 0 0 1-8.257-8.257l-.062-.383a.8.8 0 0 0-1.514 0l-.062.383a9.999 9.999 0 0 1-4.627 6.904C12.85 18.878 10.776 19 8.774 19H.024C.547 8.419 9.29 0 20 0Z"
-                            }),
-                            createVNode("path", {
-                              fill: "#F06225",
-                              d: "M0 21h8.774c2.002 0 4.076.122 5.78 1.172a10.02 10.02 0 0 1 3.274 3.274C18.878 27.15 19 29.224 19 31.226V40H6a6 6 0 0 1-6-6V21ZM40 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-                            })
-                          ]))
-                        ]),
-                        _: 1
-                      })
-                    ]),
-                    createVNode(VDivider),
-                    createVNode(_component_EvoSidebarNavigation)
-                  ];
-                }
-              }),
-              _: 1
-            }, _parent2, _scopeId));
-            _push2(ssrRenderComponent(VAppBar, null, {
-              append: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                if (_push3) {
-                  _push3(ssrRenderComponent(_component_EvoAppBarThemeSwitcher, null, null, _parent3, _scopeId2));
-                } else {
-                  return [
-                    createVNode(_component_EvoAppBarThemeSwitcher)
-                  ];
-                }
-              }),
-              _: 1
-            }, _parent2, _scopeId));
-            _push2(ssrRenderComponent(VMain, null, {
-              default: withCtx((_2, _push3, _parent3, _scopeId2) => {
-                if (_push3) {
-                  ssrRenderSlot(_ctx.$slots, "default", {}, null, _push3, _parent3, _scopeId2);
-                } else {
-                  return [
-                    renderSlot(_ctx.$slots, "default")
-                  ];
-                }
-              }),
-              _: 3
-            }, _parent2, _scopeId));
-          } else {
-            return [
-              createVNode(VNavigationDrawer, null, {
-                append: withCtx(() => [
-                  createVNode(VList, { nav: "" }, {
-                    default: withCtx(() => [
-                      createVNode(VListItem, {
-                        title: "Logout",
-                        "prepend-icon": "mdi-logout-variant",
-                        to: "auth.logout",
-                        method: "delete"
-                      })
-                    ]),
-                    _: 1
-                  })
-                ]),
-                default: withCtx(() => [
-                  createVNode("div", { class: "text-center py-4" }, [
-                    createVNode(VAvatar, null, {
-                      default: withCtx(() => [
-                        (openBlock(), createBlock("svg", {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          width: "40",
-                          height: "40",
-                          fill: "none",
-                          viewBox: "0 0 40 40"
-                        }, [
-                          createVNode("path", {
-                            fill: "#F06225",
-                            d: "M20 0c11.046 0 20 8.954 20 20v14a6 6 0 0 1-6 6H21v-8.774c0-2.002.122-4.076 1.172-5.78a10 10 0 0 1 6.904-4.627l.383-.062a.8.8 0 0 0 0-1.514l-.383-.062a10 10 0 0 1-8.257-8.257l-.062-.383a.8.8 0 0 0-1.514 0l-.062.383a9.999 9.999 0 0 1-4.627 6.904C12.85 18.878 10.776 19 8.774 19H.024C.547 8.419 9.29 0 20 0Z"
-                          }),
-                          createVNode("path", {
-                            fill: "#F06225",
-                            d: "M0 21h8.774c2.002 0 4.076.122 5.78 1.172a10.02 10.02 0 0 1 3.274 3.274C18.878 27.15 19 29.224 19 31.226V40H6a6 6 0 0 1-6-6V21ZM40 2a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"
-                          })
-                        ]))
-                      ]),
-                      _: 1
-                    })
-                  ]),
-                  createVNode(VDivider),
-                  createVNode(_component_EvoSidebarNavigation)
-                ]),
-                _: 1
-              }),
-              createVNode(VAppBar, null, {
-                append: withCtx(() => [
-                  createVNode(_component_EvoAppBarThemeSwitcher)
-                ]),
-                _: 1
-              }),
-              createVNode(VMain, null, {
-                default: withCtx(() => [
-                  renderSlot(_ctx.$slots, "default")
-                ]),
-                _: 3
-              })
-            ];
-          }
-        }),
-        _: 3
-      }, _parent));
-    }
-    const _sfc_setup$4 = _sfc_main$4.setup;
-    _sfc_main$4.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/layouts/DefaultLayout.vue");
-      return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
-    };
-    const DefaultLayout = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["ssrRender", _sfc_ssrRender$3]]);
-    const createInertiaPageResolver = (pages) => {
-      return async function(name) {
-        const resolvedPage = pages[`./pages/${name}.vue`];
-        if (!resolvedPage) {
-          return h(
-            "div",
-            {
-              class: "flex justify-center items-center min-h-screen bg-slate-700 text-white text-2xl"
-            },
-            [h("span", "Unable to find page: "), h("span", { class: "px-2 font-bold" }, name)]
-          );
-        }
-        const page = typeof resolvedPage === "function" ? await resolvedPage() : resolvedPage;
-        page.default.layout = page.default.layout ?? DefaultLayout;
-        return page;
-      };
-    };
-    const _sfc_main$3 = {};
-    function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
-      _push(`<footer${ssrRenderAttrs(mergeProps({ class: "bg-slate-900 text-white py-1" }, _attrs))}><div class="container">This is the footer</div></footer>`);
-    }
-    const _sfc_setup$3 = _sfc_main$3.setup;
-    _sfc_main$3.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/Footer.vue");
-      return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
-    };
-    const Footer = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender$2]]);
-    const __vite_glob_0_0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: Footer
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main$2 = {};
-    function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
-      _push(ssrRenderComponent(VToolbar, mergeProps({ class: "bg-slate-700 text-white py-4" }, _attrs), {
-        default: withCtx((_, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            _push2(`<div class="container"${_scopeId}>This isv-toolbar</div>`);
-          } else {
-            return [
-              createVNode("div", { class: "container" }, "This isv-toolbar")
-            ];
-          }
-        }),
-        _: 1
-      }, _parent));
-    }
-    const _sfc_setup$2 = _sfc_main$2.setup;
-    _sfc_main$2.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/Header.vue");
-      return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
-    };
-    const Header = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["ssrRender", _sfc_ssrRender$1]]);
-    const __vite_glob_0_1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: Header
-    }, Symbol.toStringTag, { value: "Module" }));
-    const useUserPreferencesStore = defineStore(
-      "userPreferences",
-      () => {
-        const vuetifyTheme = useTheme();
-        const prefersDark = usePreferredDark();
-        const theme2 = ref(!prefersDark.value ? "light" : "dark");
-        watch(
-          theme2,
-          (v) => {
-            vuetifyTheme.global.name.value = v;
-          },
-          {
-            immediate: true
-          }
-        );
-        return { theme: theme2 };
-      },
-      {
-        persist: true
-      }
-    );
-    const _sfc_main$1 = {
-      __name: "ThemeSwitcher",
-      __ssrInlineRender: true,
-      setup(__props) {
-        const userPreferencesStore = useUserPreferencesStore();
-        return (_ctx, _push, _parent, _attrs) => {
-          _push(ssrRenderComponent(VSwitch, mergeProps({
-            modelValue: unref(userPreferencesStore).theme,
-            "onUpdate:modelValue": ($event) => unref(userPreferencesStore).theme = $event,
-            class: "theme-switcher",
-            inset: "",
-            density: "compact",
-            color: unref(userPreferencesStore).theme === "light" ? "yellow-darken-3" : "black",
-            "false-value": "dark",
-            "true-value": "light"
-          }, _attrs), {
-            thumb: withCtx(({ model }, _push2, _parent2, _scopeId) => {
-              if (_push2) {
-                _push2(ssrRenderComponent(VIcon, {
-                  key: model.value,
-                  size: "18",
-                  icon: model.value === "light" ? "mdi-weather-sunny" : "mdi-weather-night"
-                }, null, _parent2, _scopeId));
-              } else {
-                return [
-                  (openBlock(), createBlock(VIcon, {
-                    key: model.value,
-                    size: "18",
-                    icon: model.value === "light" ? "mdi-weather-sunny" : "mdi-weather-night"
-                  }, null, 8, ["icon"]))
-                ];
-              }
-            }),
-            _: 1
-          }, _parent));
-        };
-      }
-    };
-    const _sfc_setup$1 = _sfc_main$1.setup;
-    _sfc_main$1.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/app-bar/ThemeSwitcher.vue");
-      return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
-    };
-    const __vite_glob_0_2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: _sfc_main$1
-    }, Symbol.toStringTag, { value: "Module" }));
-    const _sfc_main = {};
-    function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
-      _push(ssrRenderComponent(VList, mergeProps({ nav: "" }, _attrs), {
-        default: withCtx((_, _push2, _parent2, _scopeId) => {
-          if (_push2) {
-            _push2(ssrRenderComponent(VListItem, {
-              title: "Testing One",
-              "prepend-icon": "mdi-account"
-            }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(VListItem, {
-              title: "Testing Two",
-              "prepend-icon": "mdi-account"
-            }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(VListItem, {
-              title: "Testing Three",
-              "prepend-icon": "mdi-account"
-            }, null, _parent2, _scopeId));
-            _push2(ssrRenderComponent(VListItem, {
-              title: "Testing Four",
-              "prepend-icon": "mdi-account"
-            }, null, _parent2, _scopeId));
-          } else {
-            return [
-              createVNode(VListItem, {
-                title: "Testing One",
-                "prepend-icon": "mdi-account"
-              }),
-              createVNode(VListItem, {
-                title: "Testing Two",
-                "prepend-icon": "mdi-account"
-              }),
-              createVNode(VListItem, {
-                title: "Testing Three",
-                "prepend-icon": "mdi-account"
-              }),
-              createVNode(VListItem, {
-                title: "Testing Four",
-                "prepend-icon": "mdi-account"
-              })
-            ];
-          }
-        }),
-        _: 1
-      }, _parent));
-    }
-    const _sfc_setup = _sfc_main.setup;
-    _sfc_main.setup = (props, ctx) => {
-      const ssrContext = useSSRContext();
-      (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/sidebar/Navigation.vue");
-      return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
-    };
-    const Navigation = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
-    const __vite_glob_0_3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: Navigation
-    }, Symbol.toStringTag, { value: "Module" }));
-    const defaults = {
-      IconBtn: {
-        icon: true,
-        size: "small",
-        color: "default",
-        variant: "text",
-        VIcon: {
-          size: 24
-        }
-      },
-      VSwitch: {
-        color: "primary",
-        hideDetails: "auto"
-      }
-    };
-    const icons = {
-      defaultSet: "mdi",
-      aliases,
-      sets: {
-        mdi
-      }
-    };
-    const theme = {
-      defaultTheme: "light",
-      themes: {
-        light: {
-          dark: false,
-          colors: {
-            primary: "#696CFF",
-            "on-primary": "#fff",
-            secondary: "#8592A3",
-            "on-secondary": "#fff",
-            success: "#71DD37",
-            "on-success": "#fff",
-            info: "#03C3EC",
-            "on-info": "#fff",
-            warning: "#FFAB00",
-            "on-warning": "#fff",
-            error: "#FF3E1D",
-            background: "#F5F5F9",
-            "on-background": "#32475C",
-            "on-surface": "#32475C",
-            "grey-50": "#FAFAFA",
-            "grey-100": "#EBEEF0",
-            "grey-200": "#EEEEEE",
-            "grey-300": "#E0E0E0",
-            "grey-400": "#BDBDBD",
-            "grey-500": "#9E9E9E",
-            "grey-600": "#757575",
-            "grey-700": "#616161",
-            "grey-800": "#424242",
-            "grey-900": "#212121",
-            "perfect-scrollbar-thumb": "#DBDADE",
-            "skin-bordered-background": "#fff",
-            "skin-bordered-surface": "#fff"
-          },
-          variables: {
-            "code-color": "#d400ff",
-            "overlay-scrim-background": "#32475C",
-            "overlay-scrim-opacity": 0.5,
-            "border-color": "#32475C",
-            "snackbar-background": "#32475C",
-            "snackbar-color": "#ffffff",
-            "tooltip-background": "#262732",
-            "tooltip-opacity": 0.9,
-            "table-header-background": "#F5F5F7",
-            // Shadows
-            "shadow-key-umbra-opacity": "rgba(var(--v-theme-on-surface), 0.06)",
-            "shadow-key-penumbra-opacity": "rgba(var(--v-theme-on-surface), 0.04)",
-            "shadow-key-ambient-opacity": "rgba(var(--v-theme-on-surface), 0.02)"
-          }
-        },
-        dark: {
-          dark: true,
-          colors: {
-            primary: "#696CFF",
-            "on-primary": "#fff",
-            secondary: "#8592A3",
-            "on-secondary": "#fff",
-            success: "#71DD37",
-            "on-success": "#fff",
-            info: "#03C3EC",
-            "on-info": "#fff",
-            warning: "#FFAB00",
-            "on-warning": "#fff",
-            error: "#FF3E1D",
-            background: "#232333",
-            "on-background": "#DBDBEB",
-            surface: "#2B2C40",
-            "on-surface": "#DBDBEB",
-            "grey-50": "#2A2E42",
-            "grey-100": "#444463",
-            "grey-200": "#4A5072",
-            "grey-300": "#5E6692",
-            "grey-400": "#7983BB",
-            "grey-500": "#8692D0",
-            "grey-600": "#AAB3DE",
-            "grey-700": "#B6BEE3",
-            "grey-800": "#CFD3EC",
-            "grey-900": "#E7E9F6",
-            "perfect-scrollbar-thumb": "#4A5072",
-            "skin-bordered-background": "#2b2c40",
-            "skin-bordered-surface": "#2b2c40"
-          },
-          variables: {
-            "code-color": "#d400ff",
-            "overlay-scrim-background": "#0D0E24",
-            "overlay-scrim-opacity": 0.6,
-            "border-color": "#DBDBEB",
-            "snackbar-background": "#DBDBEB",
-            "snackbar-color": "#2B2C40",
-            "tooltip-background": "#464A65",
-            "tooltip-opacity": 0.9,
-            "table-header-background": "#3A3E5B",
-            // Shadows
-            "shadow-key-umbra-opacity": "rgba(20, 21, 33, 0.06)",
-            "shadow-key-penumbra-opacity": "rgba(20, 21, 33, 0.04)",
-            "shadow-key-ambient-opacity": "rgba(20, 21, 33, 0.02)"
-          }
-        }
-      }
-    };
-    const vuetify = createVuetify({
-      aliases: {
-        IconBtn: VBtn
-      },
-      defaults,
-      icons,
-      theme
-    });
-    const pinia = createPinia({});
-    pinia.use(piniaPluginPersistedstate);
-    const registerPlugins = (app) => {
-      app.use(registerComponents, {
-        namespace: "Evo",
-        resolveIndex: true,
-        sync: /* @__PURE__ */ Object.assign({
-          "../components/sync/Footer.vue": __vite_glob_0_0,
-          "../components/sync/Header.vue": __vite_glob_0_1,
-          "../components/sync/app-bar/ThemeSwitcher.vue": __vite_glob_0_2,
-          "../components/sync/sidebar/Navigation.vue": __vite_glob_0_3
-        }),
-        async: /* @__PURE__ */ Object.assign({}),
-        asyncLoading: /* @__PURE__ */ Object.assign({})
-      });
-      app.use(vuetify);
-      app.use(gs);
-      app.use(pinia);
-      app.component("SvgIcon", SvgIcon);
-    };
-    createServer(
-      (page) => createInertiaApp({
-        page,
-        render: renderToString,
-        resolve: createInertiaPageResolver(/* @__PURE__ */ Object.assign({ "./pages/Dashboard.vue": __vite_glob_0_0$1, "./pages/Error.vue": __vite_glob_0_1$1, "./pages/auth/ForgotPassword.vue": __vite_glob_0_2$1, "./pages/auth/Login.vue": __vite_glob_0_3$1, "./pages/auth/MustVerifyEmail.vue": __vite_glob_0_4, "./pages/auth/ResetPassword.vue": __vite_glob_0_5 })),
-        setup({ App, props, plugin }) {
-          const inertiaRoutesPlugin = hs(props);
-          const inertiaI18nPlugin = useInertiaI18nVue(props);
-          return createSSRApp({
-            render: () => h(App, props)
-          }).use(registerPlugins).use(inertiaRoutesPlugin).use(inertiaI18nPlugin).use(plugin);
-        }
-      })
-    );
-  }
+import { VTextField } from "vuetify/components/VTextField";
+import { VCol, VContainer, VRow } from "vuetify/components/VGrid";
+import { VBtn } from "vuetify/components/VBtn";
+import { VCard, VCardText } from "vuetify/components/VCard";
+import { VForm } from "vuetify/components/VForm";
+import { VCheckbox } from "vuetify/components/VCheckbox";
+var __defProp = Object.defineProperty;
+var __export = (all, symbols) => {
+	let target = {};
+	for (var name in all) __defProp(target, name, {
+		get: all[name],
+		enumerable: true
+	});
+	if (symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
+	return target;
+};
+var _sfc_main$14 = {
+	__name: "Wrapper",
+	__ssrInlineRender: true,
+	setup(__props) {
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(ssrRenderComponent(VApp, _attrs, {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(ssrRenderComponent(unref(Head), { title: `${_ctx.$page.props.meta?.title}` }, null, _parent$1, _scopeId));
+						ssrRenderSlot(_ctx.$slots, "default", {}, null, _push$1, _parent$1, _scopeId);
+					} else return [createVNode(unref(Head), { title: `${_ctx.$page.props.meta?.title}` }, null, 8, ["title"]), renderSlot(_ctx.$slots, "default")];
+				}),
+				_: 3
+			}, _parent));
+		};
+	}
+};
+var _sfc_setup$14 = _sfc_main$14.setup;
+_sfc_main$14.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/layouts/Wrapper.vue");
+	return _sfc_setup$14 ? _sfc_setup$14(props, ctx) : void 0;
+};
+var Wrapper_default = _sfc_main$14;
+var _sfc_main$13 = {
+	__name: "DefaultLayout",
+	__ssrInlineRender: true,
+	setup(__props) {
+		return (_ctx, _push, _parent, _attrs) => {
+			const _component_EvoLogo = resolveComponent("EvoLogo");
+			const _component_EvoSidebarNavigation = resolveComponent("EvoSidebarNavigation");
+			const _component_EvoAppBarThemeSwitcher = resolveComponent("EvoAppBarThemeSwitcher");
+			_push(ssrRenderComponent(Wrapper_default, _attrs, {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(ssrRenderComponent(VNavigationDrawer, null, {
+							append: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(ssrRenderComponent(VList, { nav: "" }, {
+									default: withCtx((_$2, _push$3, _parent$3, _scopeId$2) => {
+										if (_push$3) _push$3(ssrRenderComponent(VListItem, {
+											title: "Logout",
+											"prepend-icon": unref(mdiLogoutVariant),
+											to: "auth.logout",
+											method: "delete"
+										}, null, _parent$3, _scopeId$2));
+										else return [createVNode(VListItem, {
+											title: "Logout",
+											"prepend-icon": unref(mdiLogoutVariant),
+											to: "auth.logout",
+											method: "delete"
+										}, null, 8, ["prepend-icon"])];
+									}),
+									_: 1
+								}, _parent$2, _scopeId$1));
+								else return [createVNode(VList, { nav: "" }, {
+									default: withCtx(() => [createVNode(VListItem, {
+										title: "Logout",
+										"prepend-icon": unref(mdiLogoutVariant),
+										to: "auth.logout",
+										method: "delete"
+									}, null, 8, ["prepend-icon"])]),
+									_: 1
+								})];
+							}),
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) {
+									_push$2(`<div class="py-4 px-4"${_scopeId$1}>`);
+									_push$2(ssrRenderComponent(_component_EvoLogo, null, null, _parent$2, _scopeId$1));
+									_push$2(`</div>`);
+									_push$2(ssrRenderComponent(VDivider, null, null, _parent$2, _scopeId$1));
+									_push$2(ssrRenderComponent(_component_EvoSidebarNavigation, null, null, _parent$2, _scopeId$1));
+								} else return [
+									createVNode("div", { class: "py-4 px-4" }, [createVNode(_component_EvoLogo)]),
+									createVNode(VDivider),
+									createVNode(_component_EvoSidebarNavigation)
+								];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VAppBar, null, {
+							append: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(ssrRenderComponent(_component_EvoAppBarThemeSwitcher, null, null, _parent$2, _scopeId$1));
+								else return [createVNode(_component_EvoAppBarThemeSwitcher)];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VMain, null, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) ssrRenderSlot(_ctx.$slots, "default", {}, null, _push$2, _parent$2, _scopeId$1);
+								else return [renderSlot(_ctx.$slots, "default")];
+							}),
+							_: 3
+						}, _parent$1, _scopeId));
+					} else return [
+						createVNode(VNavigationDrawer, null, {
+							append: withCtx(() => [createVNode(VList, { nav: "" }, {
+								default: withCtx(() => [createVNode(VListItem, {
+									title: "Logout",
+									"prepend-icon": unref(mdiLogoutVariant),
+									to: "auth.logout",
+									method: "delete"
+								}, null, 8, ["prepend-icon"])]),
+								_: 1
+							})]),
+							default: withCtx(() => [
+								createVNode("div", { class: "py-4 px-4" }, [createVNode(_component_EvoLogo)]),
+								createVNode(VDivider),
+								createVNode(_component_EvoSidebarNavigation)
+							]),
+							_: 1
+						}),
+						createVNode(VAppBar, null, {
+							append: withCtx(() => [createVNode(_component_EvoAppBarThemeSwitcher)]),
+							_: 1
+						}),
+						createVNode(VMain, null, {
+							default: withCtx(() => [renderSlot(_ctx.$slots, "default")]),
+							_: 3
+						})
+					];
+				}),
+				_: 3
+			}, _parent));
+		};
+	}
+};
+var _sfc_setup$13 = _sfc_main$13.setup;
+_sfc_main$13.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/layouts/DefaultLayout.vue");
+	return _sfc_setup$13 ? _sfc_setup$13(props, ctx) : void 0;
+};
+var DefaultLayout_default = _sfc_main$13;
+const createInertiaPageResolver = (pages) => {
+	return async function(name) {
+		const resolvedPage = pages[`./pages/${name}.vue`];
+		if (!resolvedPage) return h("div", { class: "flex justify-center items-center min-h-screen bg-slate-700 text-white text-2xl" }, [h("span", "Unable to find page: "), h("span", { class: "px-2 font-bold" }, name)]);
+		const page = typeof resolvedPage === "function" ? await resolvedPage() : resolvedPage;
+		page.default.layout = page.default.layout ?? DefaultLayout_default;
+		return page;
+	};
+};
+var C = Symbol.for("inertia-routes"), D = () => inject(C);
+var w = class {
+	constructor(e, t, r) {
+		this.name = e, this.definition = t, this.bindings = t.bindings ?? {}, this.wheres = t.wheres ?? {}, this.config = r;
+	}
+	get template() {
+		let e = `${this.origin}/${this.definition.uri}`.replace(/\/+$/, "");
+		return e === "" ? "/" : e;
+	}
+	get origin() {
+		return this.config.absolute ? this.definition.domain ? `${this.config.url.match(/^\w+:\/\//)[0]}${this.definition.domain}${this.config.port ? `:${this.config.port}` : ""}` : this.config.url : "";
+	}
+	get parameterSegments() {
+		return this.template.match(/{[^}?]+\??}/g)?.map((e) => ({
+			name: e.replace(/{|\??}/g, ""),
+			required: !/\?}$/.test(e)
+		})) ?? [];
+	}
+	matchesUrl(e) {
+		if (!this.definition.methods.includes("GET")) return !1;
+		let t = this.template.replace(/[.*+$()[\]]/g, "\\$&").replace(/(\/?){([^}?]*)(\??)}/g, (l, s, c, a) => {
+			let d = `(?<${c}>${this.wheres[c]?.replace(/(^\^)|(\$$)/g, "") || "[^/?]+"})`;
+			return a ? `(${s}${d})?` : `${s}${d}`;
+		}).replace(/^\w+:\/\//, ""), [r, o] = e.replace(/^\w+:\/\//, "").split("?"), i = (/* @__PURE__ */ new RegExp(`^${t}/?$`)).exec(r) ?? (/* @__PURE__ */ new RegExp(`^${t}/?$`)).exec(decodeURI(r));
+		if (i) {
+			for (let l in i.groups) i.groups[l] = typeof i.groups[l] == "string" ? decodeURIComponent(i.groups[l]) : i.groups[l];
+			return {
+				params: i.groups,
+				query: parse(o)
+			};
+		}
+		return !1;
+	}
+	compile(e) {
+		return this.parameterSegments.length ? this.template.replace(/{([^}?]+)(\??)}/g, (r, o, i) => {
+			if (!i && [null, void 0].includes(e[o])) throw new Error(`Ziggy error: '${o}' parameter is required for route '${this.name}'.`);
+			if (this.wheres[o] && !(/* @__PURE__ */ new RegExp(`^${i ? `(${this.wheres[o]})?` : this.wheres[o]}$`)).test(e[o] ?? "")) throw new Error(`Ziggy error: '${o}' parameter '${e[o]}' does not match required format '${this.wheres[o]}' for route '${this.name}'.`);
+			return encodeURI(e[o] ?? "").replace(/%7C/g, "|").replace(/%25/g, "%").replace(/\$/g, "%24");
+		}).replace(this.config.absolute ? /(\.[^/]+?)(\/\/)/ : /(^)(\/\/)/, "$1/").replace(/\/+$/, "") : this.template;
+	}
+};
+var T = class extends String {
+	constructor(e, t, r = !0, o) {
+		if (super(), this._config = o ?? (typeof Ziggy < "u" ? Ziggy : globalThis?.Ziggy), this._config = {
+			...this._config,
+			absolute: r
+		}, e) {
+			if (!this._config.routes[e]) throw new Error(`Ziggy error: route '${e}' is not in the route list.`);
+			this._route = new w(e, this._config.routes[e], this._config), this._params = this._parse(t);
+		}
+	}
+	toString() {
+		let e = Object.keys(this._params).filter((t) => !this._route.parameterSegments.some(({ name: r }) => r === t)).filter((t) => t !== "_query").reduce((t, r) => ({
+			...t,
+			[r]: this._params[r]
+		}), {});
+		return this._route.compile(this._params) + stringify({
+			...e,
+			...this._params._query
+		}, {
+			addQueryPrefix: !0,
+			arrayFormat: "indices",
+			encodeValuesOnly: !0,
+			skipNulls: !0,
+			encoder: (t, r) => typeof t == "boolean" ? Number(t) : r(t)
+		});
+	}
+	_unresolve(e) {
+		e ? this._config.absolute && e.startsWith("/") && (e = this._location().host + e) : e = this._currentUrl();
+		let t = {}, [r, o] = Object.entries(this._config.routes).find(([i, l]) => t = new w(i, l, this._config).matchesUrl(e)) || [void 0, void 0];
+		return {
+			name: r,
+			...t,
+			route: o
+		};
+	}
+	_currentUrl() {
+		let { host: e, pathname: t, search: r } = this._location();
+		return (this._config.absolute ? e + t : t.replace(this._config.url.replace(/^\w*:\/\/[^/]+/, ""), "").replace(/^\/+/, "/")) + r;
+	}
+	current(e, t) {
+		let { name: r, params: o, query: i, route: l } = this._unresolve();
+		if (!e) return r;
+		let s = (/* @__PURE__ */ new RegExp(`^${e.replace(/\./g, "\\.").replace(/\*/g, ".*")}$`)).test(r);
+		if ([null, void 0].includes(t) || !s) return s;
+		let c = new w(r, l, this._config);
+		t = this._parse(t, c);
+		let a = {
+			...o,
+			...i
+		};
+		if (Object.values(t).every((g) => !g) && !Object.values(a).some((g) => g !== void 0)) return !0;
+		let d = (g, h$1) => Object.entries(g).every(([f, y]) => Array.isArray(y) && Array.isArray(h$1[f]) ? y.every((_) => h$1[f].includes(_)) : typeof y == "object" && typeof h$1[f] == "object" && y !== null && h$1[f] !== null ? d(y, h$1[f]) : h$1[f] == y);
+		return d(t, a);
+	}
+	_location() {
+		let { host: e = "", pathname: t = "", search: r = "" } = typeof window < "u" ? window.location : {};
+		return {
+			host: this._config.location?.host ?? e,
+			pathname: this._config.location?.pathname ?? t,
+			search: this._config.location?.search ?? r
+		};
+	}
+	get params() {
+		let { params: e, query: t } = this._unresolve();
+		return {
+			...e,
+			...t
+		};
+	}
+	get routeParams() {
+		return this._unresolve().params;
+	}
+	get queryParams() {
+		return this._unresolve().query;
+	}
+	has(e) {
+		return this._config.routes.hasOwnProperty(e);
+	}
+	_parse(e = {}, t = this._route) {
+		e ??= {}, e = ["string", "number"].includes(typeof e) ? [e] : e;
+		let r = t.parameterSegments.filter(({ name: o }) => !this._config.defaults[o]);
+		return Array.isArray(e) ? e = e.reduce((o, i, l) => r[l] ? {
+			...o,
+			[r[l].name]: i
+		} : typeof i == "object" ? {
+			...o,
+			...i
+		} : {
+			...o,
+			[i]: ""
+		}, {}) : r.length === 1 && !e[r[0].name] && (e.hasOwnProperty(Object.values(t.bindings)[0]) || e.hasOwnProperty("id")) && (e = { [r[0].name]: e }), {
+			...this._defaults(t),
+			...this._substituteBindings(e, t)
+		};
+	}
+	_defaults(e) {
+		return e.parameterSegments.filter(({ name: t }) => this._config.defaults[t]).reduce((t, { name: r }, o) => ({
+			...t,
+			[r]: this._config.defaults[r]
+		}), {});
+	}
+	_substituteBindings(e, { bindings: t, parameterSegments: r }) {
+		return Object.entries(e).reduce((o, [i, l]) => {
+			if (!l || typeof l != "object" || Array.isArray(l) || !r.some(({ name: s }) => s === i)) return {
+				...o,
+				[i]: l
+			};
+			if (!l.hasOwnProperty(t[i])) if (l.hasOwnProperty("id")) t[i] = "id";
+			else throw new Error(`Ziggy error: object passed as '${i}' parameter is missing route model binding key '${t[i]}'.`);
+			return {
+				...o,
+				[i]: l[t[i]]
+			};
+		}, {});
+	}
+	valueOf() {
+		return this.toString();
+	}
+};
+function L(n, e, t, r) {
+	let o = new T(n, e, t, r);
+	return n ? o.toString() : o;
+}
+var S = reactive({});
+function ae(n) {
+	return n.initialPage.props.ziggy && (Object.keys(n.initialPage.props.ziggy).forEach((e) => {
+		S[e] = n.initialPage.props.ziggy[e];
+	}), typeof S.location == "string" && (S.location = new URL(S.location))), { install: (e, t = {}) => {
+		let r = t.global ?? !0, o = ((...i) => (i[0] ??= void 0, i[1] ??= void 0, i[2] ??= !0, i[3] ??= S, S.location && typeof window < "u" && (S.location = null), L(...i)));
+		e.provide(C, o), r && (e.config.globalProperties.$route = o);
+	} };
+}
+var F = (n) => {
+	let e = D();
+	return computed(() => {
+		let t = toValue(n);
+		for (; isRef(t);) t = toValue(t);
+		if (t) {
+			if (typeof t == "string" && /^http/.test(t)) return t;
+			if (Array.isArray(t)) {
+				let [r, o] = t;
+				return r ? typeof o != "object" ? e(r) : e(r, toValue(o)) : "#";
+			} else return t ? e(t) : "#";
+		} else return console.warn("[Inertia Routes] You must pass a route string or tuple to useRouteProp"), "#";
+	});
+};
+function W(n) {
+	return getCurrentScope() ? (onScopeDispose(n), !0) : !1;
+}
+var k = typeof window < "u" && typeof document < "u";
+typeof WorkerGlobalScope < "u" && globalThis instanceof WorkerGlobalScope;
+var _e = Object.prototype.toString, B = (n) => _e.call(n) === "[object Object]";
+function z(n) {
+	return Object.entries(n);
+}
+function R(n) {
+	return Array.isArray(n) ? n : [n];
+}
+function H(n) {
+	let e = Object.create(null);
+	return (t) => e[t] || (e[t] = n(t));
+}
+var xe = /\B([A-Z])/g;
+H((n) => n.replace(xe, "-$1").toLowerCase());
+var Te = /-(\w)/g;
+H((n) => n.replace(Te, (e, t) => t ? t.toUpperCase() : ""));
+function q(n, e, t) {
+	return watch(n, e, {
+		...t,
+		immediate: !0
+	});
+}
+var X = k ? window : void 0;
+k && window.document;
+k && window.navigator;
+k && window.location;
+function Ce(n) {
+	var e;
+	let t = toValue(n);
+	return (e = t?.$el) != null ? e : t;
+}
+function Y(...n) {
+	let e = [], t = () => {
+		e.forEach((s) => s()), e.length = 0;
+	}, r = (s, c, a, d) => (s.addEventListener(c, a, d), () => s.removeEventListener(c, a, d)), o = computed(() => {
+		let s = R(toValue(n[0])).filter((c) => c != null);
+		return s.every((c) => typeof c != "string") ? s : void 0;
+	}), i = q(() => {
+		var s, c;
+		return [
+			(c = (s = o.value) == null ? void 0 : s.map((a) => Ce(a))) != null ? c : [X].filter((a) => a != null),
+			R(toValue(o.value ? n[1] : n[0])),
+			R(unref(o.value ? n[2] : n[1])),
+			toValue(o.value ? n[3] : n[2])
+		];
+	}, ([s, c, a, d]) => {
+		if (t(), !s?.length || !c?.length || !a?.length) return;
+		let g = B(d) ? { ...d } : d;
+		e.push(...s.flatMap((h$1) => c.flatMap((f) => a.map((y) => r(h$1, f, y, g)))));
+	}, { flush: "post" }), l = () => {
+		i(), t();
+	};
+	return W(t), l;
+}
+var K = [
+	"hash",
+	"host",
+	"hostname",
+	"href",
+	"pathname",
+	"port",
+	"protocol",
+	"search"
+];
+function Z(n = {}) {
+	let { window: e = X } = n, t = Object.fromEntries(K.map((i) => [i, ref()]));
+	for (let [i, l] of z(t)) watch(l, (s) => {
+		!e?.location || e.location[i] === s || (e.location[i] = s);
+	});
+	let r = (i) => {
+		var l;
+		let { state: s, length: c } = e?.history || {}, { origin: a } = e?.location || {};
+		for (let d of K) t[d].value = (l = e?.location) == null ? void 0 : l[d];
+		return reactive({
+			trigger: i,
+			state: s,
+			length: c,
+			origin: a,
+			...t
+		});
+	}, o = ref(r("load"));
+	if (e) {
+		let i = { passive: !0 };
+		Y(e, "popstate", () => o.value = r("popstate"), i), Y(e, "hashchange", () => o.value = r("hashchange"), i);
+	}
+	return o;
+}
+Number.POSITIVE_INFINITY;
+var P = ref(), Ue = [
+	"cache-for",
+	"data",
+	"method",
+	"replace",
+	"prefetch",
+	"preserve-scroll",
+	"preserve-state",
+	"only",
+	"except",
+	"headers",
+	"query-string-array-format",
+	"on-before",
+	"on-start",
+	"on-progress",
+	"on-finish",
+	"on-cancel",
+	"on-cancel-token",
+	"on-error",
+	"on-success",
+	"async"
+], We = (n) => n.replace(/-./g, (e) => e[1].toUpperCase()), Be = (n, e) => [
+	"replace",
+	"preserve-scroll",
+	"preserve-state",
+	"async"
+].includes(n) ? !0 : n === "prefetch" ? e ? castArray(e) : ["hover"] : ["method"].includes(n) && typeof e == "string" ? lowerCase(e) : e, ze = (n) => {
+	let e = Ue.reduce((t, r) => (typeof n[r] < "u" && (t[We(r)] = Be(r, n[r])), t), {});
+	return e.method || (e.method = "get"), e;
+}, He = (n) => {
+	let e = getCurrentInstance(), t = new AbortController(), r = Z();
+	P.value || (P.value = `${r.value.origin}${r.value.pathname}`);
+	let o = F(n.to), l = ze(useAttrs());
+	return onMounted(() => {
+		let { prefetch: s } = l, c = () => {
+			router.prefetch(o.value, omit(l, ["cacheFor"]), pick(l, ["cacheFor"]));
+		};
+		Array.isArray(s) && s?.length > 0 && (s.includes("mount") && c(), s.includes("hover") && e && e.proxy?.$el && e.proxy.$el.addEventListener("mouseenter", c, { signal: t.signal }), s.includes("click") && e && e.proxy?.$el && e.proxy.$el.addEventListener("click", c, { signal: t.signal }));
+	}), onUnmounted(() => t.abort()), {
+		route: computed(() => ({ href: o.value })),
+		isExactActive: computed(() => P.value === o.value),
+		isActive: computed(() => P.value?.startsWith(o.value) ?? !1),
+		navigate(s) {
+			s.shiftKey || s.metaKey || s.ctrlKey || (s.preventDefault(), P.value = o.value, router.visit(o.value, omit(l, ["prefetch", "cacheFor"])));
+		}
+	};
+}, qe = {
+	name: "RouterLink",
+	useLink: He
+}, Ge = { install: (n) => {
+	n.component("RouterLink", qe);
+} };
+var vuetify_default = createVuetify({
+	date: {
+		adapter: LuxonAdapter,
+		locale: { en: "en-GB" }
+	},
+	locale: { locale: "en" },
+	defaults: {
+		VSwitch: {
+			color: "primary",
+			hideDetails: "auto"
+		},
+		VCheckbox: { color: "primary" }
+	},
+	icons: {
+		defaultSet: "mdi",
+		aliases,
+		sets: { mdi }
+	},
+	theme: {
+		defaultTheme: "light",
+		themes: {
+			light: {
+				dark: false,
+				colors: {
+					primary: "#56faae",
+					secondary: "#e49273"
+				}
+			},
+			dark: {
+				dark: true,
+				colors: {
+					primary: "#696CFF",
+					secondary: "#e49273"
+				}
+			}
+		}
+	}
 });
-export default require_ssr();
+var __plugin_vue_export_helper_default = (sfc, props) => {
+	const target = sfc.__vccOpts || sfc;
+	for (const [key, val] of props) target[key] = val;
+	return target;
+};
+var Footer_exports = /* @__PURE__ */ __export({ default: () => Footer_default });
+var _sfc_main$12 = {};
+function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
+	_push(ssrRenderComponent(VFooter, mergeProps({ class: "bg-slate-900 py-1 text-white" }, _attrs), {
+		default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+			if (_push$1) _push$1(`<div class="container"${_scopeId}>This is the Footer</div>`);
+			else return [createVNode("div", { class: "container" }, "This is the Footer")];
+		}),
+		_: 1
+	}, _parent));
+}
+var _sfc_setup$12 = _sfc_main$12.setup;
+_sfc_main$12.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/Footer.vue");
+	return _sfc_setup$12 ? _sfc_setup$12(props, ctx) : void 0;
+};
+var Footer_default = /* @__PURE__ */ __plugin_vue_export_helper_default(_sfc_main$12, [["ssrRender", _sfc_ssrRender$2]]);
+var Header_exports = /* @__PURE__ */ __export({ default: () => Header_default });
+var _sfc_main$11 = {};
+function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs) {
+	_push(ssrRenderComponent(VToolbar, mergeProps({ class: "bg-slate-700 py-4 text-white" }, _attrs), {
+		default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+			if (_push$1) _push$1(`<div class="container"${_scopeId}>This is the toolbar</div>`);
+			else return [createVNode("div", { class: "container" }, "This is the toolbar")];
+		}),
+		_: 1
+	}, _parent));
+}
+var _sfc_setup$11 = _sfc_main$11.setup;
+_sfc_main$11.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/Header.vue");
+	return _sfc_setup$11 ? _sfc_setup$11(props, ctx) : void 0;
+};
+var Header_default = /* @__PURE__ */ __plugin_vue_export_helper_default(_sfc_main$11, [["ssrRender", _sfc_ssrRender$1]]);
+var Logo_exports = /* @__PURE__ */ __export({ default: () => Logo_default });
+var _sfc_main$10 = {};
+function _sfc_ssrRender(_ctx, _push, _parent, _attrs) {
+	_push(`<svg${ssrRenderAttrs(mergeProps({
+		version: "1.1",
+		xmlns: "http://www.w3.org/2000/svg",
+		"xmlns:xlink": "http://www.w3.org/1999/xlink",
+		x: "0px",
+		y: "0px",
+		viewBox: "0 0 769.4 120",
+		style: { "enable-background": "new 0 0 769.4 120" },
+		"xml:space": "preserve"
+	}, _attrs))} data-v-38a918f4><path class="fill-neutral-900 dark:fill-white" d="M194.9,77.3c7.8,10,20.4,10.2,23.2,10.2c9.2,0,16.9-3.1,22.6-9.5l7.8,9.2c-7.1,8.3-17.9,12.7-30.9,12.7
+	c-25.3,0-42.1-16.7-42.1-40.1S192.3,20,214.9,20s38.8,16.3,38.8,40.4c0,1.2-0.1,3-0.3,4.3h-55V54.4h41.7
+	C238.6,41.3,228.7,32,214.9,32c-6.2-0.1-12.3,2.1-17,6.1c-8.5,7.5-8.5,18.4-8.4,21.7C189.5,62.8,189.6,70.4,194.9,77.3z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M341.2,20.7l-34.3,78.4h-14.5l-34.3-78.4h14.8l26.9,62.9l27.5-62.9H341.2z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M345,59.9c0-23.4,17.3-39.9,40.8-39.9c23.5,0,40.7,16.6,40.7,39.9S409.3,100,385.8,100
+	C362.4,100,345,83.3,345,59.9z M412.2,59.9c0-16.7-11.2-27.5-26.3-27.5s-26.5,10.8-26.5,27.5s11.4,27.6,26.5,27.6
+	C400.9,87.6,412.2,76.6,412.2,59.9z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M519.5,99.3L519.4,34l-32,55.2h-2.7l-32-55v65.2h-5.4V23h4.7l34.2,59l34.2-59h4.6l0.1,76.4L519.5,99.3z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M598.9,77.8h-44.3l-9.7,21.5h-6L574,23h5.6l35.1,76.4h-6L598.9,77.8z M596.8,73.1L576.7,29l-20,44.1H596.8z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M681.6,99.3l-18.2-25.5c-2.5,0.3-4.9,0.5-7.4,0.5h-21.8v25h-5.6V23H656c19.2,0,30.8,9.6,30.8,25.8
+	c0,12.1-6.5,20.5-17.9,23.9l19.1,26.7L681.6,99.3z M656,69.4c16.4,0,25.1-7.6,25.1-20.7S672.3,28,656,28h-21.8v41.5L656,69.4z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M729.8,61.7l-17.1,17.6v20.1h-5.6V23h5.6v49.1L760.4,23h6.8l-33.6,34.7l35.9,41.7h-6.8L729.8,61.7z" data-v-38a918f4></path><path class="st1" d="M112.6,10.8L31.1,92.3L13.8,75L0,88.9L31.1,120l95.3-95.3C122.6,19.3,117.9,14.6,112.6,10.8z" data-v-38a918f4></path><path class="fill-neutral-900 dark:fill-white" d="M45.7,77.7L31.5,91.9c-36.7-54.1,27-117.7,81.1-81L98.4,25C64.3,5.2,25.9,43.6,45.7,77.7z M136.8,53l-19.3,5.2
+	c0.9,24.8-25.1,44.7-48.8,37.4l-15.1,15.1C93.6,130.6,141.3,97.6,136.8,53L136.8,53z" data-v-38a918f4></path></svg>`);
+}
+var _sfc_setup$10 = _sfc_main$10.setup;
+_sfc_main$10.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/Logo.vue");
+	return _sfc_setup$10 ? _sfc_setup$10(props, ctx) : void 0;
+};
+var Logo_default = /* @__PURE__ */ __plugin_vue_export_helper_default(_sfc_main$10, [["ssrRender", _sfc_ssrRender], ["__scopeId", "data-v-38a918f4"]]);
+const useUserPreferencesStore = defineStore("userPreferences", () => {
+	const vuetifyTheme = useTheme();
+	const theme = ref(!usePreferredDark().value ? "light" : "dark");
+	watch(theme, (v) => {
+		vuetifyTheme.change(v);
+		const isDark = v === "dark";
+		if (typeof window !== "undefined") document.documentElement.classList.toggle("dark", isDark);
+	}, { immediate: true });
+	return { theme };
+}, { persist: true });
+var ThemeSwitcher_exports = /* @__PURE__ */ __export({ default: () => ThemeSwitcher_default });
+var _sfc_main$9 = {
+	__name: "ThemeSwitcher",
+	__ssrInlineRender: true,
+	setup(__props) {
+		const userPreferencesStore = useUserPreferencesStore();
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(ssrRenderComponent(VSwitch, mergeProps({
+				modelValue: unref(userPreferencesStore).theme,
+				"onUpdate:modelValue": ($event) => unref(userPreferencesStore).theme = $event,
+				class: "theme-switcher",
+				inset: "",
+				density: "compact",
+				color: unref(userPreferencesStore).theme === "light" ? "yellow-darken-3" : "black",
+				"false-value": "dark",
+				"true-value": "light"
+			}, _attrs), {
+				thumb: withCtx(({ model }, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) _push$1(ssrRenderComponent(VIcon, {
+						key: model.value,
+						size: "18",
+						icon: model.value === "light" ? "mdi-weather-sunny" : "mdi-weather-night"
+					}, null, _parent$1, _scopeId));
+					else return [(openBlock(), createBlock(VIcon, {
+						key: model.value,
+						size: "18",
+						icon: model.value === "light" ? "mdi-weather-sunny" : "mdi-weather-night"
+					}, null, 8, ["icon"]))];
+				}),
+				_: 1
+			}, _parent));
+		};
+	}
+};
+var _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/app-bar/ThemeSwitcher.vue");
+	return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+};
+var ThemeSwitcher_default = _sfc_main$9;
+var Password_exports = /* @__PURE__ */ __export({ default: () => Password_default });
+var _sfc_main$8 = {
+	__name: "Password",
+	__ssrInlineRender: true,
+	props: /* @__PURE__ */ mergeModels({
+		error: {
+			type: [String, Array],
+			default: null
+		},
+		label: {
+			type: String,
+			default: "Password"
+		}
+	}, {
+		"modelValue": {
+			type: String,
+			default: ""
+		},
+		"modelModifiers": {}
+	}),
+	emits: ["update:modelValue"],
+	setup(__props) {
+		const modelValue = useModel(__props, "modelValue");
+		const show = ref(false);
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(ssrRenderComponent(VTextField, mergeProps({
+				modelValue: modelValue.value,
+				"onUpdate:modelValue": ($event) => modelValue.value = $event,
+				label: __props.label,
+				placeholder: "············",
+				type: unref(show) ? "text" : "password",
+				"append-inner-icon": unref(show) ? unref(mdiEyeOff) : unref(mdiEye),
+				"error-messages": __props.error,
+				"onClick:appendInner": ($event) => show.value = !unref(show)
+			}, _attrs), null, _parent));
+		};
+	}
+};
+var _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/input/Password.vue");
+	return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+};
+var Password_default = _sfc_main$8;
+var Navigation_exports = /* @__PURE__ */ __export({ default: () => Navigation_default });
+var _sfc_main$7 = {
+	__name: "Navigation",
+	__ssrInlineRender: true,
+	setup(__props) {
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(ssrRenderComponent(VList, mergeProps({ nav: "" }, _attrs), {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(ssrRenderComponent(VListItem, {
+							title: "Testing One",
+							"prepend-icon": unref(mdiAccount)
+						}, null, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VListItem, {
+							title: "Testing Two",
+							"prepend-icon": unref(mdiAccount)
+						}, null, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VListItem, {
+							title: "Testing Three",
+							"prepend-icon": unref(mdiAccount)
+						}, null, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VListItem, {
+							title: "Testing Four",
+							"prepend-icon": unref(mdiAccount)
+						}, null, _parent$1, _scopeId));
+					} else return [
+						createVNode(VListItem, {
+							title: "Testing One",
+							"prepend-icon": unref(mdiAccount)
+						}, null, 8, ["prepend-icon"]),
+						createVNode(VListItem, {
+							title: "Testing Two",
+							"prepend-icon": unref(mdiAccount)
+						}, null, 8, ["prepend-icon"]),
+						createVNode(VListItem, {
+							title: "Testing Three",
+							"prepend-icon": unref(mdiAccount)
+						}, null, 8, ["prepend-icon"]),
+						createVNode(VListItem, {
+							title: "Testing Four",
+							"prepend-icon": unref(mdiAccount)
+						}, null, 8, ["prepend-icon"])
+					];
+				}),
+				_: 1
+			}, _parent));
+		};
+	}
+};
+var _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/components/sync/sidebar/Navigation.vue");
+	return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+};
+var Navigation_default = _sfc_main$7;
+var pinia = createPinia({});
+pinia.use(piniaPluginPersistedstate);
+const registerPlugins = (app) => {
+	app.use(registerComponents, {
+		namespace: "Evo",
+		resolveIndex: true,
+		sync: {
+			"../components/sync/Footer.vue": Footer_exports,
+			"../components/sync/Header.vue": Header_exports,
+			"../components/sync/Logo.vue": Logo_exports,
+			"../components/sync/app-bar/ThemeSwitcher.vue": ThemeSwitcher_exports,
+			"../components/sync/input/Password.vue": Password_exports,
+			"../components/sync/sidebar/Navigation.vue": Navigation_exports
+		},
+		async: {},
+		asyncLoading: {}
+	});
+	app.use(vuetify_default);
+	app.use(Ge);
+	app.use(pinia);
+	app.component("SvgIcon", SvgIcon);
+};
+var Dashboard_exports = /* @__PURE__ */ __export({ default: () => Dashboard_default });
+var _sfc_main$6 = {
+	__name: "Dashboard",
+	__ssrInlineRender: true,
+	setup(__props) {
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(ssrRenderComponent(VContainer, mergeProps({
+				fluid: "",
+				class: "h-full flex flex-col justify-center items-center"
+			}, _attrs), {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(`<header class="flex items-center gap-4 mb-8"${_scopeId}><div${_scopeId}><svg class="size-18" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg"${_scopeId}><path d="M41 9.88889L33 5.44444L25 9.88889M41 9.88889L33 14.3333M41 9.88889V18.7778L33 23.2222M25 9.88889V18.7778M25 9.88889L33 14.3333M25 18.7778L33 23.2222M25 18.7778L9 27.6667M33 23.2222V32.1111L17 41M33 23.2222V14.3333M33 23.2222L17 32.1111M9 27.6667L17 32.1111M9 27.6667V9.88889M1 5.44444L9 1L17 5.44444M1 5.44444V32.1111L17 41M1 5.44444L9 9.88889M17 41V32.1111M9 9.88889L17 5.44444M17 5.44444V23.2222" stroke="#F53003" stroke-width="1.5"${_scopeId}></path></svg></div><div${_scopeId}>`);
+						_push$1(ssrRenderComponent(VIcon, { icon: unref(mdiPlus) }, null, _parent$1, _scopeId));
+						_push$1(`</div><div${_scopeId}><svg class="h-18 mb-3" viewBox="0 0 110 20" fill="none" xmlns="http://www.w3.org/2000/svg"${_scopeId}><g clip-path="url(#clip0_207_25158)"${_scopeId}><path class="fill-black dark:fill-white" d="M91.5651 6.37624H84.5156L91.3275 13.1881L84.5156 20H91.5651L98.377 13.1881L91.5651 6.37624Z"${_scopeId}></path><path class="fill-black dark:fill-white" d="M102.218 6.37624H95.1689L101.981 13.1881L95.1689 20H102.218L109.03 13.1881L102.218 6.37624Z"${_scopeId}></path><path class="fill-black dark:fill-white" d="M2.37662 6.05941H6.45583L4.07959 19.604H0.00038147L2.37662 6.05941ZM2.61424 2.45545C2.85187 1.14851 4.07959 0 5.42612 0C6.77266 0 7.68355 1.10891 7.48553 2.45545C7.28751 3.80198 6.02018 4.91089 4.63405 4.91089C3.24791 4.91089 2.41622 3.72277 2.61424 2.45545ZM21.5053 11.2871L20.04 19.604H16.0004L17.3469 11.8812C17.6637 10.1386 16.7133 9.42574 15.4063 9.42574C14.0598 9.42574 12.8321 10.2178 12.436 12.0396L11.0895 19.604H7.04989L9.42612 6.05941H13.5053L13.3073 7.32673C14.2182 6.29703 15.7628 5.66337 17.3073 5.66337C20.04 5.70297 22.139 7.68317 21.5053 11.2871ZM37.4261 12.8317C37.3865 13.1485 37.2281 13.901 36.9905 14.4554H27.2875C27.5251 15.9604 28.7925 16.3564 30.0598 16.3564C31.2083 16.3564 32.1192 16.0396 32.9113 15.2871L35.7628 17.6238C34.1786 19.2079 32.3172 20 29.8222 20C25.1489 20 22.6935 16.6337 23.3667 12.5941C23.6779 10.6669 24.6666 8.91403 26.1549 7.6508C27.6432 6.38756 29.5334 5.69687 31.4855 5.70297C35.3667 5.70297 38.1786 8.71287 37.4261 12.8317ZM33.5845 11.3663C33.4657 9.86139 32.3964 9.26733 31.1291 9.26733C30.4354 9.25486 29.7535 9.44738 29.1688 9.82076C28.584 10.1941 28.1225 10.7318 27.842 11.3663H33.5845ZM49.0697 5.78218L48.2776 10.3762C46.6935 10.1386 44.1192 10.6931 43.6439 13.4653L43.6836 13.3069L42.5746 19.604H38.535L40.9113 6.05941H44.9905L44.5548 8.51485C45.3865 6.65347 47.1687 5.78218 49.0697 5.78218ZM54.5746 14.7723C54.3766 16 55.3667 16.0792 57.1885 15.9208L56.5548 19.604C51.6836 20.1584 49.8618 18.5347 50.535 14.7723L51.3667 9.9802H49.1885L49.9014 6.05941H52.04L52.5152 3.48515L56.7925 2.25743L56.1192 6.05941H58.9311L58.2182 9.9802H55.4459L54.5746 14.7723ZM61.5053 6.05941H65.5845L63.2083 19.604H59.1291L61.5053 6.05941ZM61.743 2.45545C61.941 1.14851 63.2083 0 64.5548 0C65.9014 0 66.8123 1.10891 66.6143 2.45545C66.4162 3.80198 65.1489 4.91089 63.7628 4.91089C62.3766 4.91089 61.5053 3.72277 61.743 2.45545ZM82.4162 6.05941L80.04 19.604H75.9608L76.1192 18.6931C74.9605 19.6044 73.5125 20.0683 72.04 20C67.6439 20 65.9806 16.198 66.6935 12.5149C67.3271 9.0297 70.0994 5.70297 74.2974 5.70297C76.0796 5.70297 77.3469 6.41584 78.0994 7.52475L78.337 6.09901H82.4162V6.05941ZM77.1885 12.8713C77.5449 10.8119 76.436 9.54455 74.5746 9.54455C73.6539 9.53718 72.7625 9.86769 72.0691 10.4735C71.3757 11.0793 70.9285 11.9183 70.8123 12.8317C70.4558 14.8515 71.5251 16.1188 73.4261 16.1188C75.2479 16.1584 76.8321 14.8911 77.1885 12.8713Z"${_scopeId}></path></g><defs${_scopeId}><clipPath id="clip0_207_25158"${_scopeId}><rect width="109.03" height="20" fill="white"${_scopeId}></rect></clipPath></defs></svg></div><div${_scopeId}>`);
+						_push$1(ssrRenderComponent(VIcon, { icon: unref(mdiPlus) }, null, _parent$1, _scopeId));
+						_push$1(`</div><div${_scopeId}><svg class="size-18" viewBox="0 0 128 128"${_scopeId}><path fill="#42b883" d="M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z"${_scopeId}></path><path fill="#35495e" d="M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z"${_scopeId}></path></svg></div><div${_scopeId}>`);
+						_push$1(ssrRenderComponent(VIcon, { icon: unref(mdiPlus) }, null, _parent$1, _scopeId));
+						_push$1(`</div><div${_scopeId}><svg class="size-18" viewBox="0 0 300 265" fill="none" xmlns="http://www.w3.org/2000/svg"${_scopeId}><path d="M152.94 59.0434L93.217 164.384L149.768 264.167L224.668 132.084L299.535 0H186.399L152.94 59.0434Z" fill="#1697F6"${_scopeId}></path><path d="M74.9006 132.084L78.823 139.03L134.692 40.4621L157.646 0H149.767H0L74.9006 132.084Z" fill="#AEDDFF"${_scopeId}></path><path d="M186.399 0C214.709 94.8516 149.767 264.167 149.767 264.167L93.2168 164.384L186.399 0Z" fill="#1867C0"${_scopeId}></path><path d="M157.646 0C38.3716 0 78.8233 139.03 78.8233 139.03L157.646 0Z" fill="#7BC6FF"${_scopeId}></path></svg></div></header><p class="font-display font-bold text-4xl"${_scopeId}>Welcome to evoMark&#39;s LIVV Stack</p>`);
+					} else return [createVNode("header", { class: "flex items-center gap-4 mb-8" }, [
+						createVNode("div", null, [(openBlock(), createBlock("svg", {
+							class: "size-18",
+							width: "42",
+							height: "42",
+							viewBox: "0 0 42 42",
+							fill: "none",
+							xmlns: "http://www.w3.org/2000/svg"
+						}, [createVNode("path", {
+							d: "M41 9.88889L33 5.44444L25 9.88889M41 9.88889L33 14.3333M41 9.88889V18.7778L33 23.2222M25 9.88889V18.7778M25 9.88889L33 14.3333M25 18.7778L33 23.2222M25 18.7778L9 27.6667M33 23.2222V32.1111L17 41M33 23.2222V14.3333M33 23.2222L17 32.1111M9 27.6667L17 32.1111M9 27.6667V9.88889M1 5.44444L9 1L17 5.44444M1 5.44444V32.1111L17 41M1 5.44444L9 9.88889M17 41V32.1111M9 9.88889L17 5.44444M17 5.44444V23.2222",
+							stroke: "#F53003",
+							"stroke-width": "1.5"
+						})]))]),
+						createVNode("div", null, [createVNode(VIcon, { icon: unref(mdiPlus) }, null, 8, ["icon"])]),
+						createVNode("div", null, [(openBlock(), createBlock("svg", {
+							class: "h-18 mb-3",
+							viewBox: "0 0 110 20",
+							fill: "none",
+							xmlns: "http://www.w3.org/2000/svg"
+						}, [createVNode("g", { "clip-path": "url(#clip0_207_25158)" }, [
+							createVNode("path", {
+								class: "fill-black dark:fill-white",
+								d: "M91.5651 6.37624H84.5156L91.3275 13.1881L84.5156 20H91.5651L98.377 13.1881L91.5651 6.37624Z"
+							}),
+							createVNode("path", {
+								class: "fill-black dark:fill-white",
+								d: "M102.218 6.37624H95.1689L101.981 13.1881L95.1689 20H102.218L109.03 13.1881L102.218 6.37624Z"
+							}),
+							createVNode("path", {
+								class: "fill-black dark:fill-white",
+								d: "M2.37662 6.05941H6.45583L4.07959 19.604H0.00038147L2.37662 6.05941ZM2.61424 2.45545C2.85187 1.14851 4.07959 0 5.42612 0C6.77266 0 7.68355 1.10891 7.48553 2.45545C7.28751 3.80198 6.02018 4.91089 4.63405 4.91089C3.24791 4.91089 2.41622 3.72277 2.61424 2.45545ZM21.5053 11.2871L20.04 19.604H16.0004L17.3469 11.8812C17.6637 10.1386 16.7133 9.42574 15.4063 9.42574C14.0598 9.42574 12.8321 10.2178 12.436 12.0396L11.0895 19.604H7.04989L9.42612 6.05941H13.5053L13.3073 7.32673C14.2182 6.29703 15.7628 5.66337 17.3073 5.66337C20.04 5.70297 22.139 7.68317 21.5053 11.2871ZM37.4261 12.8317C37.3865 13.1485 37.2281 13.901 36.9905 14.4554H27.2875C27.5251 15.9604 28.7925 16.3564 30.0598 16.3564C31.2083 16.3564 32.1192 16.0396 32.9113 15.2871L35.7628 17.6238C34.1786 19.2079 32.3172 20 29.8222 20C25.1489 20 22.6935 16.6337 23.3667 12.5941C23.6779 10.6669 24.6666 8.91403 26.1549 7.6508C27.6432 6.38756 29.5334 5.69687 31.4855 5.70297C35.3667 5.70297 38.1786 8.71287 37.4261 12.8317ZM33.5845 11.3663C33.4657 9.86139 32.3964 9.26733 31.1291 9.26733C30.4354 9.25486 29.7535 9.44738 29.1688 9.82076C28.584 10.1941 28.1225 10.7318 27.842 11.3663H33.5845ZM49.0697 5.78218L48.2776 10.3762C46.6935 10.1386 44.1192 10.6931 43.6439 13.4653L43.6836 13.3069L42.5746 19.604H38.535L40.9113 6.05941H44.9905L44.5548 8.51485C45.3865 6.65347 47.1687 5.78218 49.0697 5.78218ZM54.5746 14.7723C54.3766 16 55.3667 16.0792 57.1885 15.9208L56.5548 19.604C51.6836 20.1584 49.8618 18.5347 50.535 14.7723L51.3667 9.9802H49.1885L49.9014 6.05941H52.04L52.5152 3.48515L56.7925 2.25743L56.1192 6.05941H58.9311L58.2182 9.9802H55.4459L54.5746 14.7723ZM61.5053 6.05941H65.5845L63.2083 19.604H59.1291L61.5053 6.05941ZM61.743 2.45545C61.941 1.14851 63.2083 0 64.5548 0C65.9014 0 66.8123 1.10891 66.6143 2.45545C66.4162 3.80198 65.1489 4.91089 63.7628 4.91089C62.3766 4.91089 61.5053 3.72277 61.743 2.45545ZM82.4162 6.05941L80.04 19.604H75.9608L76.1192 18.6931C74.9605 19.6044 73.5125 20.0683 72.04 20C67.6439 20 65.9806 16.198 66.6935 12.5149C67.3271 9.0297 70.0994 5.70297 74.2974 5.70297C76.0796 5.70297 77.3469 6.41584 78.0994 7.52475L78.337 6.09901H82.4162V6.05941ZM77.1885 12.8713C77.5449 10.8119 76.436 9.54455 74.5746 9.54455C73.6539 9.53718 72.7625 9.86769 72.0691 10.4735C71.3757 11.0793 70.9285 11.9183 70.8123 12.8317C70.4558 14.8515 71.5251 16.1188 73.4261 16.1188C75.2479 16.1584 76.8321 14.8911 77.1885 12.8713Z"
+							})
+						]), createVNode("defs", null, [createVNode("clipPath", { id: "clip0_207_25158" }, [createVNode("rect", {
+							width: "109.03",
+							height: "20",
+							fill: "white"
+						})])])]))]),
+						createVNode("div", null, [createVNode(VIcon, { icon: unref(mdiPlus) }, null, 8, ["icon"])]),
+						createVNode("div", null, [(openBlock(), createBlock("svg", {
+							class: "size-18",
+							viewBox: "0 0 128 128"
+						}, [createVNode("path", {
+							fill: "#42b883",
+							d: "M78.8,10L64,35.4L49.2,10H0l64,110l64-110C128,10,78.8,10,78.8,10z"
+						}), createVNode("path", {
+							fill: "#35495e",
+							d: "M78.8,10L64,35.4L49.2,10H25.6L64,76l38.4-66H78.8z"
+						})]))]),
+						createVNode("div", null, [createVNode(VIcon, { icon: unref(mdiPlus) }, null, 8, ["icon"])]),
+						createVNode("div", null, [(openBlock(), createBlock("svg", {
+							class: "size-18",
+							viewBox: "0 0 300 265",
+							fill: "none",
+							xmlns: "http://www.w3.org/2000/svg"
+						}, [
+							createVNode("path", {
+								d: "M152.94 59.0434L93.217 164.384L149.768 264.167L224.668 132.084L299.535 0H186.399L152.94 59.0434Z",
+								fill: "#1697F6"
+							}),
+							createVNode("path", {
+								d: "M74.9006 132.084L78.823 139.03L134.692 40.4621L157.646 0H149.767H0L74.9006 132.084Z",
+								fill: "#AEDDFF"
+							}),
+							createVNode("path", {
+								d: "M186.399 0C214.709 94.8516 149.767 264.167 149.767 264.167L93.2168 164.384L186.399 0Z",
+								fill: "#1867C0"
+							}),
+							createVNode("path", {
+								d: "M157.646 0C38.3716 0 78.8233 139.03 78.8233 139.03L157.646 0Z",
+								fill: "#7BC6FF"
+							})
+						]))])
+					]), createVNode("p", { class: "font-display font-bold text-4xl" }, "Welcome to evoMark's LIVV Stack")];
+				}),
+				_: 1
+			}, _parent));
+		};
+	}
+};
+var _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/Dashboard.vue");
+	return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+};
+var Dashboard_default = _sfc_main$6;
+var Error_exports = /* @__PURE__ */ __export({ default: () => Error_default });
+var _sfc_main$5 = /* @__PURE__ */ Object.assign({ layout: false }, {
+	__name: "Error",
+	__ssrInlineRender: true,
+	props: { status: {
+		type: Number,
+		required: true
+	} },
+	setup(__props) {
+		const props = __props;
+		const title = computed(() => {
+			return {
+				503: "503: Service Unavailable",
+				500: "500: Server Error",
+				404: "404: Page Not Found",
+				403: "403: Forbidden"
+			}[props.status];
+		});
+		const description = computed(() => {
+			return {
+				503: "Sorry, we are doing some maintenance. Please check back soon.",
+				500: "Whoops, something went wrong on our servers.",
+				404: "Sorry, the page you are looking for could not be found.",
+				403: "Sorry, you are forbidden from accessing this page."
+			}[props.status];
+		});
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(`<div${ssrRenderAttrs(mergeProps({ class: "flex w-full h-full justify-center items-center text-center flex-col grow" }, _attrs))}><h1 class="text-4xl uppercase font-bold mb-8">${ssrInterpolate(unref(title))}</h1><div>${ssrInterpolate(unref(description))}</div></div>`);
+		};
+	}
+});
+var _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/Error.vue");
+	return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+};
+var Error_default = _sfc_main$5;
+var _sfc_main$4 = {
+	__name: "BlankLayout",
+	__ssrInlineRender: true,
+	setup(__props) {
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(ssrRenderComponent(Wrapper_default, _attrs, {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) _push$1(ssrRenderComponent(VMain, null, {
+						default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+							if (_push$2) ssrRenderSlot(_ctx.$slots, "default", {}, null, _push$2, _parent$2, _scopeId$1);
+							else return [renderSlot(_ctx.$slots, "default")];
+						}),
+						_: 3
+					}, _parent$1, _scopeId));
+					else return [createVNode(VMain, null, {
+						default: withCtx(() => [renderSlot(_ctx.$slots, "default")]),
+						_: 3
+					})];
+				}),
+				_: 3
+			}, _parent));
+		};
+	}
+};
+var _sfc_setup$4 = _sfc_main$4.setup;
+_sfc_main$4.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/layouts/BlankLayout.vue");
+	return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+};
+var BlankLayout_default = _sfc_main$4;
+var ForgotPassword_exports = /* @__PURE__ */ __export({ default: () => ForgotPassword_default });
+var _sfc_main$3 = /* @__PURE__ */ Object.assign({ layout: BlankLayout_default }, {
+	__name: "ForgotPassword",
+	__ssrInlineRender: true,
+	setup(__props) {
+		const route = D();
+		const forgot = useForm({ email: "" });
+		const onSendRequest = () => {
+			forgot.post(route("auth.forgot-password.store"), { onSuccess() {
+				forgot.reset();
+			} });
+		};
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(`<div${ssrRenderAttrs(mergeProps({ class: "flex-center container h-full" }, _attrs))}>`);
+			_push(ssrRenderComponent(VCard, {
+				title: `Welcome to ${_ctx.$page.props.app.name}`,
+				"max-width": "448"
+			}, {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(ssrRenderComponent(VCardText, null, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(`<p${_scopeId$1}>Please enter your email below and, if registered, we&#39;ll send you a link to reset your password.</p>`);
+								else return [createVNode("p", null, "Please enter your email below and, if registered, we'll send you a link to reset your password.")];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VCardText, null, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(ssrRenderComponent(VForm, { onSubmit: onSendRequest }, {
+									default: withCtx((_$2, _push$3, _parent$3, _scopeId$2) => {
+										if (_push$3) _push$3(ssrRenderComponent(VRow, null, {
+											default: withCtx((_$3, _push$4, _parent$4, _scopeId$3) => {
+												if (_push$4) {
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(VTextField, {
+																modelValue: unref(forgot).email,
+																"onUpdate:modelValue": ($event) => unref(forgot).email = $event,
+																autofocus: "",
+																placeholder: "johndoe@email.com",
+																label: "Email",
+																type: "email",
+																"error-messages": unref(forgot).errors.email
+															}, null, _parent$5, _scopeId$4));
+															else return [createVNode(VTextField, {
+																modelValue: unref(forgot).email,
+																"onUpdate:modelValue": ($event) => unref(forgot).email = $event,
+																autofocus: "",
+																placeholder: "johndoe@email.com",
+																label: "Email",
+																type: "email",
+																"error-messages": unref(forgot).errors.email
+															}, null, 8, [
+																"modelValue",
+																"onUpdate:modelValue",
+																"error-messages"
+															])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) {
+																_push$5(`<div class="flex flex-wrap items-center justify-end gap-8"${_scopeId$4}>`);
+																_push$5(ssrRenderComponent(VBtn, {
+																	class: "text-capitalize text-primary",
+																	variant: "text",
+																	to: "auth.login"
+																}, {
+																	default: withCtx((_$5, _push$6, _parent$6, _scopeId$5) => {
+																		if (_push$6) _push$6(`<span class="capitalize"${_scopeId$5}>Return to Login</span>`);
+																		else return [createVNode("span", { class: "capitalize" }, "Return to Login")];
+																	}),
+																	_: 1
+																}, _parent$5, _scopeId$4));
+																_push$5(`</div>`);
+															} else return [createVNode("div", { class: "flex flex-wrap items-center justify-end gap-8" }, [createVNode(VBtn, {
+																class: "text-capitalize text-primary",
+																variant: "text",
+																to: "auth.login"
+															}, {
+																default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Return to Login")]),
+																_: 1
+															})])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(VBtn, {
+																color: "primary",
+																block: "",
+																type: "submit"
+															}, {
+																default: withCtx((_$5, _push$6, _parent$6, _scopeId$5) => {
+																	if (_push$6) _push$6(` Send Reset Request `);
+																	else return [createTextVNode(" Send Reset Request ")];
+																}),
+																_: 1
+															}, _parent$5, _scopeId$4));
+															else return [createVNode(VBtn, {
+																color: "primary",
+																block: "",
+																type: "submit"
+															}, {
+																default: withCtx(() => [createTextVNode(" Send Reset Request ")]),
+																_: 1
+															})];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+												} else return [
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(VTextField, {
+															modelValue: unref(forgot).email,
+															"onUpdate:modelValue": ($event) => unref(forgot).email = $event,
+															autofocus: "",
+															placeholder: "johndoe@email.com",
+															label: "Email",
+															type: "email",
+															"error-messages": unref(forgot).errors.email
+														}, null, 8, [
+															"modelValue",
+															"onUpdate:modelValue",
+															"error-messages"
+														])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-end gap-8" }, [createVNode(VBtn, {
+															class: "text-capitalize text-primary",
+															variant: "text",
+															to: "auth.login"
+														}, {
+															default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Return to Login")]),
+															_: 1
+														})])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(VBtn, {
+															color: "primary",
+															block: "",
+															type: "submit"
+														}, {
+															default: withCtx(() => [createTextVNode(" Send Reset Request ")]),
+															_: 1
+														})]),
+														_: 1
+													})
+												];
+											}),
+											_: 1
+										}, _parent$3, _scopeId$2));
+										else return [createVNode(VRow, null, {
+											default: withCtx(() => [
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(VTextField, {
+														modelValue: unref(forgot).email,
+														"onUpdate:modelValue": ($event) => unref(forgot).email = $event,
+														autofocus: "",
+														placeholder: "johndoe@email.com",
+														label: "Email",
+														type: "email",
+														"error-messages": unref(forgot).errors.email
+													}, null, 8, [
+														"modelValue",
+														"onUpdate:modelValue",
+														"error-messages"
+													])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-end gap-8" }, [createVNode(VBtn, {
+														class: "text-capitalize text-primary",
+														variant: "text",
+														to: "auth.login"
+													}, {
+														default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Return to Login")]),
+														_: 1
+													})])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(VBtn, {
+														color: "primary",
+														block: "",
+														type: "submit"
+													}, {
+														default: withCtx(() => [createTextVNode(" Send Reset Request ")]),
+														_: 1
+													})]),
+													_: 1
+												})
+											]),
+											_: 1
+										})];
+									}),
+									_: 1
+								}, _parent$2, _scopeId$1));
+								else return [createVNode(VForm, { onSubmit: withModifiers(onSendRequest, ["prevent"]) }, {
+									default: withCtx(() => [createVNode(VRow, null, {
+										default: withCtx(() => [
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(VTextField, {
+													modelValue: unref(forgot).email,
+													"onUpdate:modelValue": ($event) => unref(forgot).email = $event,
+													autofocus: "",
+													placeholder: "johndoe@email.com",
+													label: "Email",
+													type: "email",
+													"error-messages": unref(forgot).errors.email
+												}, null, 8, [
+													"modelValue",
+													"onUpdate:modelValue",
+													"error-messages"
+												])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-end gap-8" }, [createVNode(VBtn, {
+													class: "text-capitalize text-primary",
+													variant: "text",
+													to: "auth.login"
+												}, {
+													default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Return to Login")]),
+													_: 1
+												})])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(VBtn, {
+													color: "primary",
+													block: "",
+													type: "submit"
+												}, {
+													default: withCtx(() => [createTextVNode(" Send Reset Request ")]),
+													_: 1
+												})]),
+												_: 1
+											})
+										]),
+										_: 1
+									})]),
+									_: 1
+								})];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+					} else return [createVNode(VCardText, null, {
+						default: withCtx(() => [createVNode("p", null, "Please enter your email below and, if registered, we'll send you a link to reset your password.")]),
+						_: 1
+					}), createVNode(VCardText, null, {
+						default: withCtx(() => [createVNode(VForm, { onSubmit: withModifiers(onSendRequest, ["prevent"]) }, {
+							default: withCtx(() => [createVNode(VRow, null, {
+								default: withCtx(() => [
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(VTextField, {
+											modelValue: unref(forgot).email,
+											"onUpdate:modelValue": ($event) => unref(forgot).email = $event,
+											autofocus: "",
+											placeholder: "johndoe@email.com",
+											label: "Email",
+											type: "email",
+											"error-messages": unref(forgot).errors.email
+										}, null, 8, [
+											"modelValue",
+											"onUpdate:modelValue",
+											"error-messages"
+										])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-end gap-8" }, [createVNode(VBtn, {
+											class: "text-capitalize text-primary",
+											variant: "text",
+											to: "auth.login"
+										}, {
+											default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Return to Login")]),
+											_: 1
+										})])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(VBtn, {
+											color: "primary",
+											block: "",
+											type: "submit"
+										}, {
+											default: withCtx(() => [createTextVNode(" Send Reset Request ")]),
+											_: 1
+										})]),
+										_: 1
+									})
+								]),
+								_: 1
+							})]),
+							_: 1
+						})]),
+						_: 1
+					})];
+				}),
+				_: 1
+			}, _parent));
+			_push(`</div>`);
+		};
+	}
+});
+var _sfc_setup$3 = _sfc_main$3.setup;
+_sfc_main$3.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/ForgotPassword.vue");
+	return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+};
+var ForgotPassword_default = _sfc_main$3;
+var Login_exports = /* @__PURE__ */ __export({ default: () => Login_default });
+var _sfc_main$2 = /* @__PURE__ */ Object.assign({ layout: BlankLayout_default }, {
+	__name: "Login",
+	__ssrInlineRender: true,
+	setup(__props) {
+		const route = D();
+		const login = useForm({
+			email: "",
+			password: "",
+			remember: true
+		});
+		const onLogin = () => {
+			login.post(route("auth.login.store"), { onSuccess() {
+				console.log("Done");
+			} });
+		};
+		return (_ctx, _push, _parent, _attrs) => {
+			const _component_EvoInputPassword = resolveComponent("EvoInputPassword");
+			_push(`<div${ssrRenderAttrs(mergeProps({ class: "flex-center container h-full" }, _attrs))}>`);
+			_push(ssrRenderComponent(VCard, {
+				title: `Welcome to ${_ctx.$page.props.app.name}`,
+				"max-width": "448"
+			}, {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(ssrRenderComponent(VCardText, { class: "pt-2" }, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(`<p class="mb-0"${_scopeId$1}>Please sign-in to your account</p>`);
+								else return [createVNode("p", { class: "mb-0" }, "Please sign-in to your account")];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VCardText, null, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(ssrRenderComponent(VForm, { onSubmit: onLogin }, {
+									default: withCtx((_$2, _push$3, _parent$3, _scopeId$2) => {
+										if (_push$3) _push$3(ssrRenderComponent(VRow, null, {
+											default: withCtx((_$3, _push$4, _parent$4, _scopeId$3) => {
+												if (_push$4) {
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(VTextField, {
+																modelValue: unref(login).email,
+																"onUpdate:modelValue": ($event) => unref(login).email = $event,
+																autofocus: "",
+																placeholder: "johndoe@email.com",
+																label: "Email",
+																type: "email",
+																"error-messages": unref(login).errors.email
+															}, null, _parent$5, _scopeId$4));
+															else return [createVNode(VTextField, {
+																modelValue: unref(login).email,
+																"onUpdate:modelValue": ($event) => unref(login).email = $event,
+																autofocus: "",
+																placeholder: "johndoe@email.com",
+																label: "Email",
+																type: "email",
+																"error-messages": unref(login).errors.email
+															}, null, 8, [
+																"modelValue",
+																"onUpdate:modelValue",
+																"error-messages"
+															])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(_component_EvoInputPassword, {
+																modelValue: unref(login).password,
+																"onUpdate:modelValue": ($event) => unref(login).password = $event,
+																error: unref(login).errors.password
+															}, null, _parent$5, _scopeId$4));
+															else return [createVNode(_component_EvoInputPassword, {
+																modelValue: unref(login).password,
+																"onUpdate:modelValue": ($event) => unref(login).password = $event,
+																error: unref(login).errors.password
+															}, null, 8, [
+																"modelValue",
+																"onUpdate:modelValue",
+																"error"
+															])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) {
+																_push$5(`<div class="flex flex-wrap items-center justify-between gap-8"${_scopeId$4}>`);
+																_push$5(ssrRenderComponent(VCheckbox, {
+																	modelValue: unref(login).remember,
+																	"onUpdate:modelValue": ($event) => unref(login).remember = $event,
+																	label: "Remember me?",
+																	"hide-details": "",
+																	density: "compact"
+																}, null, _parent$5, _scopeId$4));
+																_push$5(ssrRenderComponent(VBtn, {
+																	class: "text-capitalize text-primary",
+																	variant: "text",
+																	to: "auth.forgot-password"
+																}, {
+																	default: withCtx((_$5, _push$6, _parent$6, _scopeId$5) => {
+																		if (_push$6) _push$6(`<span class="capitalize"${_scopeId$5}>Forgot Password?</span>`);
+																		else return [createVNode("span", { class: "capitalize" }, "Forgot Password?")];
+																	}),
+																	_: 1
+																}, _parent$5, _scopeId$4));
+																_push$5(`</div>`);
+															} else return [createVNode("div", { class: "flex flex-wrap items-center justify-between gap-8" }, [createVNode(VCheckbox, {
+																modelValue: unref(login).remember,
+																"onUpdate:modelValue": ($event) => unref(login).remember = $event,
+																label: "Remember me?",
+																"hide-details": "",
+																density: "compact"
+															}, null, 8, ["modelValue", "onUpdate:modelValue"]), createVNode(VBtn, {
+																class: "text-capitalize text-primary",
+																variant: "text",
+																to: "auth.forgot-password"
+															}, {
+																default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Forgot Password?")]),
+																_: 1
+															})])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(VBtn, {
+																color: "primary",
+																block: "",
+																type: "submit"
+															}, {
+																default: withCtx((_$5, _push$6, _parent$6, _scopeId$5) => {
+																	if (_push$6) _push$6(` Login `);
+																	else return [createTextVNode(" Login ")];
+																}),
+																_: 1
+															}, _parent$5, _scopeId$4));
+															else return [createVNode(VBtn, {
+																color: "primary",
+																block: "",
+																type: "submit"
+															}, {
+																default: withCtx(() => [createTextVNode(" Login ")]),
+																_: 1
+															})];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+												} else return [
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(VTextField, {
+															modelValue: unref(login).email,
+															"onUpdate:modelValue": ($event) => unref(login).email = $event,
+															autofocus: "",
+															placeholder: "johndoe@email.com",
+															label: "Email",
+															type: "email",
+															"error-messages": unref(login).errors.email
+														}, null, 8, [
+															"modelValue",
+															"onUpdate:modelValue",
+															"error-messages"
+														])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+															modelValue: unref(login).password,
+															"onUpdate:modelValue": ($event) => unref(login).password = $event,
+															error: unref(login).errors.password
+														}, null, 8, [
+															"modelValue",
+															"onUpdate:modelValue",
+															"error"
+														])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-between gap-8" }, [createVNode(VCheckbox, {
+															modelValue: unref(login).remember,
+															"onUpdate:modelValue": ($event) => unref(login).remember = $event,
+															label: "Remember me?",
+															"hide-details": "",
+															density: "compact"
+														}, null, 8, ["modelValue", "onUpdate:modelValue"]), createVNode(VBtn, {
+															class: "text-capitalize text-primary",
+															variant: "text",
+															to: "auth.forgot-password"
+														}, {
+															default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Forgot Password?")]),
+															_: 1
+														})])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(VBtn, {
+															color: "primary",
+															block: "",
+															type: "submit"
+														}, {
+															default: withCtx(() => [createTextVNode(" Login ")]),
+															_: 1
+														})]),
+														_: 1
+													})
+												];
+											}),
+											_: 1
+										}, _parent$3, _scopeId$2));
+										else return [createVNode(VRow, null, {
+											default: withCtx(() => [
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(VTextField, {
+														modelValue: unref(login).email,
+														"onUpdate:modelValue": ($event) => unref(login).email = $event,
+														autofocus: "",
+														placeholder: "johndoe@email.com",
+														label: "Email",
+														type: "email",
+														"error-messages": unref(login).errors.email
+													}, null, 8, [
+														"modelValue",
+														"onUpdate:modelValue",
+														"error-messages"
+													])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+														modelValue: unref(login).password,
+														"onUpdate:modelValue": ($event) => unref(login).password = $event,
+														error: unref(login).errors.password
+													}, null, 8, [
+														"modelValue",
+														"onUpdate:modelValue",
+														"error"
+													])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-between gap-8" }, [createVNode(VCheckbox, {
+														modelValue: unref(login).remember,
+														"onUpdate:modelValue": ($event) => unref(login).remember = $event,
+														label: "Remember me?",
+														"hide-details": "",
+														density: "compact"
+													}, null, 8, ["modelValue", "onUpdate:modelValue"]), createVNode(VBtn, {
+														class: "text-capitalize text-primary",
+														variant: "text",
+														to: "auth.forgot-password"
+													}, {
+														default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Forgot Password?")]),
+														_: 1
+													})])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(VBtn, {
+														color: "primary",
+														block: "",
+														type: "submit"
+													}, {
+														default: withCtx(() => [createTextVNode(" Login ")]),
+														_: 1
+													})]),
+													_: 1
+												})
+											]),
+											_: 1
+										})];
+									}),
+									_: 1
+								}, _parent$2, _scopeId$1));
+								else return [createVNode(VForm, { onSubmit: withModifiers(onLogin, ["prevent"]) }, {
+									default: withCtx(() => [createVNode(VRow, null, {
+										default: withCtx(() => [
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(VTextField, {
+													modelValue: unref(login).email,
+													"onUpdate:modelValue": ($event) => unref(login).email = $event,
+													autofocus: "",
+													placeholder: "johndoe@email.com",
+													label: "Email",
+													type: "email",
+													"error-messages": unref(login).errors.email
+												}, null, 8, [
+													"modelValue",
+													"onUpdate:modelValue",
+													"error-messages"
+												])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+													modelValue: unref(login).password,
+													"onUpdate:modelValue": ($event) => unref(login).password = $event,
+													error: unref(login).errors.password
+												}, null, 8, [
+													"modelValue",
+													"onUpdate:modelValue",
+													"error"
+												])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-between gap-8" }, [createVNode(VCheckbox, {
+													modelValue: unref(login).remember,
+													"onUpdate:modelValue": ($event) => unref(login).remember = $event,
+													label: "Remember me?",
+													"hide-details": "",
+													density: "compact"
+												}, null, 8, ["modelValue", "onUpdate:modelValue"]), createVNode(VBtn, {
+													class: "text-capitalize text-primary",
+													variant: "text",
+													to: "auth.forgot-password"
+												}, {
+													default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Forgot Password?")]),
+													_: 1
+												})])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(VBtn, {
+													color: "primary",
+													block: "",
+													type: "submit"
+												}, {
+													default: withCtx(() => [createTextVNode(" Login ")]),
+													_: 1
+												})]),
+												_: 1
+											})
+										]),
+										_: 1
+									})]),
+									_: 1
+								})];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+					} else return [createVNode(VCardText, { class: "pt-2" }, {
+						default: withCtx(() => [createVNode("p", { class: "mb-0" }, "Please sign-in to your account")]),
+						_: 1
+					}), createVNode(VCardText, null, {
+						default: withCtx(() => [createVNode(VForm, { onSubmit: withModifiers(onLogin, ["prevent"]) }, {
+							default: withCtx(() => [createVNode(VRow, null, {
+								default: withCtx(() => [
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(VTextField, {
+											modelValue: unref(login).email,
+											"onUpdate:modelValue": ($event) => unref(login).email = $event,
+											autofocus: "",
+											placeholder: "johndoe@email.com",
+											label: "Email",
+											type: "email",
+											"error-messages": unref(login).errors.email
+										}, null, 8, [
+											"modelValue",
+											"onUpdate:modelValue",
+											"error-messages"
+										])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+											modelValue: unref(login).password,
+											"onUpdate:modelValue": ($event) => unref(login).password = $event,
+											error: unref(login).errors.password
+										}, null, 8, [
+											"modelValue",
+											"onUpdate:modelValue",
+											"error"
+										])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode("div", { class: "flex flex-wrap items-center justify-between gap-8" }, [createVNode(VCheckbox, {
+											modelValue: unref(login).remember,
+											"onUpdate:modelValue": ($event) => unref(login).remember = $event,
+											label: "Remember me?",
+											"hide-details": "",
+											density: "compact"
+										}, null, 8, ["modelValue", "onUpdate:modelValue"]), createVNode(VBtn, {
+											class: "text-capitalize text-primary",
+											variant: "text",
+											to: "auth.forgot-password"
+										}, {
+											default: withCtx(() => [createVNode("span", { class: "capitalize" }, "Forgot Password?")]),
+											_: 1
+										})])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(VBtn, {
+											color: "primary",
+											block: "",
+											type: "submit"
+										}, {
+											default: withCtx(() => [createTextVNode(" Login ")]),
+											_: 1
+										})]),
+										_: 1
+									})
+								]),
+								_: 1
+							})]),
+							_: 1
+						})]),
+						_: 1
+					})];
+				}),
+				_: 1
+			}, _parent));
+			_push(`</div>`);
+		};
+	}
+});
+var _sfc_setup$2 = _sfc_main$2.setup;
+_sfc_main$2.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/Login.vue");
+	return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
+};
+var Login_default = _sfc_main$2;
+var MustVerifyEmail_exports = /* @__PURE__ */ __export({ default: () => MustVerifyEmail_default });
+var _sfc_main$1 = {
+	__name: "MustVerifyEmail",
+	__ssrInlineRender: true,
+	setup(__props) {
+		D();
+		ref(false);
+		return (_ctx, _push, _parent, _attrs) => {
+			_push(`<div${ssrRenderAttrs(_attrs)}><div class="prose prose-invert"><h1 class="uppercase">Email Verification Required</h1><p>Before you can access the application, we need you to verify your email address.</p><p>You should have received this email when you registered, but you can resend it using the link below.</p></div><div class="flex justify-end py-8"><button>Resend Verification Email</button></div></div>`);
+		};
+	}
+};
+var _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/MustVerifyEmail.vue");
+	return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
+var MustVerifyEmail_default = _sfc_main$1;
+var ResetPassword_exports = /* @__PURE__ */ __export({ default: () => ResetPassword_default });
+var _sfc_main = /* @__PURE__ */ Object.assign({ layout: BlankLayout_default }, {
+	__name: "ResetPassword",
+	__ssrInlineRender: true,
+	setup(__props) {
+		const route = D();
+		const reset = useForm({
+			token: usePage().props.token,
+			email: usePage().props.email,
+			password: "",
+			password_confirmation: ""
+		});
+		const onResetPassword = () => {
+			reset.post(route("auth.reset-password.store"), { onSuccess() {
+				reset.reset();
+			} });
+		};
+		return (_ctx, _push, _parent, _attrs) => {
+			const _component_EvoInputPassword = resolveComponent("EvoInputPassword");
+			_push(`<div${ssrRenderAttrs(mergeProps({ class: "flex-center container h-full" }, _attrs))}>`);
+			_push(ssrRenderComponent(VCard, {
+				title: "Reset Your Password",
+				"max-width": "448"
+			}, {
+				default: withCtx((_, _push$1, _parent$1, _scopeId) => {
+					if (_push$1) {
+						_push$1(ssrRenderComponent(VCardText, { class: "pt-2" }, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(`<p class="mb-0"${_scopeId$1}>Please enter a new password for your account below</p>`);
+								else return [createVNode("p", { class: "mb-0" }, "Please enter a new password for your account below")];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+						_push$1(ssrRenderComponent(VCardText, null, {
+							default: withCtx((_$1, _push$2, _parent$2, _scopeId$1) => {
+								if (_push$2) _push$2(ssrRenderComponent(VForm, { onSubmit: onResetPassword }, {
+									default: withCtx((_$2, _push$3, _parent$3, _scopeId$2) => {
+										if (_push$3) _push$3(ssrRenderComponent(VRow, null, {
+											default: withCtx((_$3, _push$4, _parent$4, _scopeId$3) => {
+												if (_push$4) {
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(VTextField, {
+																modelValue: unref(reset).email,
+																"onUpdate:modelValue": ($event) => unref(reset).email = $event,
+																autofocus: "",
+																placeholder: "johndoe@email.com",
+																label: "Email",
+																type: "email",
+																"error-messages": unref(reset).errors.email
+															}, null, _parent$5, _scopeId$4));
+															else return [createVNode(VTextField, {
+																modelValue: unref(reset).email,
+																"onUpdate:modelValue": ($event) => unref(reset).email = $event,
+																autofocus: "",
+																placeholder: "johndoe@email.com",
+																label: "Email",
+																type: "email",
+																"error-messages": unref(reset).errors.email
+															}, null, 8, [
+																"modelValue",
+																"onUpdate:modelValue",
+																"error-messages"
+															])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(_component_EvoInputPassword, {
+																modelValue: unref(reset).password,
+																"onUpdate:modelValue": ($event) => unref(reset).password = $event,
+																error: unref(reset).errors.password
+															}, null, _parent$5, _scopeId$4));
+															else return [createVNode(_component_EvoInputPassword, {
+																modelValue: unref(reset).password,
+																"onUpdate:modelValue": ($event) => unref(reset).password = $event,
+																error: unref(reset).errors.password
+															}, null, 8, [
+																"modelValue",
+																"onUpdate:modelValue",
+																"error"
+															])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(_component_EvoInputPassword, {
+																modelValue: unref(reset).password_confirmation,
+																"onUpdate:modelValue": ($event) => unref(reset).password_confirmation = $event,
+																error: unref(reset).errors.password_confirmation
+															}, null, _parent$5, _scopeId$4));
+															else return [createVNode(_component_EvoInputPassword, {
+																modelValue: unref(reset).password_confirmation,
+																"onUpdate:modelValue": ($event) => unref(reset).password_confirmation = $event,
+																error: unref(reset).errors.password_confirmation
+															}, null, 8, [
+																"modelValue",
+																"onUpdate:modelValue",
+																"error"
+															])];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+													_push$4(ssrRenderComponent(VCol, { cols: "12" }, {
+														default: withCtx((_$4, _push$5, _parent$5, _scopeId$4) => {
+															if (_push$5) _push$5(ssrRenderComponent(VBtn, {
+																color: "primary",
+																block: "",
+																type: "submit"
+															}, {
+																default: withCtx((_$5, _push$6, _parent$6, _scopeId$5) => {
+																	if (_push$6) _push$6(` Reset Password `);
+																	else return [createTextVNode(" Reset Password ")];
+																}),
+																_: 1
+															}, _parent$5, _scopeId$4));
+															else return [createVNode(VBtn, {
+																color: "primary",
+																block: "",
+																type: "submit"
+															}, {
+																default: withCtx(() => [createTextVNode(" Reset Password ")]),
+																_: 1
+															})];
+														}),
+														_: 1
+													}, _parent$4, _scopeId$3));
+												} else return [
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(VTextField, {
+															modelValue: unref(reset).email,
+															"onUpdate:modelValue": ($event) => unref(reset).email = $event,
+															autofocus: "",
+															placeholder: "johndoe@email.com",
+															label: "Email",
+															type: "email",
+															"error-messages": unref(reset).errors.email
+														}, null, 8, [
+															"modelValue",
+															"onUpdate:modelValue",
+															"error-messages"
+														])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+															modelValue: unref(reset).password,
+															"onUpdate:modelValue": ($event) => unref(reset).password = $event,
+															error: unref(reset).errors.password
+														}, null, 8, [
+															"modelValue",
+															"onUpdate:modelValue",
+															"error"
+														])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+															modelValue: unref(reset).password_confirmation,
+															"onUpdate:modelValue": ($event) => unref(reset).password_confirmation = $event,
+															error: unref(reset).errors.password_confirmation
+														}, null, 8, [
+															"modelValue",
+															"onUpdate:modelValue",
+															"error"
+														])]),
+														_: 1
+													}),
+													createVNode(VCol, { cols: "12" }, {
+														default: withCtx(() => [createVNode(VBtn, {
+															color: "primary",
+															block: "",
+															type: "submit"
+														}, {
+															default: withCtx(() => [createTextVNode(" Reset Password ")]),
+															_: 1
+														})]),
+														_: 1
+													})
+												];
+											}),
+											_: 1
+										}, _parent$3, _scopeId$2));
+										else return [createVNode(VRow, null, {
+											default: withCtx(() => [
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(VTextField, {
+														modelValue: unref(reset).email,
+														"onUpdate:modelValue": ($event) => unref(reset).email = $event,
+														autofocus: "",
+														placeholder: "johndoe@email.com",
+														label: "Email",
+														type: "email",
+														"error-messages": unref(reset).errors.email
+													}, null, 8, [
+														"modelValue",
+														"onUpdate:modelValue",
+														"error-messages"
+													])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+														modelValue: unref(reset).password,
+														"onUpdate:modelValue": ($event) => unref(reset).password = $event,
+														error: unref(reset).errors.password
+													}, null, 8, [
+														"modelValue",
+														"onUpdate:modelValue",
+														"error"
+													])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+														modelValue: unref(reset).password_confirmation,
+														"onUpdate:modelValue": ($event) => unref(reset).password_confirmation = $event,
+														error: unref(reset).errors.password_confirmation
+													}, null, 8, [
+														"modelValue",
+														"onUpdate:modelValue",
+														"error"
+													])]),
+													_: 1
+												}),
+												createVNode(VCol, { cols: "12" }, {
+													default: withCtx(() => [createVNode(VBtn, {
+														color: "primary",
+														block: "",
+														type: "submit"
+													}, {
+														default: withCtx(() => [createTextVNode(" Reset Password ")]),
+														_: 1
+													})]),
+													_: 1
+												})
+											]),
+											_: 1
+										})];
+									}),
+									_: 1
+								}, _parent$2, _scopeId$1));
+								else return [createVNode(VForm, { onSubmit: withModifiers(onResetPassword, ["prevent"]) }, {
+									default: withCtx(() => [createVNode(VRow, null, {
+										default: withCtx(() => [
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(VTextField, {
+													modelValue: unref(reset).email,
+													"onUpdate:modelValue": ($event) => unref(reset).email = $event,
+													autofocus: "",
+													placeholder: "johndoe@email.com",
+													label: "Email",
+													type: "email",
+													"error-messages": unref(reset).errors.email
+												}, null, 8, [
+													"modelValue",
+													"onUpdate:modelValue",
+													"error-messages"
+												])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+													modelValue: unref(reset).password,
+													"onUpdate:modelValue": ($event) => unref(reset).password = $event,
+													error: unref(reset).errors.password
+												}, null, 8, [
+													"modelValue",
+													"onUpdate:modelValue",
+													"error"
+												])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+													modelValue: unref(reset).password_confirmation,
+													"onUpdate:modelValue": ($event) => unref(reset).password_confirmation = $event,
+													error: unref(reset).errors.password_confirmation
+												}, null, 8, [
+													"modelValue",
+													"onUpdate:modelValue",
+													"error"
+												])]),
+												_: 1
+											}),
+											createVNode(VCol, { cols: "12" }, {
+												default: withCtx(() => [createVNode(VBtn, {
+													color: "primary",
+													block: "",
+													type: "submit"
+												}, {
+													default: withCtx(() => [createTextVNode(" Reset Password ")]),
+													_: 1
+												})]),
+												_: 1
+											})
+										]),
+										_: 1
+									})]),
+									_: 1
+								})];
+							}),
+							_: 1
+						}, _parent$1, _scopeId));
+					} else return [createVNode(VCardText, { class: "pt-2" }, {
+						default: withCtx(() => [createVNode("p", { class: "mb-0" }, "Please enter a new password for your account below")]),
+						_: 1
+					}), createVNode(VCardText, null, {
+						default: withCtx(() => [createVNode(VForm, { onSubmit: withModifiers(onResetPassword, ["prevent"]) }, {
+							default: withCtx(() => [createVNode(VRow, null, {
+								default: withCtx(() => [
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(VTextField, {
+											modelValue: unref(reset).email,
+											"onUpdate:modelValue": ($event) => unref(reset).email = $event,
+											autofocus: "",
+											placeholder: "johndoe@email.com",
+											label: "Email",
+											type: "email",
+											"error-messages": unref(reset).errors.email
+										}, null, 8, [
+											"modelValue",
+											"onUpdate:modelValue",
+											"error-messages"
+										])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+											modelValue: unref(reset).password,
+											"onUpdate:modelValue": ($event) => unref(reset).password = $event,
+											error: unref(reset).errors.password
+										}, null, 8, [
+											"modelValue",
+											"onUpdate:modelValue",
+											"error"
+										])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(_component_EvoInputPassword, {
+											modelValue: unref(reset).password_confirmation,
+											"onUpdate:modelValue": ($event) => unref(reset).password_confirmation = $event,
+											error: unref(reset).errors.password_confirmation
+										}, null, 8, [
+											"modelValue",
+											"onUpdate:modelValue",
+											"error"
+										])]),
+										_: 1
+									}),
+									createVNode(VCol, { cols: "12" }, {
+										default: withCtx(() => [createVNode(VBtn, {
+											color: "primary",
+											block: "",
+											type: "submit"
+										}, {
+											default: withCtx(() => [createTextVNode(" Reset Password ")]),
+											_: 1
+										})]),
+										_: 1
+									})
+								]),
+								_: 1
+							})]),
+							_: 1
+						})]),
+						_: 1
+					})];
+				}),
+				_: 1
+			}, _parent));
+			_push(`</div>`);
+		};
+	}
+});
+var _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+	const ssrContext = useSSRContext();
+	(ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/js/pages/auth/ResetPassword.vue");
+	return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+var ResetPassword_default = _sfc_main;
+createServer((page) => createInertiaApp({
+	page,
+	render: renderToString,
+	resolve: createInertiaPageResolver({
+		"./pages/Dashboard.vue": Dashboard_exports,
+		"./pages/Error.vue": Error_exports,
+		"./pages/auth/ForgotPassword.vue": ForgotPassword_exports,
+		"./pages/auth/Login.vue": Login_exports,
+		"./pages/auth/MustVerifyEmail.vue": MustVerifyEmail_exports,
+		"./pages/auth/ResetPassword.vue": ResetPassword_exports
+	}),
+	setup({ App, props, plugin }) {
+		const inertiaRoutesPlugin = ae(props);
+		const inertiaI18nPlugin = useInertiaI18nVue(props);
+		return createSSRApp({ render: () => h(App, props) }).use(registerPlugins).use(inertiaRoutesPlugin).use(inertiaI18nPlugin).use(plugin);
+	}
+}));
+export {};

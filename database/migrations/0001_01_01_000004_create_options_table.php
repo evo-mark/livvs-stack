@@ -17,6 +17,8 @@ return new class extends Migration
             $table->text('value')->nullable();
             $table->string('type')->nullable();
             $table->nullableMorphs('optionable');
+            $table->string('description')->nullable();
+            $table->boolean('is_public')->default(false)->index();
             $table->timestamps();
         });
     }

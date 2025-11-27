@@ -3,9 +3,11 @@
 namespace App\Http\Middleware;
 
 use Inertia\Inertia;
+use App\Models\Option;
 use Inertia\Middleware;
 use App\Facades\MetaService;
 use Illuminate\Http\Request;
+use App\Facades\OptionsService;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -45,6 +47,19 @@ class HandleInertiaRequests extends Middleware
                 'url' => fn() => config('app.url'),
                 'timezone' => fn() => config('app.timezone')
             ],
+            'countries' => Inertia::lazy(function () {
+                $countries = collect(countries());
+
+                return $countries->map(function ($value, $key) {
+                    return [
+                        'value' => $key,
+                        'title' => $value['name'],
+                        'flag' => $value['emoji'],
+                    ];
+                })->sortBy(function ($item) {
+                    return $item['value'] === 'gb' ? 0 : 1;
+                })->values();
+            }),
             'flash' => Inertia::always([
                 'success' => fn() => $request->session()->get('success'),
                 'error' => fn() => $request->session()->get('error'),
@@ -54,6 +69,7 @@ class HandleInertiaRequests extends Middleware
             'meta' => [
                 'title' => fn() => MetaService::getTitle(),
             ],
+            'options' => OptionsService::loadPublicOptions(),
             'ws' => [
                 'key' => config('broadcasting.connections.pusher.key'),
                 'host' => config('broadcasting.connections.pusher.options.host'),

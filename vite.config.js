@@ -32,7 +32,7 @@ export default async ({ mode }) => {
 					"pinia",
 					{
 						"@inertiajs/vue3": ["router", "useForm", "usePage"],
-						"@adminui/inertia-routes": ["useRoute"],
+						"@adminui/inertia-routes": ["useRoute","useExtendedForm"],
 						"vue-i18n": ["useI18n"],
 					},
 				],

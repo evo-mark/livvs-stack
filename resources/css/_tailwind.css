@@ -11,6 +11,7 @@
 	--color-primary: rgb(var(--v-theme-primary));
 	--color-secondary: rgb(var(--v-theme-secondary));
 	--breakpoint-3xl: 1924px;
+	--font-display: "Syncopate", sans-serif;
 }
 
 @utility container {
@@ -29,3 +30,5 @@
 		padding-inline: 6rem;
 	}
 }
+
+@custom-variant dark (&:where(.dark, .dark *));

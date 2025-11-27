@@ -4,10 +4,13 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "axios",
         "dispatchable",
+        "laravel",
         "optionable",
         "persistedstate",
-        "timebox"
+        "timebox",
+        "vuetify"
     ],
     "ignoreWords": [
         "Activitylog",
@@ -16,6 +19,7 @@
         "dont",
         "fakerphp",
         "livvs",
+        "nowrite",
         "nunomaduro",
         "pestphp",
         "phpunit",

@@ -1,8 +1,8 @@
 import { cloneDeep, debounce, isEqual } from "es-toolkit";
 import { isObject, transform } from "es-toolkit/compat";
-import { watchPausable, refAutoReset } from "@vueuse/core";
+import { refAutoReset } from "@vueuse/core";
 import { useResolvedRoute } from "@adminui/inertia-routes";
-import { computed, reactive, toValue } from "vue";
+import { computed, reactive, toValue, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import axios from "axios";
 
@@ -67,7 +67,7 @@ export const useApiForm = (source, options = {}) => {
 	};
 	const debouncedUpdate = debounce(update, debounceTime);
 
-	const { stop, pause, resume } = watchPausable(_internalCopy, debouncedUpdate);
+	const { stop, pause, resume } = watch(_internalCopy, debouncedUpdate);
 
 	return {
 		form: _internal,

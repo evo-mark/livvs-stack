@@ -5,4 +5,6 @@
 	</VApp>
 </template>
 
-<script setup></script>
+<script setup>
+import { Head as InertiaHead } from '@inertiajs/vue3';
+</script>

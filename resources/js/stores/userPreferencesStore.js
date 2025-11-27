@@ -12,7 +12,11 @@ export const useUserPreferencesStore = defineStore(
 		watch(
 			theme,
 			(v) => {
-				vuetifyTheme.global.name.value = v;
+				vuetifyTheme.change(v);
+				const isDark = v === 'dark';
+				if (typeof window !== "undefined") {
+					document.documentElement.classList.toggle('dark', isDark);
+				}
 			},
 			{
 				immediate: true,

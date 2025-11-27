@@ -4,7 +4,6 @@ export default {
 	semi: true,
 	printWidth: 120,
 	proseWrap: "preserve",
-	plugins: ["prettier-plugin-tailwindcss"],
-	tailwindStylesheet: "./resources/css/app.postcss",
+	tailwindStylesheet: "./resources/css/app.css",
 	tailwindFunctions: ["normalizeClass"],
 };
