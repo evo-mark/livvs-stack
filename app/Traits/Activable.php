@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +13,9 @@ trait Activable
      */
     public function initializeActivable()
     {
-        $this->mergeFillable(['is_active']);
+        if (count($this->getFillable()) > 0) {
+            $this->mergeFillable(['is_active']);
+        }
         // Add is_active to the model's casts
 
         $this->mergeCasts([
@@ -24,7 +28,7 @@ trait Activable
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->where('is_active', true);
+        return $query->where($query->qualifyColumn('is_active'), true);
     }
 
     /**
@@ -32,6 +36,6 @@ trait Activable
      */
     public function scopeInactive(Builder $query): Builder
     {
-        return $query->where('is_active', false);
+        return $query->where($query->qualifyColumn('is_active'), false);
     }
 }
