@@ -14,7 +14,7 @@ class AddressSearchService
 
     public function __construct()
     {
-        $this->token = config('services.get_address.token');
+        $this->token = config('services.get_address.token', "");
     }
 
     public function get(string $postcode)
