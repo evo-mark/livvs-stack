@@ -39,7 +39,11 @@ class Address extends Model
             get: function ($value, array $attributes) {
                 $code = Str::lower($attributes['country_code']);
 
-                return country($code);
+                try {
+                    return country($code);
+                } catch (\Exception) {
+                    return null;
+                }
             },
             set: function (string|array|Country $value) {
                 if ($value instanceof Country) {

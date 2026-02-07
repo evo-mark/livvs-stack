@@ -23,6 +23,30 @@ export default defineConfig([
 			},
 		},
 		rules: {
+			"vue/block-order": [
+				"error",
+				{
+					order: ["template", "script", "style"],
+				},
+			],
+			"vue/define-macros-order": [
+				"error",
+				{
+					order: [
+						"defineOptions",
+						"defineEmits",
+						"defineModel",
+						"defineProps",
+						"defineCustom",
+						"defineSlots",
+					],
+					defineExposeLast: true,
+				},
+			],
+			"vue/padding-line-between-blocks": "error",
+			"vue/prefer-define-options": "error",
+			"vue/prefer-use-template-ref": "error",
+			"vue/v-for-delimiter-style": ["error", "in"],
 			"vue/multi-word-component-names": "off",
 			"vue/valid-v-slot": "off",
 			"vue/no-v-html": "off",

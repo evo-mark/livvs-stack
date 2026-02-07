@@ -4,9 +4,19 @@
 	"ignorePaths": [],
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
-	"words": ["axios", "dispatchable", "laravel", "optionable", "persistedstate", "timebox", "vuetify"],
+	"words": [
+		"axios",
+		"dispatchable",
+		"laravel",
+		"optionable",
+		"persistedstate",
+		"timebox",
+		"vuetify"
+	],
 	"ignoreWords": [
 		"Activitylog",
+		"Matan",
+		"Rinvex",
 		"Unplugin",
 		"barryvdh",
 		"dont",

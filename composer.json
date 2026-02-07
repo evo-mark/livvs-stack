@@ -15,7 +15,7 @@
 		"evo-mark/evo-laravel-profanity": "^1.1",
 		"evo-mark/evo-laravel-rbac": "^2.0.0",
 		"evo-mark/evo-laravel-service-facades": "*",
-		"evo-mark/inertia-i18n": "^1.0",
+		"evo-mark/inertia-i18n": "^2.0",
 		"evo-mark/laravel-id-obfuscator": "^1.4",
 		"inertiajs/inertia-laravel": "^2.0",
 		"laravel/framework": "^12.0",

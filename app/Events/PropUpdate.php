@@ -17,7 +17,7 @@ class PropUpdate implements ShouldBroadcastNow
      */
     public function __construct(
         public string|array $key,
-        public ?string $component = null,
+        public string|array|null $component = null,
         public ?array $data = []
     ) {}
 
