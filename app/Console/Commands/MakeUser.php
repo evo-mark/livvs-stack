@@ -52,19 +52,19 @@ class MakeUser extends Command implements PromptsForMissingInput
 
         $verifyEmail = confirm('Verify the email address now?');
 
-        $admin = new User([
+        $user = new User([
             'first_name' => $firstName,
             'last_name' => $lastName,
             'email' => $email,
         ]);
 
-        $admin->password = $password;
+        $user->password = $password;
 
         if ($verifyEmail) {
-            $admin->email_verified_at = Carbon::now();
+            $user->email_verified_at = Carbon::now();
         }
-        $admin->save();
+        $user->save();
 
-        $this->info('Admin "' . $admin->full_name . '" has been created');
+        $this->info('Admin "' . $user->full_name . '" has been created');
     }
 }

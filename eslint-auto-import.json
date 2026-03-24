@@ -185,6 +185,7 @@
     "useCounter": true,
     "useCountries": true,
     "useCssModule": true,
+    "useCssSupports": true,
     "useCssVar": true,
     "useCssVars": true,
     "useCurrentElement": true,
