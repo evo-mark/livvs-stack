@@ -1,11 +1,7 @@
 <template>
-	<Wrapper>
-		<VMain>
-			<slot></slot>
-		</VMain>
-	</Wrapper>
+	<VMain>
+		<slot></slot>
+	</VMain>
 </template>
 
-<script setup>
-import Wrapper from "./Wrapper.vue";
-</script>
+<script setup></script>

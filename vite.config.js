@@ -23,6 +23,29 @@ export default async ({ mode }) => {
 				"~": resolve("./resources/css"),
 			},
 		},
+		build: {
+			rolldownOptions: {
+				output: {
+					codeSplitting: {
+						minSize: 20000,
+						groups: [
+							{
+								name: 'vue',
+								test: /node_modules\/@?vue\//,
+							},
+							{
+								name: 'vuetify',
+								test: /node_modules\/vuetify/,
+							},
+							{
+								name: 'vendor',
+								test: /node_modules/,
+							},
+						],
+					}
+				}
+			}
+		},
 		plugins: [
 			AutoImport({
 				imports: [
@@ -32,7 +55,7 @@ export default async ({ mode }) => {
 					"pinia",
 					{
 						"@inertiajs/vue3": ["router", "useForm", "usePage"],
-						"@adminui/inertia-routes": ["useRoute","useExtendedForm"],
+						"@adminui/inertia-routes": ["useRoute", "useExtendedForm"],
 						"vue-i18n": ["useI18n"],
 					},
 				],
@@ -58,9 +81,9 @@ export default async ({ mode }) => {
 				},
 			}),
 			tailwindcss(),
-            vueDevTools({
-                appendTo: 'resources/js/app.js',
-            }),
+			vueDevTools({
+				appendTo: 'resources/js/app.js',
+			}),
 		],
 		server: {
 			host,

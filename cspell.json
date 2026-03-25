@@ -10,6 +10,7 @@
 		"laravel",
 		"optionable",
 		"persistedstate",
+		"sass",
 		"timebox",
 		"vuetify"
 	],

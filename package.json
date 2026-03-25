@@ -51,24 +51,16 @@
 		"pinia": "^3.0.4",
 		"pinia-plugin-persistedstate": "^4.7.1",
 		"pusher-js": "^8.4.3",
-		"qs-esm": "^7.0.0",
+		"qs-esm": "^7.0.3",
 		"universal-cookie": "^8.0.1",
 		"vue": "^3.5.30",
 		"vue-i18n": "^11.3.0",
 		"vue3-auto-vite-components": "^1.3.2",
 		"vue3-icon": "^3.0.3",
-		"vuetify": "^4.0.3"
+		"vuetify": "^4.0.4"
 	},
 	"engines": {
 		"node": ">=24"
 	},
-	"packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
-	"pnpm": {
-		"allowedDeprecatedVersions": {
-			"lodash.isequal": "4.5.0"
-		},
-		"onlyBuiltDependencies": [
-			"@tailwindcss/oxide"
-		]
-	}
+	"packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
 }

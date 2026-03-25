@@ -5,12 +5,19 @@ import { createSSRApp, h } from "vue";
 import useInertiaI18nVue from "inertia-i18n/vue";
 import { createInertiaPageResolver, registerPlugins } from "./setup";
 import { useInertiaRoutes } from "@adminui/inertia-routes";
+import DefaultLayout from "layouts/DefaultLayout.vue";
+import Wrapper from "layouts/Wrapper.vue";
 
 createServer((page) =>
 	createInertiaApp({
 		page,
 		render: renderToString,
-		resolve: createInertiaPageResolver(import.meta.glob("./pages/**/*.vue", { eager: true })),
+		resolve: createInertiaPageResolver(import.meta.glob("./pages/**/*.vue", { eager: true }), {
+			errorClass: "flex justify-center items-center min-h-screen bg-slate-700 text-white text-2xl",
+			errorTextClass: "px-2 font-bold",
+			wrapper: Wrapper,
+			default: DefaultLayout
+		}),
 		setup({ App, props, plugin }) {
 			const inertiaRoutesPlugin = useInertiaRoutes(props);
 			const inertiaI18nPlugin = useInertiaI18nVue(props);
