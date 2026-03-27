@@ -2,11 +2,12 @@ import { resolve } from "node:path";
 import vue from "@vitejs/plugin-vue";
 import vuetify from "vite-plugin-vuetify";
 import laravel from "laravel-vite-plugin";
-import tailwindcss from '@tailwindcss/vite';
-import InertiaI18n from "inertia-i18n/vite";
+import tailwindcss from "@tailwindcss/vite";
+import inertiaI18n from "inertia-i18n/vite";
 import { defineConfig, loadEnv } from "vite";
 import AutoImport from "unplugin-auto-import/vite";
-import vueDevTools from 'vite-plugin-vue-devtools';
+import vueDevTools from "vite-plugin-vue-devtools";
+import inertia from "@inertiajs/vite";
 
 export default async ({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
@@ -15,6 +16,9 @@ export default async ({ mode }) => {
 	return defineConfig({
 		css: {
 			preprocessorMaxWorkers: true,
+		},
+		ssr: {
+			noExternal: ["vuetify"],
 		},
 		resolve: {
 			alias: {
@@ -30,21 +34,21 @@ export default async ({ mode }) => {
 						minSize: 20000,
 						groups: [
 							{
-								name: 'vue',
+								name: "vue",
 								test: /node_modules\/@?vue\//,
 							},
 							{
-								name: 'vuetify',
+								name: "vuetify",
 								test: /node_modules\/vuetify/,
 							},
 							{
-								name: 'vendor',
+								name: "vendor",
 								test: /node_modules/,
 							},
 						],
-					}
-				}
-			}
+					},
+				},
+			},
 		},
 		plugins: [
 			AutoImport({
@@ -70,10 +74,10 @@ export default async ({ mode }) => {
 			}),
 			laravel({
 				input: ["resources/js/app.js"],
-				ssr: "resources/js/ssr.js",
 				refresh: true,
 			}),
-			InertiaI18n(),
+			inertia(),
+			inertiaI18n(),
 			vue(),
 			vuetify({
 				styles: {
@@ -82,7 +86,7 @@ export default async ({ mode }) => {
 			}),
 			tailwindcss(),
 			vueDevTools({
-				appendTo: 'resources/js/app.js',
+				appendTo: "resources/js/app.js",
 			}),
 		],
 		server: {

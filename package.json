@@ -14,7 +14,7 @@
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.2.2",
 		"@vitejs/plugin-vue": "^6.0.5",
-		"@vue/server-renderer": "^3.5.30",
+		"@vue/server-renderer": "^3.5.31",
 		"eslint": "^10.1.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-vue": "^10.8.0",
@@ -26,7 +26,7 @@
 		"sass-embedded": "1.97.3",
 		"tailwindcss": "^4.2.2",
 		"unplugin-auto-import": "^21.0.0",
-		"vite": "^8.0.2",
+		"vite": "^8.0.3",
 		"vite-plugin-eslint": "^1.8.1",
 		"vite-plugin-full-reload": "^1.2.0",
 		"vite-plugin-vue-devtools": "^8.1.1",
@@ -38,7 +38,8 @@
 		"@date-io/luxon": "^3.2.0",
 		"@evomark/vue-forward-slots": "^6.2.2",
 		"@fontsource/roboto": "^5.2.10",
-		"@inertiajs/vue3": "^2.3.18",
+		"@inertiajs/vite": "^3.0.0",
+		"@inertiajs/vue3": "^3.0.0",
 		"@mdi/js": "^7.4.47",
 		"@vueuse/core": "^14.2.1",
 		"@vueuse/integrations": "^14.2.1",
@@ -47,13 +48,14 @@
 		"evo-laravel-datatable": "file:vendor/evo-mark/evo-laravel-datatable",
 		"inertia-i18n": "file:vendor/evo-mark/inertia-i18n",
 		"laravel-echo": "^2.3.1",
+		"lodash-es": "^4.17.23",
 		"luxon": "^3.7.2",
 		"pinia": "^3.0.4",
 		"pinia-plugin-persistedstate": "^4.7.1",
 		"pusher-js": "^8.4.3",
 		"qs-esm": "^7.0.3",
 		"universal-cookie": "^8.0.1",
-		"vue": "^3.5.30",
+		"vue": "^3.5.31",
 		"vue-i18n": "^11.3.0",
 		"vue3-auto-vite-components": "^1.3.2",
 		"vue3-icon": "^3.0.3",
@@ -62,5 +64,5 @@
 	"engines": {
 		"node": ">=24"
 	},
-	"packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
+	"packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319"
 }

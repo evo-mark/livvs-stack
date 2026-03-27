@@ -19,15 +19,18 @@
 		"Matan",
 		"Rinvex",
 		"Unplugin",
+		"adminui",
 		"barryvdh",
 		"dont",
 		"fakerphp",
+		"inertiajs",
 		"livvs",
 		"nowrite",
 		"nunomaduro",
 		"pestphp",
 		"phpunit",
 		"pixelfear",
+		"sass",
 		"schosting"
 	],
 	"import": []

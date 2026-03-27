@@ -47,7 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'url' => fn() => config('app.url'),
                 'timezone' => fn() => config('app.timezone')
             ],
-            'countries' => Inertia::lazy(function () {
+            'countries' => Inertia::optional(function () {
                 $countries = collect(countries());
 
                 return $countries->map(function ($value, $key) {
