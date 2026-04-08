@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Data\PointData;
-use Carbon\CarbonInterval;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\AddressResultResource;
+use Carbon\CarbonInterval;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class AddressSearchService
 {
@@ -14,13 +16,13 @@ class AddressSearchService
 
     public function __construct()
     {
-        $this->token = config('services.get_address.token', "");
+        $this->token = config('services.pinpoint.token', '');
     }
 
     public function get(string $postcode)
     {
         if (empty($this->token)) {
-            throw new \Exception("No token found for the getAddress service");
+            throw new \Exception('No token found for the Pinpoint service');
         }
 
         $postcode = str($postcode)->replace(' ', '')->trim()->upper()->value;
@@ -28,25 +30,27 @@ class AddressSearchService
             return $this->findAddress($postcode);
         });
 
-        if (! isset($response['addresses']) || count($response['addresses']) <= 0) {
+        if (! isset($response['data']) || ! isset($response['data']['addresses']) || count($response['data']['addresses']) <= 0) {
             return response()->json([
                 'postcode' => $postcode,
                 'message' => $response['Message'] ?? 'No addresses found',
             ], status: 404);
         }
 
+        $data = $response['data'];
+
         return [
             'postcode' => $postcode,
-            'point' => new PointData(latitude: $response['latitude'], longitude: $response['longitude']),
-            'count' => count($response['addresses']) ?? 0,
-            'addresses' => AddressResultResource::collection(collect($response['addresses'])->sort(fn($a, $b) => strnatcmp($a['line_1'], $b['line_1']))),
+            'point' => new PointData(latitude: $data['latitude'], longitude: $data['longitude']),
+            'count' => count($data['addresses']) ?? 0,
+            'addresses' => AddressResultResource::collection(collect($data['addresses'])->sort(fn($a, $b) => strnatcmp($a['address'], $b['address']))),
         ];
     }
 
     private function findAddress(string $postcode)
     {
-        $url = sprintf('https://api.getAddress.io/find/%s?api-key=%s&expand=true', $postcode, $this->token);
+        $url = sprintf('https://pinpoint.evomark.co.uk/api/v1/postcode/%s', $postcode);
 
-        return Http::get($url)->json();
+        return Http::withToken($this->token)->get($url)->json();
     }
 }

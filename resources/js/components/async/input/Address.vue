@@ -82,7 +82,7 @@
 						<VListSubheader>Found {{ resultsCount }} addresses</VListSubheader>
 						<VVirtualScroll :items="results" item-height="48" height="200">
 							<template #default="{ item }">
-								<VListItem :title="item.formatted_string" @click="selectAddress(item)" />
+								<VListItem :title="item.summary" @click="selectAddress(item)" />
 							</template>
 						</VVirtualScroll>
 					</VCardText>
@@ -148,12 +148,13 @@ watch(
 		if (manual.value || !postcode || postcode.length < 5) return;
 
 		axios
-			.get(route("address.search"), {
+			.get(route("search.address"), {
 				params: {
 					postcode,
 				},
 			})
 			.then((res) => {
+				console.log(res);
 				results.value = res.data.addresses;
 				resultsCount.value = res.data.count;
 				modelValue.value.latitude = res.data.point?.coordinates?.latitude ?? null;
