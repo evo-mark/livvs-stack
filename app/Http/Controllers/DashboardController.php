@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\MetaService;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Facades\MetaService;
 
 class DashboardController
 {
@@ -12,6 +12,6 @@ class DashboardController
     {
         MetaService::setTitle(title: 'Welcome to LIVVS');
 
-        return Inertia::render("Dashboard");
+        return Inertia::render('Dashboard');
     }
 }

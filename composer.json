@@ -28,17 +28,18 @@
 	},
 	"require-dev": {
 		"fakerphp/faker": "^1.23",
-		"laravel/pint": "^1.13",
+		"friendsofphp/php-cs-fixer": "^3.95",
+		"laravel/pail": "^1.2",
 		"mockery/mockery": "^1.6",
 		"nunomaduro/collision": "^8.0",
-		"pestphp/pest": "^4.0",
-		"pestphp/pest-plugin-laravel": "^4.0",
+		"pestphp/pest": "^5.0",
+		"pestphp/pest-plugin-laravel": "^5.0",
 		"spatie/laravel-ignition": "^2.4"
 	},
 	"repositories": [
 		{
-			"type": "vcs",
-			"url": "https://github.com/evo-mark/evo-laravel-datatable"
+			"type": "composer",
+			"url": "https://packagist.evomark.co.uk/evomark"
 		}
 	],
 	"autoload": {
@@ -75,7 +76,16 @@
 			"@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
 			"@php artisan migrate --graceful --ansi"
 		],
-		"pint": "./vendor/bin/pint"
+		"lint": [
+			"@php vendor/bin/php-cs-fixer fix --dry-run --diff"
+		],
+		"format": [
+			"@php vendor/bin/php-cs-fixer fix"
+		],
+		"dev": [
+			"Composer\\Config::disableProcessTimeout",
+			"@php artisan dev"
+		]
 	},
 	"extra": {
 		"laravel": {

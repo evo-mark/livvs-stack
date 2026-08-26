@@ -3,13 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Console\PromptsForMissingInput;
+use Illuminate\Support\Carbon;
 
-use function Laravel\Prompts\text;
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\password;
-use Illuminate\Contracts\Console\PromptsForMissingInput;
+use function Laravel\Prompts\text;
 
 class MakeUser extends Command implements PromptsForMissingInput
 {
@@ -65,6 +65,6 @@ class MakeUser extends Command implements PromptsForMissingInput
         }
         $user->save();
 
-        $this->info('Admin "' . $user->full_name . '" has been created');
+        $this->info('Admin "'.$user->full_name.'" has been created');
     }
 }

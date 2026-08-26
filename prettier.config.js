@@ -6,4 +6,5 @@ export default {
 	proseWrap: "preserve",
 	tailwindStylesheet: "./resources/css/app.css",
 	tailwindFunctions: ["normalizeClass"],
+	plugins: ["prettier-plugin-tailwindcss"],
 };

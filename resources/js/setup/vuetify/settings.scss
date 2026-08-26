@@ -1,5 +1,5 @@
-@forward "vuetify/settings" with (
+@use "vuetify/settings" with (
 	$reset: false,
-	$color-pack: false,
-	$utilities: false
+	$body-font-family: var(--font-sans),
+	$heading-font-family: var(--font-display)
 );

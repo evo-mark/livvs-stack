@@ -1,6 +1,6 @@
+import { usePreferredDark } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { useTheme } from "vuetify";
-import { usePreferredDark } from "@vueuse/core";
 
 export const useUserPreferencesStore = defineStore(
 	"userPreferences",
@@ -13,10 +13,6 @@ export const useUserPreferencesStore = defineStore(
 			theme,
 			(v) => {
 				vuetifyTheme.change(v);
-				const isDark = v === 'dark';
-				if (typeof window !== "undefined") {
-					document.documentElement.classList.toggle('dark', isDark);
-				}
 			},
 			{
 				immediate: true,

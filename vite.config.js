@@ -1,13 +1,13 @@
-import { resolve } from "node:path";
-import vue from "@vitejs/plugin-vue";
-import vuetify from "vite-plugin-vuetify";
-import laravel from "laravel-vite-plugin";
-import tailwindcss from "@tailwindcss/vite";
-import inertiaI18n from "inertia-i18n/vite";
-import { defineConfig, loadEnv } from "vite";
-import AutoImport from "unplugin-auto-import/vite";
-import vueDevTools from "vite-plugin-vue-devtools";
 import inertia from "@inertiajs/vite";
+import tailwindcss from "@tailwindcss/vite";
+import vue from "@vitejs/plugin-vue";
+import inertiaI18n from "inertia-i18n/vite";
+import laravel from "laravel-vite-plugin";
+import { resolve } from "node:path";
+import AutoImport from "unplugin-auto-import/vite";
+import { defineConfig, loadEnv } from "vite";
+import vueDevTools from "vite-plugin-vue-devtools";
+import vuetify from "vite-plugin-vuetify";
 
 export default async ({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
@@ -20,34 +20,14 @@ export default async ({ mode }) => {
 		ssr: {
 			noExternal: ["vuetify"],
 		},
+		optimizeDeps: {
+			exclude: ["vuetify"],
+		},
 		resolve: {
 			alias: {
 				layouts: resolve("./resources/js/layouts"),
 				images: resolve("./resources/images"),
 				"~": resolve("./resources/css"),
-			},
-		},
-		build: {
-			rolldownOptions: {
-				output: {
-					codeSplitting: {
-						minSize: 20000,
-						groups: [
-							{
-								name: "vue",
-								test: /node_modules\/@?vue\//,
-							},
-							{
-								name: "vuetify",
-								test: /node_modules\/vuetify/,
-							},
-							{
-								name: "vendor",
-								test: /node_modules/,
-							},
-						],
-					},
-				},
 			},
 		},
 		plugins: [
@@ -73,7 +53,7 @@ export default async ({ mode }) => {
 				},
 			}),
 			laravel({
-				input: ["resources/js/app.js"],
+				input: ["resources/js/app.js", "resources/css/app.css"],
 				refresh: true,
 			}),
 			inertia(),

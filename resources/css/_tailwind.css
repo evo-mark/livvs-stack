@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @layer utilities {
 	.flex-center,
@@ -13,6 +13,19 @@
 	--breakpoint-3xl: 1924px;
 	--font-display: "Syncopate", sans-serif;
 }
+
+@utility rounded-pill {
+	border-radius: 9999px;
+}
+@utility rounded-circle {
+	border-radius: 50%;
+}
+@utility rounded-shaped {
+	border-radius: 24px 0;
+}
+
+@source inline("rounded");
+@source inline("rounded-{none,sm,md,lg,xl,2xl,3xl,full,pill,circle,shaped}");
 
 @utility container {
 	margin-inline: auto;
@@ -31,4 +44,26 @@
 	}
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+@utility elevation-0 {
+	box-shadow: none;
+}
+@utility elevation-1 {
+	box-shadow: var(--shadow-xs);
+}
+@utility elevation-2 {
+	box-shadow: var(--shadow-sm);
+}
+@utility elevation-3 {
+	box-shadow: var(--shadow-md);
+}
+@utility elevation-4 {
+	box-shadow: var(--shadow-xl);
+}
+@utility elevation-5 {
+	box-shadow: var(--shadow-2xl);
+}
+
+@source inline("elevation-{0,1,2,3,4,5}");
+
+@custom-variant light (&:where(.v-theme--light, .v-theme--light *));
+@custom-variant dark (&:where(.v-theme--dark, .v-theme--dark *));

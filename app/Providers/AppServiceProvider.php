@@ -3,16 +3,17 @@
 namespace App\Providers;
 
 use App\Data\PointData;
-use Carbon\CarbonInterval;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Address;
+use App\Models\User;
 use App\Observers\ActivityLogObserver;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\ServiceProvider;
-use Spatie\Activitylog\Models\Activity;
-use Illuminate\Support\Facades\Schedule;
-use Illuminate\Http\Resources\Json\JsonResource;
-use MatanYadaev\EloquentSpatial\EloquentSpatial;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Foundation\DevCommands;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Schedule;
+use Illuminate\Support\ServiceProvider;
+use MatanYadaev\EloquentSpatial\EloquentSpatial;
+use Spatie\Activitylog\Models\Activity;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         $this->changePasswordResetRoute();
         $this->scheduleTasks();
         $this->createMorphMap();
+        DevCommands::except('server');
         JsonResource::withoutWrapping();
 
         EloquentSpatial::usePoint(PointData::class);
@@ -46,14 +48,14 @@ class AppServiceProvider extends ServiceProvider
     private function createMorphMap(): void
     {
         Relation::enforceMorphMap([
-            'address' => get_class(app(\App\Models\Address::class)),
-            'user' => get_class(app(\App\Models\User::class)),
+            'address' => get_class(app(Address::class)),
+            'user' => get_class(app(User::class)),
         ]);
     }
 
     private function changePasswordResetRoute()
     {
-        \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function ($notifiable, $token) {
+        ResetPassword::createUrlUsing(function ($notifiable, $token) {
             return url(route('auth.reset-password', [
                 'token' => $token,
                 'email' => $notifiable->getEmailForPasswordReset(),

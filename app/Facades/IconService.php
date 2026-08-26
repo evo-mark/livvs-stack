@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static string get(string $icon)
  * @method static string fallback()
- * @method static void getIconPathFromLine( $line)
+ * @method static void getIconPathFromLine($line)
  *
  * @see \App\Services\IconService
  */

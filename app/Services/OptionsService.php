@@ -4,10 +4,10 @@ namespace App\Services;
 
 use App\Models\Option;
 use Carbon\CarbonInterval;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
 
 class OptionsService
 {
@@ -65,10 +65,10 @@ class OptionsService
         }
 
         if (! empty($optionable)) {
-            $key = $optionable->getMorphClass() . '_' . $optionable->id . '_' . $field;
+            $key = $optionable->getMorphClass().'_'.$optionable->id.'_'.$field;
             $model = $optionable->options()->firstWhere('field', $field);
         } else {
-            $key = 'global_' . $field;
+            $key = 'global_'.$field;
             $model = Option::global()->firstWhere('field', $field);
         }
 
@@ -90,6 +90,7 @@ class OptionsService
         } else {
             $globals = collect();
         }
+
         return $globals;
     }
 }

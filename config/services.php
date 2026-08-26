@@ -32,6 +32,6 @@ return [
     ],
 
     'pinpoint' => [
-        'token' => env('PINPOINT_TOKEN', '')
-    ]
+        'token' => env('PINPOINT_TOKEN', ''),
+    ],
 ];

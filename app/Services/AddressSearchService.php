@@ -26,7 +26,7 @@ class AddressSearchService
         }
 
         $postcode = str($postcode)->replace(' ', '')->trim()->upper()->value;
-        $response = Cache::remember('address_search_' . $postcode, CarbonInterval::week(1), function () use ($postcode) {
+        $response = Cache::remember('address_search_'.$postcode, CarbonInterval::week(1), function () use ($postcode) {
             return $this->findAddress($postcode);
         });
 
@@ -43,7 +43,7 @@ class AddressSearchService
             'postcode' => $postcode,
             'point' => new PointData(latitude: $data['latitude'], longitude: $data['longitude']),
             'count' => count($data['addresses']) ?? 0,
-            'addresses' => AddressResultResource::collection(collect($data['addresses'])->sort(fn($a, $b) => strnatcmp($a['address'], $b['address']))),
+            'addresses' => AddressResultResource::collection(collect($data['addresses'])->sort(fn ($a, $b) => strnatcmp($a['address'], $b['address']))),
         ];
     }
 

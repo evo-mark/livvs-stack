@@ -8,11 +8,11 @@
     </a>
 </p>
 
-# Laravel 12 Application Template
+# Laravel 13 Application Template
 
 ## Introduction
 
-This template installs a bare-bones Laravel 12 installation with the following features:
+This template installs a bare-bones Laravel 13 installation with the following features:
 
 ### General
 
@@ -53,4 +53,4 @@ Then inside your created application folder:
 - Setup database and `.env` file.
 - `composer update`
 - `pnpm install`
-- `npm run dev`
+- `composer dev`

@@ -1,6 +1,6 @@
 <template>
-	<VContainer fluid class="h-full flex flex-col justify-center items-center">
-		<header class="flex items-center gap-4 mb-8">
+	<VContainer fluid class="flex h-full flex-col items-center justify-center">
+		<header class="mb-8 flex items-center gap-4">
 			<div>
 				<svg
 					class="size-18"
@@ -21,7 +21,7 @@
 				<VIcon :icon="mdiPlus" />
 			</div>
 			<div>
-				<svg class="h-18 mb-3" viewBox="0 0 110 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg class="mb-3 h-18" viewBox="0 0 110 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_207_25158)">
 						<path
 							class="fill-black dark:fill-white"
@@ -73,7 +73,7 @@
 				</svg>
 			</div>
 		</header>
-		<p class="font-display font-bold text-4xl">Welcome to evoMark's LIVV Stack</p>
+		<p class="font-display text-4xl font-bold">Welcome to evoMark's LIVV Stack</p>
 	</VContainer>
 </template>
 

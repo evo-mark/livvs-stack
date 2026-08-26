@@ -18,7 +18,7 @@ trait ExtendedEnum
 
     public static function names(): array
     {
-        return collect(self::cases())->pluck('name')->map(fn($str) => str($str)->title()->replace('_', ' '))->toArray();
+        return collect(self::cases())->pluck('name')->map(fn ($str) => str($str)->title()->replace('_', ' '))->toArray();
     }
 
     public static function values(): array

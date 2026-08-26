@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Facade;
  */
 class AddressSearchService extends Facade
 {
-    /**
-     * @return string
-     */
     protected static function getFacadeAccessor(): string
     {
         return \App\Services\AddressSearchService::class;

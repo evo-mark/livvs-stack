@@ -4,21 +4,19 @@
 		class="theme-switcher"
 		inset
 		density="compact"
-		:color="userPreferencesStore.theme === 'light' ? 'yellow-darken-3' : 'black'"
+		:color="userPreferencesStore.theme === 'light' ? 'yellow-500' : 'black'"
 		false-value="dark"
 		true-value="light"
 	>
 		<template #thumb="{ model }">
-			<VIcon
-				:key="model.value"
-				size="18"
-				:icon="model.value === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-			/>
+			<VIcon :key="model.value" size="18" :icon="model.value === 'light' ? mdiWeatherSunny : mdiWeatherNight" />
 		</template>
 	</VSwitch>
 </template>
 
 <script setup>
+import { mdiWeatherNight, mdiWeatherSunny } from "@mdi/js";
+
 const userPreferencesStore = useUserPreferencesStore();
 </script>
 

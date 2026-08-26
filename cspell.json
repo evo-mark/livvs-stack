@@ -1,19 +1,10 @@
 {
 	"version": "0.2",
 	"language": "en_GB",
-	"ignorePaths": [],
+	"ignorePaths": ["composer.json", "package.json", "composer.lock", "pnpm-lock.yaml"],
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
-	"words": [
-		"axios",
-		"dispatchable",
-		"laravel",
-		"optionable",
-		"persistedstate",
-		"sass",
-		"timebox",
-		"vuetify"
-	],
+	"words": ["axios", "dispatchable", "laravel", "optionable", "persistedstate", "sass", "timebox", "vuetify"],
 	"ignoreWords": [
 		"Activitylog",
 		"Matan",
@@ -21,6 +12,7 @@
 		"Unplugin",
 		"adminui",
 		"barryvdh",
+		"color",
 		"dont",
 		"fakerphp",
 		"inertiajs",

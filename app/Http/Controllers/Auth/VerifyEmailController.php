@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
 use App\Facades\FlashService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class VerifyEmailController extends Controller
 {
@@ -15,7 +15,7 @@ class VerifyEmailController extends Controller
         $request->fulfill();
 
         FlashService::success(
-            "Your email address has been successfully verified.",
+            'Your email address has been successfully verified.',
             'Email Verified'
         );
 

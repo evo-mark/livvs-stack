@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Inertia\Inertia;
-use App\Models\Option;
-use Inertia\Middleware;
 use App\Facades\MetaService;
-use Illuminate\Http\Request;
 use App\Facades\OptionsService;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -41,11 +40,11 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'app' => [
-                'name' => fn() => config('app.name'),
-                'env' => fn() => config('app.env'),
-                'debug' => fn() => config('app.debug'),
-                'url' => fn() => config('app.url'),
-                'timezone' => fn() => config('app.timezone')
+                'name' => fn () => config('app.name'),
+                'env' => fn () => config('app.env'),
+                'debug' => fn () => config('app.debug'),
+                'url' => fn () => config('app.url'),
+                'timezone' => fn () => config('app.timezone'),
             ],
             'countries' => Inertia::optional(function () {
                 $countries = collect(countries());
@@ -61,13 +60,13 @@ class HandleInertiaRequests extends Middleware
                 })->values();
             }),
             'flash' => Inertia::always([
-                'success' => fn() => $request->session()->get('success'),
-                'error' => fn() => $request->session()->get('error'),
-                'warning' => fn() => $request->session()->get('warning'),
-                'info' => fn() => $request->session()->get('info'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
+                'warning' => fn () => $request->session()->get('warning'),
+                'info' => fn () => $request->session()->get('info'),
             ]),
             'meta' => [
-                'title' => fn() => MetaService::getTitle(),
+                'title' => fn () => MetaService::getTitle(),
             ],
             'options' => OptionsService::loadPublicOptions(),
             'ws' => [

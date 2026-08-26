@@ -1,17 +1,18 @@
-import { registerComponents } from "vue3-auto-vite-components";
 import { vuetifyRoutesPlugin } from "@adminui/inertia-routes";
-import SvgIcon from "vue3-icon";
-import vuetify from "./vuetify";
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
-
-const pinia = createPinia({});
-pinia.use(piniaPluginPersistedstate);
+import { registerComponents } from "vue3-auto-vite-components";
+import SvgIcon from "vue3-icon";
+import vuetify from "./vuetify";
 
 /**
  * General registration function
  */
-export const registerPlugins = (app) => {
+export const registerPlugins = (app, { ssr }) => {
+	const pinia = createPinia({});
+	if (!ssr) {
+		pinia.use(piniaPluginPersistedstate);
+	}
 	app.use(registerComponents, {
 		namespace: "Evo",
 		resolveIndex: true,
