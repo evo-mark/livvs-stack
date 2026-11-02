@@ -4,6 +4,9 @@ import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 import { registerComponents } from "vue3-auto-vite-components";
 import SvgIcon from "vue3-icon";
 import vuetify from "./vuetify";
+import { SnackbarService } from "vue3-snackbar";
+import "vue3-snackbar/styles";
+import { Link } from "@inertiajs/vue3";
 
 /**
  * General registration function
@@ -24,8 +27,10 @@ export const registerPlugins = (app, { ssr }) => {
 			eager: true,
 		}),
 	});
+	app.use(SnackbarService);
 	app.use(vuetify);
 	app.use(vuetifyRoutesPlugin);
 	app.use(pinia);
 	app.component("SvgIcon", SvgIcon);
+	app.component("InertiaLink", Link);
 };
