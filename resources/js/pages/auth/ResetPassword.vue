@@ -22,10 +22,10 @@
 
 						<!-- password -->
 						<VCol cols="12">
-							<EvoInputPassword v-model="reset.password" :error="reset.errors.password" />
+							<EvoSharedInputPassword v-model="reset.password" :error="reset.errors.password" />
 						</VCol>
 						<VCol cols="12">
-							<EvoInputPassword
+							<EvoSharedInputPassword
 								v-model="reset.password_confirmation"
 								:error="reset.errors.password_confirmation"
 							/>

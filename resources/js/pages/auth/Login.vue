@@ -22,7 +22,7 @@
 
 						<!-- password -->
 						<VCol cols="12">
-							<EvoInputPassword v-model="login.password" :error="login.errors.password" />
+							<EvoSharedInputPassword v-model="login.password" :error="login.errors.password" />
 						</VCol>
 						<VCol cols="12">
 							<!-- remember me checkbox -->
