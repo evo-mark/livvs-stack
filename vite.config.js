@@ -8,6 +8,9 @@ import AutoImport from "unplugin-auto-import/vite";
 import { defineConfig, loadEnv } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 import vuetify from "vite-plugin-vuetify";
+import evoSharedImportDirectories from "@evomark/evo-shared/import-directories";
+import evoSharedComponentResolver from "@evomark/evo-shared/resolver";
+import AutoComponents from "unplugin-vue-components/vite";
 
 export default async ({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
@@ -31,6 +34,9 @@ export default async ({ mode }) => {
 			},
 		},
 		plugins: [
+			AutoComponents({
+				resolvers: [evoSharedComponentResolver],
+			}),
 			AutoImport({
 				imports: [
 					"vue",
@@ -43,7 +49,12 @@ export default async ({ mode }) => {
 						"vue-i18n": ["useI18n"],
 					},
 				],
-				dirs: ["./resources/js/composables/**", "./resources/js/helpers/**", "./resources/js/stores/**"],
+				dirs: [
+					"./resources/js/composables/**",
+					"./resources/js/helpers/**",
+					"./resources/js/stores/**",
+					...evoSharedImportDirectories,
+				],
 				dts: "./auto-imports.d.ts",
 				vueTemplate: true,
 				eslintrc: {

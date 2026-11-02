@@ -1,10 +1,25 @@
 {
 	"version": "0.2",
 	"language": "en_GB",
-	"ignorePaths": ["composer.json", "package.json", "composer.lock", "pnpm-lock.yaml"],
+	"ignorePaths": [
+		"composer.json",
+		"package.json",
+		"composer.lock",
+		"pnpm-lock.yaml"
+	],
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
-	"words": ["axios", "dispatchable", "laravel", "optionable", "persistedstate", "sass", "timebox", "vuetify"],
+	"words": [
+		"axios",
+		"dispatchable",
+		"evomark",
+		"laravel",
+		"optionable",
+		"persistedstate",
+		"sass",
+		"timebox",
+		"vuetify"
+	],
 	"ignoreWords": [
 		"Activitylog",
 		"Matan",

@@ -9,6 +9,7 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue').EffectScope
+  const MouseButton: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useMousePressed.js').MouseButton
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
@@ -34,7 +35,10 @@ declare global {
   const createTemplatePromise: typeof import('@vueuse/core').createTemplatePromise
   const createUnrefFn: typeof import('@vueuse/core').createUnrefFn
   const currency: typeof import('./resources/js/helpers/string.js').currency
+  const currencyToBase: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/number.js').currencyToBase
+  const currencyToSubunit: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/number.js').currencyToSubunit
   const customRef: typeof import('vue').customRef
+  const dateToVuetify: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').dateToVuetify
   const debouncedRef: typeof import('@vueuse/core').debouncedRef
   const debouncedWatch: typeof import('@vueuse/core').debouncedWatch
   const defineAsyncComponent: typeof import('vue').defineAsyncComponent
@@ -48,6 +52,7 @@ declare global {
   const getCurrentScope: typeof import('vue').getCurrentScope
   const getCurrentWatcher: typeof import('vue').getCurrentWatcher
   const h: typeof import('vue').h
+  const humanFileSize: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/number.js').humanFileSize
   const ignorableWatch: typeof import('@vueuse/core').ignorableWatch
   const inject: typeof import('vue').inject
   const injectLocal: typeof import('@vueuse/core').injectLocal
@@ -60,8 +65,8 @@ declare global {
   const logicAnd: typeof import('@vueuse/math').logicAnd
   const logicNot: typeof import('@vueuse/math').logicNot
   const logicOr: typeof import('@vueuse/math').logicOr
-  const longDate: typeof import('./resources/js/helpers/date.js').longDate
-  const longDateTime: typeof import('./resources/js/helpers/date.js').longDateTime
+  const longDate: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').longDate
+  const longDateTime: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').longDateTime
   const makeDestructurable: typeof import('@vueuse/core').makeDestructurable
   const mapActions: typeof import('pinia').mapActions
   const mapGetters: typeof import('pinia').mapGetters
@@ -69,8 +74,8 @@ declare global {
   const mapStores: typeof import('pinia').mapStores
   const mapWritableState: typeof import('pinia').mapWritableState
   const markRaw: typeof import('vue').markRaw
-  const mediumDate: typeof import('./resources/js/helpers/date.js').mediumDate
-  const mediumDateTime: typeof import('./resources/js/helpers/date.js').mediumDateTime
+  const mediumDate: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').mediumDate
+  const mediumDateTime: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').mediumDateTime
   const nextTick: typeof import('vue').nextTick
   const onActivated: typeof import('vue').onActivated
   const onBeforeMount: typeof import('vue').onBeforeMount
@@ -92,6 +97,7 @@ declare global {
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
   const pausableWatch: typeof import('@vueuse/core').pausableWatch
+  const pluralise: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/string.js').pluralise
   const provide: typeof import('vue').provide
   const provideLocal: typeof import('@vueuse/core').provideLocal
   const reactify: typeof import('@vueuse/core').reactify
@@ -117,8 +123,8 @@ declare global {
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
-  const shortDate: typeof import('./resources/js/helpers/date.js').shortDate
-  const shortDateTime: typeof import('./resources/js/helpers/date.js').shortDateTime
+  const shortDate: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').shortDate
+  const shortDateTime: typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js').shortDateTime
   const storeToRefs: typeof import('pinia').storeToRefs
   const syncRef: typeof import('@vueuse/core').syncRef
   const syncRefs: typeof import('@vueuse/core').syncRefs
@@ -167,6 +173,7 @@ declare global {
   const useBroadcastChannel: typeof import('@vueuse/core').useBroadcastChannel
   const useBrowserLocation: typeof import('@vueuse/core').useBrowserLocation
   const useCached: typeof import('@vueuse/core').useCached
+  const useCan: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useCan.js').useCan
   const useCeil: typeof import('@vueuse/math').useCeil
   const useClamp: typeof import('@vueuse/math').useClamp
   const useClipboard: typeof import('@vueuse/core').useClipboard
@@ -196,7 +203,7 @@ declare global {
   const useDocumentVisibility: typeof import('@vueuse/core').useDocumentVisibility
   const useDraggable: typeof import('@vueuse/core').useDraggable
   const useDropZone: typeof import('@vueuse/core').useDropZone
-  const useEcho: typeof import('./resources/js/composables/useEcho.js').useEcho
+  const useEcho: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useEcho.js').useEcho
   const useElementBounding: typeof import('@vueuse/core').useElementBounding
   const useElementByPoint: typeof import('@vueuse/core').useElementByPoint
   const useElementHover: typeof import('@vueuse/core').useElementHover
@@ -230,7 +237,9 @@ declare global {
   const useIntervalFn: typeof import('@vueuse/core').useIntervalFn
   const useKeyModifier: typeof import('@vueuse/core').useKeyModifier
   const useLastChanged: typeof import('@vueuse/core').useLastChanged
-  const useLiveProps: typeof import('./resources/js/composables/useLiveProps.js').useLiveProps
+  const useLiveAnnouncer: typeof import('@vueuse/core').useLiveAnnouncer
+  const useLiveForm: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useLiveForm.js').useLiveForm
+  const useLiveProps: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useLiveProps.js').useLiveProps
   const useLocalStorage: typeof import('@vueuse/core').useLocalStorage
   const useMagicKeys: typeof import('@vueuse/core').useMagicKeys
   const useManualRefHistory: typeof import('@vueuse/core').useManualRefHistory
@@ -245,7 +254,7 @@ declare global {
   const useMounted: typeof import('@vueuse/core').useMounted
   const useMouse: typeof import('@vueuse/core').useMouse
   const useMouseInElement: typeof import('@vueuse/core').useMouseInElement
-  const useMousePressed: typeof import('@vueuse/core').useMousePressed
+  const useMousePressed: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useMousePressed.js').useMousePressed
   const useMutationObserver: typeof import('@vueuse/core').useMutationObserver
   const useNavigatorLanguage: typeof import('@vueuse/core').useNavigatorLanguage
   const useNetwork: typeof import('@vueuse/core').useNetwork
@@ -253,6 +262,7 @@ declare global {
   const useObjectUrl: typeof import('@vueuse/core').useObjectUrl
   const useOffsetPagination: typeof import('@vueuse/core').useOffsetPagination
   const useOnline: typeof import('@vueuse/core').useOnline
+  const useOptionalProp: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useOptionalProp.js').useOptionalProp
   const usePage: typeof import('@inertiajs/vue3').usePage
   const usePageLeave: typeof import('@vueuse/core').usePageLeave
   const useParallax: typeof import('@vueuse/core').useParallax
@@ -262,6 +272,7 @@ declare global {
   const usePointer: typeof import('@vueuse/core').usePointer
   const usePointerLock: typeof import('@vueuse/core').usePointerLock
   const usePointerSwipe: typeof import('@vueuse/core').usePointerSwipe
+  const usePortalHasContent: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/usePortalHasContent.js').usePortalHasContent
   const usePrecision: typeof import('@vueuse/math').usePrecision
   const usePreferredColorScheme: typeof import('@vueuse/core').usePreferredColorScheme
   const usePreferredContrast: typeof import('@vueuse/core').usePreferredContrast
@@ -289,14 +300,17 @@ declare global {
   const useSpeechRecognition: typeof import('@vueuse/core').useSpeechRecognition
   const useSpeechSynthesis: typeof import('@vueuse/core').useSpeechSynthesis
   const useStepper: typeof import('@vueuse/core').useStepper
+  const useStepperFlow: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useStepperFlow.js').useStepperFlow
   const useStorage: typeof import('@vueuse/core').useStorage
   const useStorageAsync: typeof import('@vueuse/core').useStorageAsync
   const useStyleTag: typeof import('@vueuse/core').useStyleTag
   const useSum: typeof import('@vueuse/math').useSum
   const useSupported: typeof import('@vueuse/core').useSupported
+  const useSvgImport: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useSvgImport.js').useSvgImport
   const useSwipe: typeof import('@vueuse/core').useSwipe
   const useTemplateRef: typeof import('vue').useTemplateRef
   const useTemplateRefsList: typeof import('@vueuse/core').useTemplateRefsList
+  const useTemporalNow: typeof import('@vueuse/core').useTemporalNow
   const useTextDirection: typeof import('@vueuse/core').useTextDirection
   const useTextSelection: typeof import('@vueuse/core').useTextSelection
   const useTextareaAutosize: typeof import('@vueuse/core').useTextareaAutosize
@@ -315,6 +329,7 @@ declare global {
   const useToggle: typeof import('@vueuse/core').useToggle
   const useTransition: typeof import('@vueuse/core').useTransition
   const useTrunc: typeof import('@vueuse/math').useTrunc
+  const useTypewriterEffect: typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useTypewriterEffect.js').useTypewriterEffect
   const useUrlSearchParams: typeof import('@vueuse/core').useUrlSearchParams
   const useUserMedia: typeof import('@vueuse/core').useUserMedia
   const useUserPreferencesStore: typeof import('./resources/js/stores/userPreferencesStore.js').useUserPreferencesStore
@@ -323,6 +338,7 @@ declare global {
   const useVibrate: typeof import('@vueuse/core').useVibrate
   const useVirtualList: typeof import('@vueuse/core').useVirtualList
   const useWakeLock: typeof import('@vueuse/core').useWakeLock
+  const useWebMCP: typeof import('@vueuse/core').useWebMCP
   const useWebNotification: typeof import('@vueuse/core').useWebNotification
   const useWebSocket: typeof import('@vueuse/core').useWebSocket
   const useWebWorker: typeof import('@vueuse/core').useWebWorker
@@ -360,6 +376,7 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly MouseButton: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useMousePressed.js')['MouseButton']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
@@ -385,7 +402,10 @@ declare module 'vue' {
     readonly createTemplatePromise: UnwrapRef<typeof import('@vueuse/core')['createTemplatePromise']>
     readonly createUnrefFn: UnwrapRef<typeof import('@vueuse/core')['createUnrefFn']>
     readonly currency: UnwrapRef<typeof import('./resources/js/helpers/string.js')['currency']>
+    readonly currencyToBase: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/number.js')['currencyToBase']>
+    readonly currencyToSubunit: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/number.js')['currencyToSubunit']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly dateToVuetify: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['dateToVuetify']>
     readonly debouncedRef: UnwrapRef<typeof import('@vueuse/core')['debouncedRef']>
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
@@ -399,6 +419,7 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
+    readonly humanFileSize: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/number.js')['humanFileSize']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
@@ -411,8 +432,8 @@ declare module 'vue' {
     readonly logicAnd: UnwrapRef<typeof import('@vueuse/math')['logicAnd']>
     readonly logicNot: UnwrapRef<typeof import('@vueuse/math')['logicNot']>
     readonly logicOr: UnwrapRef<typeof import('@vueuse/math')['logicOr']>
-    readonly longDate: UnwrapRef<typeof import('./resources/js/helpers/date.js')['longDate']>
-    readonly longDateTime: UnwrapRef<typeof import('./resources/js/helpers/date.js')['longDateTime']>
+    readonly longDate: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['longDate']>
+    readonly longDateTime: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['longDateTime']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -420,8 +441,8 @@ declare module 'vue' {
     readonly mapStores: UnwrapRef<typeof import('pinia')['mapStores']>
     readonly mapWritableState: UnwrapRef<typeof import('pinia')['mapWritableState']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
-    readonly mediumDate: UnwrapRef<typeof import('./resources/js/helpers/date.js')['mediumDate']>
-    readonly mediumDateTime: UnwrapRef<typeof import('./resources/js/helpers/date.js')['mediumDateTime']>
+    readonly mediumDate: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['mediumDate']>
+    readonly mediumDateTime: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['mediumDateTime']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
@@ -443,6 +464,7 @@ declare module 'vue' {
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
+    readonly pluralise: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/string.js')['pluralise']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
@@ -466,12 +488,11 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
-    readonly shortDate: UnwrapRef<typeof import('./resources/js/helpers/date.js')['shortDate']>
-    readonly shortDateTime: UnwrapRef<typeof import('./resources/js/helpers/date.js')['shortDateTime']>
+    readonly shortDate: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['shortDate']>
+    readonly shortDateTime: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/helpers/date.js')['shortDateTime']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
-    readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
@@ -516,6 +537,7 @@ declare module 'vue' {
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
+    readonly useCan: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useCan.js')['useCan']>
     readonly useCeil: UnwrapRef<typeof import('@vueuse/math')['useCeil']>
     readonly useClamp: UnwrapRef<typeof import('@vueuse/math')['useClamp']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
@@ -525,7 +547,6 @@ declare module 'vue' {
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCountdown: UnwrapRef<typeof import('@vueuse/core')['useCountdown']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
-    readonly useCountries: UnwrapRef<typeof import('./resources/js/composables/useCountries.js')['useCountries']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssSupports: UnwrapRef<typeof import('@vueuse/core')['useCssSupports']>
     readonly useCssVar: UnwrapRef<typeof import('@vueuse/core')['useCssVar']>
@@ -545,7 +566,7 @@ declare module 'vue' {
     readonly useDocumentVisibility: UnwrapRef<typeof import('@vueuse/core')['useDocumentVisibility']>
     readonly useDraggable: UnwrapRef<typeof import('@vueuse/core')['useDraggable']>
     readonly useDropZone: UnwrapRef<typeof import('@vueuse/core')['useDropZone']>
-    readonly useEcho: UnwrapRef<typeof import('./resources/js/composables/useEcho.js')['useEcho']>
+    readonly useEcho: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useEcho.js')['useEcho']>
     readonly useElementBounding: UnwrapRef<typeof import('@vueuse/core')['useElementBounding']>
     readonly useElementByPoint: UnwrapRef<typeof import('@vueuse/core')['useElementByPoint']>
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
@@ -579,7 +600,9 @@ declare module 'vue' {
     readonly useIntervalFn: UnwrapRef<typeof import('@vueuse/core')['useIntervalFn']>
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
-    readonly useLiveProps: UnwrapRef<typeof import('./resources/js/composables/useLiveProps.js')['useLiveProps']>
+    readonly useLiveAnnouncer: UnwrapRef<typeof import('@vueuse/core')['useLiveAnnouncer']>
+    readonly useLiveForm: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useLiveForm.js')['useLiveForm']>
+    readonly useLiveProps: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useLiveProps.js')['useLiveProps']>
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
     readonly useManualRefHistory: UnwrapRef<typeof import('@vueuse/core')['useManualRefHistory']>
@@ -594,7 +617,7 @@ declare module 'vue' {
     readonly useMounted: UnwrapRef<typeof import('@vueuse/core')['useMounted']>
     readonly useMouse: UnwrapRef<typeof import('@vueuse/core')['useMouse']>
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
-    readonly useMousePressed: UnwrapRef<typeof import('@vueuse/core')['useMousePressed']>
+    readonly useMousePressed: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useMousePressed.js')['useMousePressed']>
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
@@ -602,6 +625,7 @@ declare module 'vue' {
     readonly useObjectUrl: UnwrapRef<typeof import('@vueuse/core')['useObjectUrl']>
     readonly useOffsetPagination: UnwrapRef<typeof import('@vueuse/core')['useOffsetPagination']>
     readonly useOnline: UnwrapRef<typeof import('@vueuse/core')['useOnline']>
+    readonly useOptionalProp: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useOptionalProp.js')['useOptionalProp']>
     readonly usePage: UnwrapRef<typeof import('@inertiajs/vue3')['usePage']>
     readonly usePageLeave: UnwrapRef<typeof import('@vueuse/core')['usePageLeave']>
     readonly useParallax: UnwrapRef<typeof import('@vueuse/core')['useParallax']>
@@ -611,6 +635,7 @@ declare module 'vue' {
     readonly usePointer: UnwrapRef<typeof import('@vueuse/core')['usePointer']>
     readonly usePointerLock: UnwrapRef<typeof import('@vueuse/core')['usePointerLock']>
     readonly usePointerSwipe: UnwrapRef<typeof import('@vueuse/core')['usePointerSwipe']>
+    readonly usePortalHasContent: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/usePortalHasContent.js')['usePortalHasContent']>
     readonly usePrecision: UnwrapRef<typeof import('@vueuse/math')['usePrecision']>
     readonly usePreferredColorScheme: UnwrapRef<typeof import('@vueuse/core')['usePreferredColorScheme']>
     readonly usePreferredContrast: UnwrapRef<typeof import('@vueuse/core')['usePreferredContrast']>
@@ -638,14 +663,17 @@ declare module 'vue' {
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>
     readonly useSpeechSynthesis: UnwrapRef<typeof import('@vueuse/core')['useSpeechSynthesis']>
     readonly useStepper: UnwrapRef<typeof import('@vueuse/core')['useStepper']>
+    readonly useStepperFlow: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useStepperFlow.js')['useStepperFlow']>
     readonly useStorage: UnwrapRef<typeof import('@vueuse/core')['useStorage']>
     readonly useStorageAsync: UnwrapRef<typeof import('@vueuse/core')['useStorageAsync']>
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSum: UnwrapRef<typeof import('@vueuse/math')['useSum']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
+    readonly useSvgImport: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useSvgImport.js')['useSvgImport']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
+    readonly useTemporalNow: UnwrapRef<typeof import('@vueuse/core')['useTemporalNow']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
     readonly useTextSelection: UnwrapRef<typeof import('@vueuse/core')['useTextSelection']>
     readonly useTextareaAutosize: UnwrapRef<typeof import('@vueuse/core')['useTextareaAutosize']>
@@ -664,6 +692,7 @@ declare module 'vue' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useTrunc: UnwrapRef<typeof import('@vueuse/math')['useTrunc']>
+    readonly useTypewriterEffect: UnwrapRef<typeof import('./node_modules/@evomark/evo-shared/resources/js/composables/useTypewriterEffect.js')['useTypewriterEffect']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useUserPreferencesStore: UnwrapRef<typeof import('./resources/js/stores/userPreferencesStore.js')['useUserPreferencesStore']>
@@ -672,6 +701,7 @@ declare module 'vue' {
     readonly useVibrate: UnwrapRef<typeof import('@vueuse/core')['useVibrate']>
     readonly useVirtualList: UnwrapRef<typeof import('@vueuse/core')['useVirtualList']>
     readonly useWakeLock: UnwrapRef<typeof import('@vueuse/core')['useWakeLock']>
+    readonly useWebMCP: UnwrapRef<typeof import('@vueuse/core')['useWebMCP']>
     readonly useWebNotification: UnwrapRef<typeof import('@vueuse/core')['useWebNotification']>
     readonly useWebSocket: UnwrapRef<typeof import('@vueuse/core')['useWebSocket']>
     readonly useWebWorker: UnwrapRef<typeof import('@vueuse/core')['useWebWorker']>

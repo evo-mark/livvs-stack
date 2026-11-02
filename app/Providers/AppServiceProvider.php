@@ -36,7 +36,6 @@ class AppServiceProvider extends ServiceProvider
         DevCommands::except('server');
         JsonResource::withoutWrapping();
 
-        EloquentSpatial::usePoint(PointData::class);
         Activity::observe(ActivityLogObserver::class);
     }
 

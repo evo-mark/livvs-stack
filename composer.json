@@ -15,11 +15,13 @@
 		"evo-mark/evo-laravel-profanity": "^1.1",
 		"evo-mark/evo-laravel-rbac": "^2.0.0",
 		"evo-mark/evo-laravel-service-facades": "*",
+		"evo-mark/evo-shared": "*",
 		"evo-mark/inertia-i18n": "^3.0",
 		"evo-mark/laravel-id-obfuscator": "^1.4",
 		"inertiajs/inertia-laravel": "^3.0",
 		"laravel/framework": "^13.0",
 		"laravel/tinker": "^3.0",
+		"lorisleiva/laravel-actions": "*",
 		"matanyadaev/laravel-eloquent-spatial": "^4.5",
 		"pusher/pusher-php-server": "^7.2",
 		"rinvex/countries": "^9.1",
@@ -34,7 +36,8 @@
 		"nunomaduro/collision": "^8.0",
 		"pestphp/pest": "^5.0",
 		"pestphp/pest-plugin-laravel": "^5.0",
-		"spatie/laravel-ignition": "^2.4"
+		"spatie/laravel-ignition": "^2.4",
+		"wulfheart/laravel-actions-ide-helper": "*"
 	},
 	"repositories": [
 		{
