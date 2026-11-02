@@ -1,0 +1,12 @@
+{
+	"recommendations": [
+		"Vue.volar",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"bradlc.vscode-tailwindcss",
+		"bmewburn.vscode-intelephense-client",
+		"laravel.vscode-laravel",
+		"junstyle.php-cs-fixer",
+		"Pest.vscode-pest"
+	]
+}
